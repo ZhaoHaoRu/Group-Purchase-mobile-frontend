@@ -1,0 +1,12 @@
+{
+  "name": "rnDemo",
+  "displayName": "rnDemo",
+  "android": {
+    "adaptiveIcon": {
+      "backgroundColor": "#3861b1",
+      "foregroundImage": "./assets/icon-fg.png"
+    }
+  }
+}
+
+

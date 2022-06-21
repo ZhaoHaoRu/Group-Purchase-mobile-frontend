@@ -15,11 +15,6 @@ import {
   Center,
   Pressable,
 } from 'native-base';
-import {
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome,
-} from '@expo/vector-icons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
 
