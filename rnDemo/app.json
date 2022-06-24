@@ -3,7 +3,7 @@
   "displayName": "rnDemo",
   "android": {
     "adaptiveIcon": {
-      "backgroundColor": "#3861b1",
+      "backgroundColor": "#ffffff",
       "foregroundImage": "./assets/icon-fg.png"
     }
   }

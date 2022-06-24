@@ -13,7 +13,7 @@ import {Button, Box, Text, HStack, VStack, Center} from 'native-base';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}) => {
   console.log('get home screen!');
   return (
     <ImageBackground
@@ -27,7 +27,7 @@ const WelcomeScreen = () => {
               交我团
             </Text>
           </Center>
-          <Center w="100%" h="5%" rounded="md" >
+          <Center w="100%" h="5%" rounded="md">
             <Text italic fontSize="md">
               有 温 度 的 社 区 团 购
             </Text>
@@ -39,7 +39,8 @@ const WelcomeScreen = () => {
               colorScheme="danger"
               width="80%"
               size="lg"
-              borderRadius="full">
+              borderRadius="full"
+              onPress={() => navigation.replace('Register')}>
               创建账户
             </Button>
           </Center>
@@ -51,7 +52,8 @@ const WelcomeScreen = () => {
               size="lg"
               borderColor="danger.400"
               borderWidth="3px"
-              borderRadius="full">
+              borderRadius="full"
+              onPress={() => navigation.replace('Login')}>
               登录
             </Button>
           </Center>
@@ -68,6 +70,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: null,
     height: null, // //不加这句，就是按照屏幕高度自适应
-  }
+  },
 });
 export default WelcomeScreen;

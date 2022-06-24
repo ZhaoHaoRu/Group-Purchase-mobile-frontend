@@ -136,7 +136,7 @@ export default function Footer() {
               size={w * 0.07}
               alt="order"
             />
-            <Text color="light.800" fontSize="12" >
+            <Text color="light.800" fontSize="12">
               个人
             </Text>
           </Center>
