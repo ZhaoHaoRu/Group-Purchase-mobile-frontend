@@ -12,7 +12,7 @@ import {
   Pressable,
   Spacer,
 } from 'native-base';
-
+import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -96,7 +96,13 @@ const ProfileFuncRow2 = () => {
                 <Text fontSize="xs">配送地址</Text>
               </Pressable>
 
-              <Pressable py="3" flex={1} alignItems="center">
+              <Pressable
+                py="3"
+                flex={1}
+                alignItems="center"
+                /*onPress={() => navigation.replace('Detail')}*/
+              >
+                {/* <Link to={{screen: 'QrCodeScanner', initial: false}}>*/}
                 <Image
                   mb="5%"
                   opacity={0.5}
@@ -104,7 +110,8 @@ const ProfileFuncRow2 = () => {
                   size="30px"
                   alt="refresh"
                 />
-                <Text fontSize="xs">刷新</Text>
+                <Text fontSize="xs">扫码</Text>
+                {/*    </Link>*/}
               </Pressable>
             </HStack>
           </Box>

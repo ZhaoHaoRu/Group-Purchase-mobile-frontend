@@ -31,7 +31,12 @@ export default function PurchaseFooter() {
       borderColor="gray.100"
       borderTopWidth="3">
       <Center flex={1} />
-      <HStack alignItems="center" safeAreaBottom shadow={6} space={3} padding={3}>
+      <HStack
+        alignItems="center"
+        safeAreaBottom
+        shadow={6}
+        space={3}
+        padding={3}>
         <Center>
           <Icon
             as={AntDesign}

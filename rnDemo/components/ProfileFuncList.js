@@ -21,9 +21,9 @@ const h = Dimensions.get('window').height;
 
 const ProfileFuncList = () => {
   return (
-    <View  bg={'#fff'} >
-      <VStack >
-        <Box bg={'#fff'} >
+    <View bg={'#fff'}>
+      <VStack>
+        <Box bg={'#fff'}>
           <HStack mt={1} mb={1}>
             <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
               我的收藏

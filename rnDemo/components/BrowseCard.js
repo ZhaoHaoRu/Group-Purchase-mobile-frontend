@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Box, Image, AspectRatio, Text} from 'native-base';
 import {Dimensions} from 'react-native';
 import {Link} from '@react-navigation/native';
-import DetailScreen from '../screens/DetailScreen';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -19,11 +18,11 @@ const BrowseCard = () => {
           borderRadius="lg"
         />
       </AspectRatio>
-        <Link to={{screen: 'Detail', initial: false}}>
-          <Text mt={0.02 * w} color="#71717a" bold size="xl">
-            团购名称
-          </Text>
-        </Link>
+      <Link to={{screen: 'Detail', initial: false}}>
+        <Text mt={0.02 * w} color="#71717a" bold size="xl">
+          团购名称
+        </Text>
+      </Link>
     </Box>
   );
 };

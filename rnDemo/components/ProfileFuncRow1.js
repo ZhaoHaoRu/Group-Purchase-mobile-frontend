@@ -17,101 +17,77 @@ import {
 
 const ProfileFuncRow1 = () => {
   return (
-        <Box bg={"#fff"} mb={2}>
-        <HStack justifyContent="space-between" mt={2}>
-          <Pressable
-          py="3"
-          flex={1}
-          alignItems="center"
-          >
-            <Image
-              mb="5%"
-              opacity={0.4}
-              source={
-                require('../image/wallet.png')
-              }
-              size="30px"
-              alt="wallet"
-            />
-            <Text fontSize="xs">钱包</Text>
-        </Pressable>
-          <Divider
-            bg="darkText"
-            thickness="2"
-            mx="2"
-            mt="4"
+    <Box bg={'#fff'} mb={2}>
+      <HStack justifyContent="space-between" mt={2}>
+        <Pressable py="3" flex={1} alignItems="center">
+          <Image
+            mb="5%"
             opacity={0.4}
-            height={10}
-            orientation="vertical"
+            source={require('../image/wallet.png')}
+            size="30px"
+            alt="wallet"
           />
-          <Pressable
-          py="3"
-          flex={1}
-          alignItems="center"
-          >
-            <Image
-              mb="5%"
-              opacity={0.4}
-              source={
-                require('../image/people.png')
-              }
-              size="30px"
-              alt="people"
-            />
-            <Text fontSize="xs">团员</Text>
-        </Pressable>
-          <Divider
-            bg="darkText"
-            thickness="2"
-            mx="2"
-            mt="4"
-            opacity={0.4}
-            height={10}
-            orientation="vertical"
-          />
-          <Pressable
-          py="3"
-          flex={1}
-          alignItems="center"
-          >
-            <Image
-              mb="5%"
-              opacity={0.4}
-              source={
-                require('../image/store.png')
-              }
-              size="30px"
-              alt="store"
-            />
-            <Text fontSize="xs">店铺</Text>
+          <Text fontSize="xs">钱包</Text>
         </Pressable>
         <Divider
-            bg="darkText"
-            thickness="2"
-            mx="2"
-            mt="4"
-            height={10}
+          bg="darkText"
+          thickness="2"
+          mx="2"
+          mt="4"
+          opacity={0.4}
+          height={10}
+          orientation="vertical"
+        />
+        <Pressable py="3" flex={1} alignItems="center">
+          <Image
+            mb="5%"
             opacity={0.4}
-            orientation="vertical"
+            source={require('../image/people.png')}
+            size="30px"
+            alt="people"
           />
-          <Pressable
-          py="3"
-          flex={1}
-          alignItems="center"
-          >
-            <Image
-              mb="5%"
-              opacity={0.4}
-              source={
-                require('../image/msg.png')
-              }
-              size="30px"
-              alt="msg"
-            />
-            <Text fontSize="xs">社群</Text>
+          <Text fontSize="xs">团员</Text>
         </Pressable>
-        </HStack>
-        </Box>
+        <Divider
+          bg="darkText"
+          thickness="2"
+          mx="2"
+          mt="4"
+          opacity={0.4}
+          height={10}
+          orientation="vertical"
+        />
+        <Pressable py="3" flex={1} alignItems="center">
+          <Image
+            mb="5%"
+            opacity={0.4}
+            source={require('../image/store.png')}
+            size="30px"
+            alt="store"
+          />
+          <Text fontSize="xs">店铺</Text>
+        </Pressable>
+        <Divider
+          bg="darkText"
+          thickness="2"
+          mx="2"
+          mt="4"
+          height={10}
+          opacity={0.4}
+          orientation="vertical"
+        />
+        <Pressable py="3" flex={1} alignItems="center">
+          <Image
+            mb="5%"
+            opacity={0.4}
+            source={require('../image/msg.png')}
+            size="30px"
+            alt="msg"
+          />
+          <Text fontSize="xs">社群</Text>
+        </Pressable>
+      </HStack>
+    </Box>
   );
 };
-export default ProfileFuncRow1
+export default ProfileFuncRow1;

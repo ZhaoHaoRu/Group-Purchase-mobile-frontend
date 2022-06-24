@@ -6,7 +6,9 @@ import {
   FormControl,
   Input,
   Button,
-  Center, Icon, Stack,
+  Center,
+  Icon,
+  Stack,
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
@@ -20,14 +22,14 @@ const RegisterForm = ({navigation}) => {
       <Box safeArea p="2" w="90%" maxW="290" py="10">
         <Stack space={4}>
           <Icon
-              as={AntDesign}
-              name="smileo"
-              size="5xl"
-              color="danger.400"
-              _dark={{
-                color: 'danger.300',
-              }}
-              margin={"auto"}
+            as={AntDesign}
+            name="smileo"
+            size="5xl"
+            color="danger.400"
+            _dark={{
+              color: 'danger.300',
+            }}
+            margin={'auto'}
           />
           <Stack space={1}>
             <Heading
@@ -36,7 +38,8 @@ const RegisterForm = ({navigation}) => {
               _dark={{
                 color: 'warmGray.50',
               }}
-              fontWeight="semibold" margin={"auto"}>
+              fontWeight="semibold"
+              margin={'auto'}>
               欢迎来到交我团
             </Heading>
             <Heading
@@ -46,7 +49,7 @@ const RegisterForm = ({navigation}) => {
                 color: 'warmGray.200',
               }}
               fontWeight="light"
-              margin={"auto"}
+              margin={'auto'}
               size="xs">
               有 温 度 的 社 区 团 购
             </Heading>
@@ -69,7 +72,10 @@ const RegisterForm = ({navigation}) => {
             <FormControl.Label>确认密码</FormControl.Label>
             <Input type="password" />
           </FormControl>
-          <Button mt="2" backgroundColor="danger.600" onPress={() => navigation.replace('Welcome')}>
+          <Button
+            mt="2"
+            backgroundColor="danger.600"
+            onPress={() => navigation.replace('Welcome')}>
             注册
           </Button>
         </VStack>

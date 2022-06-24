@@ -5,8 +5,11 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import DetailScreen from '../screens/DetailScreen';
 import HomeScreen from '../screens/HomeScreen';
 import BrowseScreen from '../screens/BrowseScreen';
+import QrCodeScreen from '../screens/QrCodeScreen';
+import QrCodeScannerScreen from '../screens/QrCodeScannerScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+import {Ionicons} from '@expo/vector-icons';
 
 function DetailsScreen() {
   return (
@@ -23,30 +26,32 @@ const Stack = createNativeStackNavigator({
 function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Welcome"
-           screenOptions={({ route }) => ({
-               tabBarIcon: ({ focused, color, size }) => {
-                   let iconName;
+      <Stack.Navigator
+        initialRouteName="Welcome"
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
 
-                   if (route.name === 'Home') {
-                       iconName = focused
-                           ? 'ios-information-circle'
-                           : 'ios-information-circle-outline';
-                   } else if (route.name === 'Settings') {
-                       iconName = focused ? 'ios-list-box' : 'ios-list';
-                   }
+            if (route.name === 'Home') {
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
+            } else if (route.name === 'Settings') {
+              iconName = focused ? 'ios-list-box' : 'ios-list';
+            }
 
-                   // You can return any component that you like here!
-                   return <Ionicons name={iconName} size={size} color={color} />;
-               },
-               tabBarActiveTintColor: 'tomato',
-               tabBarInactiveTintColor: 'gray',
-           })}
-      >
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}>
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Detail" component={DetailScreen} />
-          <Stack.Screen name="Browse" component={BrowseScreen} />
+        <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Screen name="Browse" component={BrowseScreen} />
+        <Stack.Screen name="QrCode" component={QrCodeScreen} />
+        <Stack.Screen name="QrCodeScanner" component={QrCodeScannerScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

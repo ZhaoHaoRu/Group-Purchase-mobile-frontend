@@ -18,11 +18,9 @@ import {Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-
 // 获得屏幕的宽度和高度，便于确定元素的大小，适配不同大小的屏幕
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
-
 
 function AppBar({navigation}) {
   return (

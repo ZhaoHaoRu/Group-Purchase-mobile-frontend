@@ -32,29 +32,29 @@ function GrpDetailsForm() {
 
   return (
     // <VStack width="90%" mx="3" maxW="300px">
-      <FormControl isRequired>
-        {/* <FormControl.Label _text={{
+    <FormControl isRequired>
+      {/* <FormControl.Label _text={{
         bold: true
       }}>Name</FormControl.Label> */}
-        <Input
-          placeholder="团购名称"
-          variant="unstyled" 
-          borderColor={'transparent'}
-          onChangeText={value => setData({...formData, name: value})}
-        />
-        {/* <FormControl.HelperText
+      <Input
+        placeholder="团购名称"
+        variant="unstyled"
+        borderColor={'transparent'}
+        onChangeText={value => setData({...formData, name: value})}
+      />
+      {/* <FormControl.HelperText
           _text={{
             fontSize: 'xs',
           }}>
           请输入团购名称
         </FormControl.HelperText> */}
-        <FormControl.ErrorMessage
-          _text={{
-            fontSize: 'xs',
-          }}>
-          Error
-        </FormControl.ErrorMessage>
-      </FormControl>
+      <FormControl.ErrorMessage
+        _text={{
+          fontSize: 'xs',
+        }}>
+        Error
+      </FormControl.ErrorMessage>
+    </FormControl>
     // </VStack>
   );
 }
@@ -62,14 +62,14 @@ function GrpDetailsForm() {
 const GroupDetailsForm = () => {
   const [text, setText] = useState('');
   return (
-        <Box bg={'#fff'} borderRadius={15} height={'auto'} pb="2" m="2">
-          <VStack>
-            <HStack mt={1} mb={1}>
-              <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
-                团购介绍
-              </Heading>
-              <Spacer />
-              {/* <Image
+    <Box bg={'#fff'} borderRadius={15} height={'auto'} pb="2" m="2">
+      <VStack>
+        <HStack mt={1} mb={1}>
+          <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
+            团购介绍
+          </Heading>
+          <Spacer />
+          {/* <Image
                 // mt="15%"
                 mr="4"
                 mt="4"
@@ -78,42 +78,42 @@ const GroupDetailsForm = () => {
                 size="18px"
                 alt="map"
               /> */}
-            </HStack>
-            <Divider
-              bg="darkText"
-              thickness="1.5"
-              alignSelf={'center'}
-              mt="3"
-              mb="0"
-              width={0.9 * w}
-              opacity={0.3}
-              orientation="horizontal"
-            />
-            <GrpDetailsForm />
-            <Divider
-              bg="darkText"
-              thickness="1.5"
-              alignSelf={'center'}
-              width={0.9 * w}
-              opacity={0.05}
-              orientation="horizontal"
-            />
-            <FormControl isRequired>
-              <Input
-                placeholder="描述"
-                variant="unstyled" 
-                borderColor={'transparent'}
-                onChangeText={value => setData({...formData, name: value})}
-              />
-            </FormControl>
-            {/* <TextInput
+        </HStack>
+        <Divider
+          bg="darkText"
+          thickness="1.5"
+          alignSelf={'center'}
+          mt="3"
+          mb="0"
+          width={0.9 * w}
+          opacity={0.3}
+          orientation="horizontal"
+        />
+        <GrpDetailsForm />
+        <Divider
+          bg="darkText"
+          thickness="1.5"
+          alignSelf={'center'}
+          width={0.9 * w}
+          opacity={0.05}
+          orientation="horizontal"
+        />
+        <FormControl isRequired>
+          <Input
+            placeholder="描述"
+            variant="unstyled"
+            borderColor={'transparent'}
+            onChangeText={value => setData({...formData, name: value})}
+          />
+        </FormControl>
+        {/* <TextInput
               style={{height: 40}}
               placeholder="Type here to translate!"
               onChangeText={newText => setText(newText)}
               defaultValue={text}
             /> */}
-          </VStack>
-        </Box>
+      </VStack>
+    </Box>
   );
 };
 

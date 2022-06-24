@@ -33,6 +33,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import QrCodeScreen from './screens/QrCodeScreen';
+import QrCodeScannerScreen from './screens/QrCodeScannerScreen';
 
 const config = {
   useSystemColorMode: false,
@@ -180,6 +182,8 @@ export default function App() {
           <Route.Screen name="Login" component={LoginForm} />
           <Route.Screen name="Register" component={RegisterForm} />
           <Route.Screen name="Detail" component={DetailScreen} />
+          <Route.Screen name="QrCode" component={QrCodeScreen} />
+          <Route.Screen name="QrCodeScanner" component={QrCodeScannerScreen} />
           {/*<Route.Screen*/}
           {/*  name="WelcomeSys"*/}
           {/*  component={UserStackWrapper}*/}

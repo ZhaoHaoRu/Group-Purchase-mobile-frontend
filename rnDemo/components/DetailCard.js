@@ -20,6 +20,7 @@ import {
 import {Dimensions} from 'react-native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -28,7 +29,8 @@ const CommentCard = () => {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     fullName: 'Afreen Khan',
     timeStamp: '12:47 PM',
-    recentText: '孩子很喜欢，敏感肌也能用，已经是第二次回购了,感谢店家，物流很快',
+    recentText:
+      '孩子很喜欢，敏感肌也能用，已经是第二次回购了,感谢店家，物流很快',
     avatarUrl:
       'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   };
@@ -67,8 +69,7 @@ const CommentCard = () => {
             color: 'warmGray.50',
           }}
           alignSelf="flex-start"
-          ml={-0.15 * w}
-        >
+          ml={-0.15 * w}>
           {item.timeStamp}
         </Text>
       </HStack>
@@ -225,15 +226,22 @@ const DetailCard = () => {
                       color: 'danger.300',
                     }}
                   />
-                  <Icon
-                    as={AntDesign}
-                    name="export"
-                    size="lg"
-                    color="danger.400"
-                    _dark={{
-                      color: 'danger.300',
-                    }}
-                  />
+                  <Pressable>
+                    <Link to={{screen: 'QrCode', initial: false}}>
+                      <Icon
+                        as={AntDesign}
+                        name="export"
+                        size="lg"
+                        color="danger.400"
+                        _dark={{
+                          color: 'danger.300',
+                        }}
+                        /*  onPress={({navigation}) =>
+                          navigation.replace('Register')
+                        }*/
+                      />
+                    </Link>
+                  </Pressable>
                   <Pressable onPress={() => setColleted(1)}>
                     <Icon
                       as={AntDesign}
