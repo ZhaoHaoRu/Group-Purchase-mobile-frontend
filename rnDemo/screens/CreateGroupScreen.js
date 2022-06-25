@@ -9,7 +9,7 @@ import GroupSetting from '../components/GroupSetting';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const CreateGroupScreen = () => {
+const CreateGroupScreen = ({navigation}) => {
   return (
     <ScrollView bg="muted.150">
       <View>
@@ -32,7 +32,14 @@ const CreateGroupScreen = () => {
               base: 'auto',
               md: '0',
             }}>
-            <Button size="sm" colorScheme="danger" width={0.9 * w}>
+            <Button
+              size="sm"
+              colorScheme="danger"
+              width={0.9 * w}
+              onPress={() => {
+                // navigation.dispatch(StackActions.popToTop());
+                navigation.replace('QrCode');
+              }}>
               发布团购
             </Button>
           </Stack>

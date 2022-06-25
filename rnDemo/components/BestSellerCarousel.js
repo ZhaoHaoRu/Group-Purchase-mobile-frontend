@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   title_2: {
     display: 'flex',
-    ml: 0.15 * w,
+    // ml: 0.15 * w,
     color: '#9f1239',
     width: '100%',
     height: 45,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   date: {
     display: 'flex',
-    ml: 0.15 * w,
+    // ml: 0.15 * w,
     color: '#9f1239',
     width: '100%',
     height: 45,

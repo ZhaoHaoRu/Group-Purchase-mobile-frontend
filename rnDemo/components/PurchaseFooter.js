@@ -37,15 +37,17 @@ export default function PurchaseFooter() {
         space={3}
         padding={3}>
         <Center>
-          <Icon
-            as={AntDesign}
-            name="shoppingcart"
-            size="lg"
-            color="danger.400"
-            _dark={{
-              color: 'danger.300',
-            }}
-          />
+          <Link to={{screen: '订单', initial: false}}>
+            <Icon
+              as={AntDesign}
+              name="shoppingcart"
+              size="lg"
+              color="danger.400"
+              _dark={{
+                color: 'danger.300',
+              }}
+            />
+          </Link>
           <Text color="light.800" fontSize="12">
             购物车
           </Text>
@@ -87,7 +89,7 @@ export default function PurchaseFooter() {
             // mt={0.005 * h}
             // color="danger.800"
           >
-            一键开团
+            <Link to={{screen: 'PaymentDetail', initial: false}}>一键开团</Link>
           </Button>
         </Center>
       </HStack>

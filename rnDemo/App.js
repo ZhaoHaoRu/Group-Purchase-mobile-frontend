@@ -38,6 +38,12 @@ import QrCodeScreen from './screens/QrCodeScreen';
 import QrCodeScannerScreen from './screens/QrCodeScannerScreen';
 import PaymentDoneScreen from './screens/PaymentDoneScreen';
 import PaymentDetails from './components/PaymentDetails';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs([
+  'ViewPropTypes will be removed',
+  'ColorPropType will be removed',
+]);
 
 const config = {
   useSystemColorMode: false,
@@ -47,8 +53,6 @@ const config = {
 // 为了Detail页面不显示footer，再包一层
 const Tab = createBottomTabNavigator();
 //为了退出时不显示用户界面，包一层 stack
-const Stack = createNativeStackNavigator();
-const TabStack = createNativeStackNavigator();
 const Route = createNativeStackNavigator();
 //不显示header的操作
 Tab.navigationOptions = ({navigation}) => {
@@ -73,24 +77,6 @@ export const theme = extendTheme({config});
 //     </NativeBaseProvider>
 //   );
 // }
-
-// export const App = StackNavigator(
-//   {
-//     Login: {screen: LoginPage}, // 登录页
-//     Reg: {screen: RegPage}, // 注册页
-//     FindAccount: {screen: FindAccountPage}, // 找回密码页
-//     Main: {
-//       screen: TabNav,
-//       navigationOptions: ({navigation}) => ({
-//         header: null,
-//       }),
-//     },
-//   },
-//   {
-//     initialRouteName: 'Login',
-//     headerMode: 'screen',
-//   },
-// );
 
 export function TabWrapper() {
   return (
@@ -179,7 +165,7 @@ export default function App() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Route.Navigator
-          initialRouteName="WelcomeSys"
+          initialRouteName="Welcome"
           screenOptions={{headerShown: false}}>
           <Route.Screen name="Welcome" component={WelcomeScreen} />
           <Route.Screen name="Login" component={LoginForm} />

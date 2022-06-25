@@ -12,7 +12,7 @@ import {
 
 let camera;
 
-const QrCodeScanner = () => {
+const QrCodeScanner = ({navigation}) => {
   const moveAnim = useRef(new Animated.Value(-2)).current;
 
   useEffect(() => {
@@ -63,9 +63,9 @@ const QrCodeScanner = () => {
   };
   const onBarCodeRead = result => {
     const {data} = result; //拿到data
+    console.log('data:', data);
     //扫码后的操作
-
-    /*navigation.replace('Detail', {data: data});*/
+    if (data === 'detail') navigation.replace('Detail');
   };
 
   return (

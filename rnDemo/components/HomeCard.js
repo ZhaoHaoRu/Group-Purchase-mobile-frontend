@@ -46,8 +46,10 @@ const HomeCard = () => {
                   团购名称
                 </Heading>
               </Link>
-              <Box width={0.4 * w}>
-                <Text size="sm" ml={0.05 * w} mt={0.01 * h} color="gray.700">
+              <Box width={0.4 * w}  ml={0.05 * w}>
+                <Text size="sm"
+                      // ml={0.05 * w}
+                      mt={0.01 * h} color="gray.700">
                   团购商家名称
                 </Text>
               </Box>
@@ -55,7 +57,7 @@ const HomeCard = () => {
                 size="xs"
                 variant="subtle"
                 colorScheme="danger"
-                ml={0.1 * w}
+                ml={0.05 * w}
                 mt={0.005 * h}
                 color="danger.800">
                 订阅

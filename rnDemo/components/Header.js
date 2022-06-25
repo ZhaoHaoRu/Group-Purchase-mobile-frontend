@@ -12,7 +12,7 @@ import {
   StatusBar,
   Pressable,
 } from 'native-base';
-import {MaterialIcons} from '@expo/vector-icons';
+// import {MaterialIcons} from '@expo/vector-icons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
@@ -59,11 +59,11 @@ function AppBar({navigation}) {
           {/*  size="lg"*/}
           {/*  color="white"*/}
           {/*/>*/}
-          <IconButton
-            icon={
-              <Icon size="sm" as={MaterialIcons} name="menu" color="white" />
-            }
-          />
+          {/*<IconButton*/}
+          {/*  icon={*/}
+          {/*    <Icon size="sm" as={MaterialIcons} name="menu" color="white" />*/}
+          {/*  }*/}
+          {/*/>*/}
         </HStack>
       </HStack>
     </>

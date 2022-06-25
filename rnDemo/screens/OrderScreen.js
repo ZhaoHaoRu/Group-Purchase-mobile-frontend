@@ -33,49 +33,38 @@ export default function OrderScreen() {
   return (
     <NativeBaseProvider>
       {/* <View style={styles.container}> */}
-      <ScrollView>
-        <VStack w="100%" space={3} alignSelf="center">
-          <Pressable
-            onPress={({navigation}) => navigation.navigate('Register')}>
-            <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
-              我的购买订单
-            </Heading>
-          </Pressable>
-          <Input
-            placeholder="搜索团名/商品名"
-            width="90%"
-            variant="rounded"
-            borderColor={'danger.600'}
-            borderWidth="2"
-            mt={5}
-            py="3"
-            px="1"
-            fontSize="14"
-            alignSelf={'center'}
-            style={styles.input}
-            InputLeftElement={
-              <Image
-                ml="3"
-                opacity={0.3}
-                source={require('../image/search.png')}
-                size="18px"
-                alt="arrowR"
-              />
-            }
-          />
-          {/* <Divider
-            bg="darkText"
-            thickness="1.5"
-            alignSelf={'center'}
-            mt="-1"
-            mb="0"
-            width={w}
-            opacity={0.1}
-            orientation="horizontal"
-          /> */}
-        </VStack>
-        <OrderList />
-      </ScrollView>
+      {/*<ScrollView>*/}
+      <VStack w="100%" space={3} alignSelf="center">
+        <Pressable onPress={({navigation}) => navigation.navigate('Register')}>
+          <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
+            我的购买订单
+          </Heading>
+        </Pressable>
+        <Input
+          placeholder="搜索团名/商品名"
+          width="90%"
+          variant="rounded"
+          borderColor={'danger.600'}
+          borderWidth="2"
+          mt={5}
+          py="3"
+          px="1"
+          fontSize="14"
+          alignSelf={'center'}
+          style={styles.input}
+          InputLeftElement={
+            <Image
+              ml="3"
+              opacity={0.3}
+              source={require('../image/search.png')}
+              size="18px"
+              alt="arrowR"
+            />
+          }
+        />
+      </VStack>
+      {/*</ScrollView>*/}
+      <OrderList />
       {/* </View> */}
       {/* <Footer/> */}
     </NativeBaseProvider>

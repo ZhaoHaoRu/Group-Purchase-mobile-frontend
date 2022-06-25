@@ -11,6 +11,13 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer, StackActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Link} from '@react-navigation/native';
+import {LogBox} from 'react-native';
+
+// 忽略版本报错信息
+LogBox.ignoreLogs([
+  'ViewPropTypes will be removed',
+  'ColorPropType will be removed',
+]);
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;

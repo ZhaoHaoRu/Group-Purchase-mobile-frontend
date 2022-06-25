@@ -16,7 +16,7 @@ import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const PaymentDoneScreen = () => {
+const PaymentDoneScreen = ({navigation}) => {
   return (
     <NativeBaseProvider>
       <Button size="30px" m="3" bg="transparent">
@@ -58,10 +58,12 @@ const PaymentDoneScreen = () => {
             size="sm"
             // variant="outline"
             colorScheme="danger"
-            width={0.5 * w}>
-            <Link to={{screen: 'Home', initial: false}}>
+            width={0.5 * w}
+            onPress={() => {
+              // navigation.dispatch(StackActions.popToTop());
+              navigation.replace('TabWrapper');
+            }}>
             回到主页
-            </Link>
           </Button>
         </Stack>
       </Box>
