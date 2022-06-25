@@ -22,13 +22,13 @@ class BestSellerCarousel extends React.Component {
           title: '团购标题',
           subtitle: 'Lorem ipsum dolor sit amet',
           illustration:
-            'https://img.zcool.cn/community/01b0e45e120106a80120a895a2e9af.jpg@1280w_1l_2o_100sh.jpg'
+            'https://img.zcool.cn/community/01b0e45e120106a80120a895a2e9af.jpg@1280w_1l_2o_100sh.jpg',
         },
         {
           title: '团购标题',
           subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
           illustration:
-            'http://seopic.699pic.com/photo/50050/6251.jpg_wh1200.jpg'
+            'http://seopic.699pic.com/photo/50050/6251.jpg_wh1200.jpg',
         },
       ],
     };
@@ -55,9 +55,7 @@ class BestSellerCarousel extends React.Component {
     return (
       <View style={styles.carousel_container}>
         <Box ml={0.1 * w}>
-          <Text style={styles.title_2}>
-            今日热门团购
-          </Text>
+          <Text style={styles.title_2}>今日热门团购</Text>
         </Box>
         <Carousel
           sliderWidth={w}
@@ -68,9 +66,7 @@ class BestSellerCarousel extends React.Component {
           hasParallaxImages={true}
         />
         <Box ml={0.1 * w} width={w}>
-          <Text style={styles.date}>
-            今日日期
-          </Text>
+          <Text style={styles.date}>今日日期</Text>
         </Box>
       </View>
     );
@@ -131,7 +127,7 @@ const styles = StyleSheet.create({
     height: 45,
     lineHeight: 45,
     fontSize: 12,
-  }
+  },
 });
 
 export default BestSellerCarousel;

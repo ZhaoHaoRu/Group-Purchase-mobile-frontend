@@ -41,7 +41,7 @@ function SearchBar() {
                 size="6"
                 color="gray.400"
                 as={AntDesign}
-                name={"search1"}
+                name={'search1'}
               />
             }
           />
@@ -52,4 +52,3 @@ function SearchBar() {
 }
 
 export default SearchBar;
-

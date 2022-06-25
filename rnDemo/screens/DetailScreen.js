@@ -17,7 +17,7 @@ import PurchaseFooter from '../components/PurchaseFooter';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const DetailScreen = () => {
+const DetailScreen = ({navigation}) => {
   return (
     <>
       <ScrollView mb={0.1 * h}>

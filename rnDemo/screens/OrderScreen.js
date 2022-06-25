@@ -35,9 +35,12 @@ export default function OrderScreen() {
       {/* <View style={styles.container}> */}
         <ScrollView>
         <VStack w="100%" space={3} alignSelf="center">
-          {/* <Heading fontSize="md" alignSelf={'center'} style={styles.title} color="danger.600">
-            我的购买订单
-          </Heading> */}
+          <Pressable
+            onPress={({navigation}) => navigation.navigate('Register')}>
+            <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
+              我的购买订单
+            </Heading>
+          </Pressable>
           <Input
             placeholder="搜索团名/商品名"
             width="90%"

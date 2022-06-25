@@ -22,7 +22,7 @@ const h = Dimensions.get('window').height;
 
 const GroupProductDetails = () => {
   const [text, setText] = useState('');
-  let [service, setService] = React.useState("");
+  let [service, setService] = React.useState('');
   return (
     <Box
       bg={'#fff'}
@@ -211,11 +211,11 @@ const GroupProductDetails = () => {
             minWidth="85%"
             accessibilityLabel="是/否"
             placeholder=" 是/否"
-            alignSelf={"center"}
+            alignSelf={'center'}
             mx="6"
             mt="0"
-            height={"10"}
-            borderColor={"transparent"}
+            height={'10'}
+            borderColor={'transparent'}
             _selectedItem={{
               bg: 'teal.600',
               endIcon: <CheckIcon size="5" />,
