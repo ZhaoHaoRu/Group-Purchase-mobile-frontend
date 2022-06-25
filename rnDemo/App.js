@@ -37,6 +37,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import QrCodeScreen from './screens/QrCodeScreen';
 import QrCodeScannerScreen from './screens/QrCodeScannerScreen';
 import PaymentDoneScreen from './screens/PaymentDoneScreen';
+import ScannerScreen from './screens/ScannerScreen';
 import PaymentDetails from './components/PaymentDetails';
 import {LogBox} from 'react-native';
 
@@ -173,7 +174,7 @@ export default function App() {
           <Route.Screen name="Detail" component={DetailScreen} />
           {/* <Route.Screen name="Payment" component={PaymentDetailsScreen} /> */}
           <Route.Screen name="QrCode" component={QrCodeScreen} />
-          <Route.Screen name="QrCodeScanner" component={QrCodeScannerScreen} />
+          <Route.Screen name="QrCodeScanner" component={ScannerScreen} />
           <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />
           <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
           {/*<Route.Screen*/}

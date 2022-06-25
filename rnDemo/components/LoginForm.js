@@ -81,7 +81,7 @@ const LoginForm = ({navigation}) => {
             onPress={
               () => {
                 // navigation.dispatch(StackActions.popToTop());
-                navigation.replace('TabWrapper');
+                navigation.replace("TabWrapper");
               }
               // navigation.navigate("TabWrapper")}
             }>
@@ -96,7 +96,7 @@ const LoginForm = ({navigation}) => {
               }}>
               我没有账号{' '}
             </Text>
-            <Link to={{screen: 'Register', initial: false}}>
+            <Link to={{screen: "Register", initial: false}}>
               <Text color="danger.800" fontWeight="medium" fontSize="sm">
                 注册
               </Text>

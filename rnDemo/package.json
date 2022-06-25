@@ -22,6 +22,8 @@
     "react-native": "0.68.2",
     "react-native-camera": "^4.2.1",
     "react-native-gesture-handler": "^2.5.0",
+    "react-native-image-crop-picker": "^0.37.3",
+    "react-native-local-barcode-recognizer": "^0.0.2",
     "react-native-qrcode-svg": "^6.1.2",
     "react-native-reanimated": "^2.8.0",
     "react-native-safe-area-context": "^4.3.1",
