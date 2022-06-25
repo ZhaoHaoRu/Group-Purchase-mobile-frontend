@@ -19,11 +19,11 @@ const BrowseCard = () => {
           borderRadius="lg"
         />
       </AspectRatio>
-        <Link to={{screen: 'Detail', initial: false}}>
-          <Text mt={0.02 * w} color="#71717a" bold size="xl">
-            团购名称
-          </Text>
-        </Link>
+      <Link to={{screen: 'Detail', initial: false}}>
+        <Text mt={0.02 * w} color="#71717a" bold size="xl">
+          团购名称
+        </Text>
+      </Link>
     </Box>
   );
 };

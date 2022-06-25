@@ -22,6 +22,7 @@ import Footer from './components/Footer';
 import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreenWrapper from './screens/HomeScreen';
 import DetailScreen from './screens/DetailScreen';
+import PaymentDetailsScreen from './screens/PaymentDetailsScreen';
 import {Icon} from 'native-base';
 import BrowseScreen from './screens/BrowseScreen';
 import MyProfileScreen from './screens/MyProfileScreen';
@@ -180,6 +181,7 @@ export default function App() {
           <Route.Screen name="Login" component={LoginForm} />
           <Route.Screen name="Register" component={RegisterForm} />
           <Route.Screen name="Detail" component={DetailScreen} />
+          {/* <Route.Screen name="Payment" component={PaymentDetailsScreen} /> */}
           {/*<Route.Screen*/}
           {/*  name="WelcomeSys"*/}
           {/*  component={UserStackWrapper}*/}

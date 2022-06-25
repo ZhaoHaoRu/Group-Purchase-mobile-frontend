@@ -32,21 +32,23 @@ const h = Dimensions.get('window').height;
 export default function OrderScreen() {
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
+      {/* <View style={styles.container}> */}
+        <ScrollView>
         <VStack w="100%" space={3} alignSelf="center">
-          <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
+          {/* <Heading fontSize="md" alignSelf={'center'} style={styles.title} color="danger.600">
             我的购买订单
-          </Heading>
+          </Heading> */}
           <Input
-            placeholder="Search People & Places"
+            placeholder="搜索团名/商品名"
             width="90%"
-            height={10}
-            borderRadius="4"
+            variant="rounded" 
+            borderColor={"danger.600"}
+            borderWidth="2"
+            mt={5}
             py="3"
             px="1"
             fontSize="14"
             alignSelf={'center'}
-            bg="light.100"
             style={styles.input}
             InputLeftElement={
               <Image
@@ -58,7 +60,7 @@ export default function OrderScreen() {
               />
             }
           />
-          <Divider
+          {/* <Divider
             bg="darkText"
             thickness="1.5"
             alignSelf={'center'}
@@ -67,10 +69,11 @@ export default function OrderScreen() {
             width={w}
             opacity={0.1}
             orientation="horizontal"
-          />
+          /> */}
         </VStack>
         <OrderList />
-      </View>
+        </ScrollView>
+      {/* </View> */}
       {/* <Footer/> */}
     </NativeBaseProvider>
   );
@@ -79,10 +82,10 @@ export default function OrderScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   input: {
-    height: 40,
+    height: 45,
     padding: 10,
   },
   title: {

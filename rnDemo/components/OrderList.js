@@ -20,7 +20,7 @@ const OrderList = () => {
       id: '1',
       fullName: 'Empreinte Tradition 2011 - Cotes Du Jura',
       description: 'Volume: 500ml',
-      price: '30 USD',
+      price: 'RMB 30',
       image:
         'https://www.healthifyme.com/blog/wp-content/uploads/2022/02/Red-Wine.-benefits-1.jpg',
     },
@@ -28,28 +28,28 @@ const OrderList = () => {
       id: '2',
       fullName: 'Brunch at the Rug Restaurant',
       description: 'Set menu for two on weekdays only',
-      price: '58 USD',
+      price: 'RMB 58',
       image: 'https://scx2.b-cdn.net/gfx/news/hires/2016/howcuttingdo.jpg',
     },
     {
       id: '3',
       fullName: 'Yellow Pig Bagel & Brunch',
       description: 'Set menu for two on weekdays only',
-      price: '68 USD',
+      price: 'RMB 68',
       image:
         'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
     },
   ];
   return (
-    <Box>
-      <Heading fontSize="15" ml="4" mt="4" color={'muted.600'}>
+    <Box bg={"white"} borderRadius="15" height="auto" mt="3" ml="2" mr="2" pb="2">
+      <Heading fontSize="15" ml="4" mt="4" mb="3" color={'muted.600'}>
         订单号: XXX
       </Heading>
       <FlatList
         data={data}
         renderItem={({item}) => (
           <Box
-            borderBottomWidth="1"
+            borderTopWidth="1"
             _dark={{
               borderColor: 'gray.600',
             }}
@@ -90,9 +90,9 @@ const OrderList = () => {
                   {item.description}
                 </Text>
                 <Text
-                  color="danger.700"
+                  color="danger.500"
                   _dark={{
-                    color: 'danger.900',
+                    color: 'danger.500',
                   }}>
                   {item.price}
                 </Text>

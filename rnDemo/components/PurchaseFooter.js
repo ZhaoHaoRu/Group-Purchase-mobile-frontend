@@ -58,6 +58,21 @@ export default function PurchaseFooter() {
             加入购物车
           </Button>
         </Center>
+        {/* <Center>
+          <Link to={{screen: 'Payment', initial: false}}>
+          <Button
+            size="sm"
+            variant="subtle"
+            colorScheme="danger"
+            // ml={0.21 * w}
+            // ml={0.1 * w}
+            // mt={0.005 * h}
+            color="danger.800"
+            >
+            抢
+          </Button>
+          </Link>
+        </Center> */}
         <Center>
           <Button
             size="sm"
