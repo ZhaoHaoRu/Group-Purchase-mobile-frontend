@@ -36,6 +36,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import QrCodeScreen from './screens/QrCodeScreen';
 import QrCodeScannerScreen from './screens/QrCodeScannerScreen';
+import PaymentDoneScreen from './screens/PaymentDoneScreen';
+import PaymentDetails from './components/PaymentDetails';
 
 const config = {
   useSystemColorMode: false,
@@ -186,6 +188,8 @@ export default function App() {
           {/* <Route.Screen name="Payment" component={PaymentDetailsScreen} /> */}
           <Route.Screen name="QrCode" component={QrCodeScreen} />
           <Route.Screen name="QrCodeScanner" component={QrCodeScannerScreen} />
+          <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />
+          <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
           {/*<Route.Screen*/}
           {/*  name="WelcomeSys"*/}
           {/*  component={UserStackWrapper}*/}

@@ -7,6 +7,8 @@ import HomeScreen from '../screens/HomeScreen';
 import BrowseScreen from '../screens/BrowseScreen';
 import QrCodeScreen from '../screens/QrCodeScreen';
 import QrCodeScannerScreen from '../screens/QrCodeScannerScreen';
+import PaymentDoneScreen from '../screens/PaymentDoneScreen';
+import PaymentDetailsScreen from '../screens/PaymentDetailsScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {Ionicons} from '@expo/vector-icons';
@@ -52,6 +54,8 @@ function Navigation() {
         <Stack.Screen name="Browse" component={BrowseScreen} />
         <Stack.Screen name="QrCode" component={QrCodeScreen} />
         <Stack.Screen name="QrCodeScanner" component={QrCodeScannerScreen} />
+        <Stack.Screen name="PaymentDone" component={PaymentDoneScreen} />
+        <Stack.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

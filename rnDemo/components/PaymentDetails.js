@@ -30,7 +30,15 @@ const PaymentDetails = () => {
 
   return (
     <View>
-      <Box borderRadius="5" bg="#fff" pt="3" pb="1" width={0.9 * w} alignSelf={'center'} mt="5" mb="5">
+      <Box
+        borderRadius="5"
+        bg="#fff"
+        pt="3"
+        pb="1"
+        width={0.9 * w}
+        alignSelf={'center'}
+        mt="5"
+        mb="5">
         <VStack flex={1} ml="3">
           <Heading fontSize="md">付款</Heading>
           <Select
@@ -61,17 +69,19 @@ const PaymentDetails = () => {
         mb="2"
         mt="2">
         <VStack>
-          
           <HStack ml={4}>
             <FormControl.Label
               alignSelf={'center'}
               _text={{
                 bold: true,
               }}>
-             配送费
+              配送费
             </FormControl.Label>
-            <Spacer/>
-            <Text color={"danger.600"} fontSize={"xs"} mr="3" mt="4" height="9"> RMB 20.45</Text>
+            <Spacer />
+            <Text color={'danger.600'} fontSize={'xs'} mr="3" mt="4" height="9">
+              {' '}
+              RMB 20.45
+            </Text>
           </HStack>
           <Divider
             bg="darkText"
@@ -89,8 +99,11 @@ const PaymentDetails = () => {
               }}>
               订单总金额
             </FormControl.Label>
-            <Spacer/>
-            <Text color={"danger.600"} fontSize={"xs"} mr="3" mt="4" height="9"> RMB 20.45</Text>
+            <Spacer />
+            <Text color={'danger.600'} fontSize={'xs'} mr="3" mt="4" height="9">
+              {' '}
+              RMB 20.45
+            </Text>
           </HStack>
           <Divider
             bg="darkText"
@@ -106,8 +119,16 @@ const PaymentDetails = () => {
             <Heading fontSize="14" ml="4" mt="3" mb="1" opacity={0.6}>
               总共
             </Heading>
-            <Spacer/>
-            <Text color={"danger.600"} fontSize={"xs"} mr="3" mt="2" alignSelf={"center"}> RMB 20.45</Text>
+            <Spacer />
+            <Text
+              color={'danger.600'}
+              fontSize={'xs'}
+              mr="3"
+              mt="2"
+              alignSelf={'center'}>
+              {' '}
+              RMB 20.45
+            </Text>
           </HStack>
         </VStack>
       </Box>

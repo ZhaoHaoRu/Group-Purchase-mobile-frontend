@@ -41,7 +41,14 @@ const OrderList = () => {
     },
   ];
   return (
-    <Box bg={"white"} borderRadius="15" height="auto" mt="3" ml="2" mr="2" pb="2">
+    <Box
+      bg={'white'}
+      borderRadius="15"
+      height="auto"
+      mt="3"
+      ml="2"
+      mr="2"
+      pb="2">
       <Heading fontSize="15" ml="4" mt="4" mb="3" color={'muted.600'}>
         订单号: XXX
       </Heading>

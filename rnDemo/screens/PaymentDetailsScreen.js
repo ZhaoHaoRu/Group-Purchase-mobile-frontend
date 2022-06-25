@@ -13,11 +13,12 @@ import {
 } from 'native-base';
 import DeliveryDetailsList from '../components/DeliveryDetailsList';
 import PaymentDetails from '../components/PaymentDetails';
-
+import PaymentDoneScreen from './PaymentDoneScreen';
+import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-export default class PaymentDetailsScreen extends Component {
+class PaymentDetailsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,38 +31,38 @@ export default class PaymentDetailsScreen extends Component {
     return (
       <NativeBaseProvider>
         <Button size="30px" m="3" bg="transparent">
-        <Image
-              mb="5%"
-              opacity={0.4}
-              source={
-                require('../image/arrowL.png')
-              }
-              size="30px"
-              alt="arrowL"
-            />
+          <Image
+            mb="5%"
+            opacity={0.4}
+            source={require('../image/arrowL.png')}
+            size="30px"
+            alt="arrowL"
+          />
         </Button>
         <ScrollView ml="1" mr="1" flex="1">
           <DeliveryDetailsList />
           <PaymentDetails />
           <Stack
-          mb="2.5"
-          mt="1.5"
-          direction={{
-            base: 'column',
-            md: 'row',
-          }}
-          space={2}
-          mx={{
-            base: 'auto',
-            md: '0',
-          }}>
-          <Button
-            size="sm"
-            // variant="outline"
-            colorScheme="danger"
-            width={0.9 * w}>
-            去付款
-          </Button>
+            mb="2.5"
+            mt="1.5"
+            direction={{
+              base: 'column',
+              md: 'row',
+            }}
+            space={2}
+            mx={{
+              base: 'auto',
+              md: '0',
+            }}>
+            <Button
+              size="sm"
+              // variant="outline"
+              colorScheme="danger"
+              width={0.9 * w}>
+              <Link to={{screen: 'PaymentDone', initial: false}}>
+              去付款
+            </Link>
+            </Button>
           </Stack>
         </ScrollView>
       </NativeBaseProvider>
@@ -78,3 +79,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+export default PaymentDetailsScreen;

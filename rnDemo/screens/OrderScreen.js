@@ -33,7 +33,7 @@ export default function OrderScreen() {
   return (
     <NativeBaseProvider>
       {/* <View style={styles.container}> */}
-        <ScrollView>
+      <ScrollView>
         <VStack w="100%" space={3} alignSelf="center">
           <Pressable
             onPress={({navigation}) => navigation.navigate('Register')}>
@@ -44,8 +44,8 @@ export default function OrderScreen() {
           <Input
             placeholder="搜索团名/商品名"
             width="90%"
-            variant="rounded" 
-            borderColor={"danger.600"}
+            variant="rounded"
+            borderColor={'danger.600'}
             borderWidth="2"
             mt={5}
             py="3"
@@ -75,7 +75,7 @@ export default function OrderScreen() {
           /> */}
         </VStack>
         <OrderList />
-        </ScrollView>
+      </ScrollView>
       {/* </View> */}
       {/* <Footer/> */}
     </NativeBaseProvider>

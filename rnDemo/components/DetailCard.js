@@ -227,20 +227,18 @@ const DetailCard = () => {
                     }}
                   />
                   <Pressable>
-                    <Link to={{screen: 'QrCode', initial: false}}>
-                      <Icon
-                        as={AntDesign}
-                        name="export"
-                        size="lg"
-                        color="danger.400"
-                        _dark={{
-                          color: 'danger.300',
-                        }}
-                        /*  onPress={({navigation}) =>
-                          navigation.replace('Register')
-                        }*/
-                      />
-                    </Link>
+                    {/*<Link to={{screen: 'QrCode', initial: false}}>*/}
+                    <Icon
+                      as={AntDesign}
+                      name="export"
+                      size="lg"
+                      color="danger.400"
+                      _dark={{
+                        color: 'danger.300',
+                      }}
+                      onPress={({navigation}) => navigation.replace('Register')}
+                    />
+                    {/*</Link>*/}
                   </Pressable>
                   <Pressable onPress={() => setColleted(1)}>
                     <Icon

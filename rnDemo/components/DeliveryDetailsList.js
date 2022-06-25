@@ -19,26 +19,26 @@ import {StyleSheet} from 'react-native';
 const DeliveryDetailsList = () => {
   return (
     <VStack flex={1} ml="1">
-      <Box borderRadius="5" alignSelf={"center"} bg="#fff" pl="3" pt="3" pb="1">
+      <Box borderRadius="5" alignSelf={'center'} bg="#fff" pl="3" pt="3" pb="1">
         <Heading fontSize="md" mb="3">
           配送信息
         </Heading>
         <Box>
           <HStack>
-            <VStack width={"80%"}>
+            <VStack width={'80%'}>
               <Text
                 fontSize="xs"
                 _dark={{color: 'warmGray.50'}}
                 color="coolGray.800"
-                justifyItems={"center"}
+                justifyItems={'center'}
                 width="80%">
                 {/* {item.address} */}
                 123, Transfer Road, California
               </Text>
             </VStack>
             {/* <Spacer /> */}
-            <Button alignSelf="center" style={styles.changeButton} mt="-2" >
-              <Text color={'danger.700'} fontSize="12" >
+            <Button alignSelf="center" style={styles.changeButton} mt="-2">
+              <Text color={'danger.700'} fontSize="12">
                 编辑
               </Text>
             </Button>
@@ -46,7 +46,7 @@ const DeliveryDetailsList = () => {
         </Box>
         <Box>
           <HStack>
-            <VStack width={"80%"}>
+            <VStack width={'80%'}>
               <Text
                 fontSize="xs"
                 // alignContent={}
@@ -59,7 +59,7 @@ const DeliveryDetailsList = () => {
               </Text>
             </VStack>
             {/* <Spacer /> */}
-            <Button  style={styles.changeButton} mt="-2">
+            <Button style={styles.changeButton} mt="-2">
               <Text color={'danger.700'} fontSize="12">
                 编辑
               </Text>

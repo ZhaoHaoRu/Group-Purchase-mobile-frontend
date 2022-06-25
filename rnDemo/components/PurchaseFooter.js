@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   Box,
   Text,
-  Link,
   Button,
   Icon,
   HStack,
@@ -12,7 +11,7 @@ import {
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
-
+import {Link} from '@react-navigation/native';
 // 获得屏幕的宽度和高度，便于确定元素的大小，适配不同大小的屏幕
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -60,7 +59,9 @@ export default function PurchaseFooter() {
             // ml={0.1 * w}
             // mt={0.005 * h}
             color="danger.800">
-            加入购物车
+            <Link to={{screen: 'PaymentDetail', initial: false}}>
+              加入购物车
+            </Link>
           </Button>
         </Center>
         {/* <Center>

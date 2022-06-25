@@ -13,10 +13,11 @@ import {
   Spacer,
 } from 'native-base';
 import {Link} from '@react-navigation/native';
+
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const ProfileFuncRow2 = () => {
+const ProfileFuncRow2 = ({navigation}) => {
   return (
     <View>
       <VStack>
@@ -100,9 +101,7 @@ const ProfileFuncRow2 = () => {
                 py="3"
                 flex={1}
                 alignItems="center"
-                /*onPress={() => navigation.replace('Detail')}*/
-              >
-                {/* <Link to={{screen: 'QrCodeScanner', initial: false}}>*/}
+                /*onPress={() => navigation.replace('QrCodeScanner')}*/>
                 <Image
                   mb="5%"
                   opacity={0.5}
@@ -110,8 +109,9 @@ const ProfileFuncRow2 = () => {
                   size="30px"
                   alt="refresh"
                 />
-                <Text fontSize="xs">扫码</Text>
-                {/*    </Link>*/}
+                <Link to={{screen: 'QrCodeScanner', initial: false}}>
+                  <Text fontSize="xs">扫码</Text>
+                </Link>
               </Pressable>
             </HStack>
           </Box>
