@@ -38,7 +38,7 @@ export default class ScannerScreen extends Component {
       alert('扫描结果:' + data);
       if (data === 'detail') {
         this.setState({data});
-        this.props.navigation.navigate('Detail');
+        this.props.navigation.replace('Detail');
       }
     }
   };
@@ -64,7 +64,7 @@ export default class ScannerScreen extends Component {
         {codeTypes: ['ean13', 'qr']},
     );
     // alert('识别结果：' + result);
-    this.props.navigation.navigate('Detail');
+    this.props.navigation.replace('Detail');
   };
 
   render() {

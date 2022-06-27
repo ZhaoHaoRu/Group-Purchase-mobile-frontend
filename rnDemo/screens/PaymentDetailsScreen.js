@@ -62,7 +62,7 @@ const PaymentDetailsScreen = ({navigation}) => {
             width={0.9 * w}
             onPress={() => {
               // navigation.dispatch(StackActions.popToTop());
-              navigation.replace('TabWrapper');
+              navigation.replace('PaymentDone');
             }}>
             {/*<Link to={{screen: 'PaymentDone', initial: false}}>*/}
               去付款

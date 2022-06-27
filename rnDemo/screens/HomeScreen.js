@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
 import {Dimensions} from 'react-native';
-import {Center, ScrollView, Flex, Icon, Image} from 'native-base';
+import {
+  Center,
+  ScrollView,
+  Flex,
+  Icon,
+  Image,
+  HStack,
+  Box,
+  Text,
+  VStack,
+  Pressable,
+} from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Footer from '../components/Footer';
 import BestSellerCarousel from '../components/BestSellerCarousel';
@@ -40,21 +51,30 @@ const HomeScreen = ({navigation}) => {
           ml: '0',
         }}>
         <Flex direction="column" mb="2.5" mt="1.5">
-          {/*<Box*/}
-          {/*  width={w}*/}
-          {/*  height={0.1 * h}*/}
-          {/*  bg="primary.100"*/}
-          {/*  _text={{*/}
-          {/*    color: 'coolGray.800',*/}
-          {/*  }}>*/}
-          {/*<Image*/}
-          {/*  source={require('../image/search.png')}*/}
-          {/*  size={0.12 * w}*/}
-          {/*  alt="map"*/}
-          {/*  ml={0.85 * w}*/}
-          {/*  // backgroundColor="secondary.300"*/}
-          {/*/>*/}
-          <Searchbar />
+          {/*<HStack>*/}
+            <Searchbar />
+          {/*  <VStack my={0.03 * w} space={0}>*/}
+          {/*    <Icon*/}
+          {/*      m="2"*/}
+          {/*      ml="3"*/}
+          {/*      // my={0.05 * w}*/}
+          {/*      // space={4}*/}
+          {/*      size="3xl"*/}
+          {/*      color="gray.400"*/}
+          {/*      as={AntDesign}*/}
+          {/*      name={'scan1'}*/}
+          {/*    />*/}
+          {/*    <Box margin={'auto'}>*/}
+          {/*      <Pressable onPress={navigation.replace('QrCodeScanner')}>*/}
+          {/*        /!*<Link to={{screen: 'QrCodeScanner', initial: false}}>*!/*/}
+          {/*        <Text size={'md'} color={'gray.700'}>*/}
+          {/*          扫码*/}
+          {/*        </Text>*/}
+          {/*      </Pressable>*/}
+          {/*      /!*</Link>*!/*/}
+          {/*    </Box>*/}
+          {/*  </VStack>*/}
+          {/*</HStack>*/}
           {/*</Box>*/}
           <Center
             width={w}

@@ -22,7 +22,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-function AppBar({navigation}) {
+function AppBar({props}) {
+  // console.log("props:", props);
   return (
     <>
       <StatusBar bg="danger.300" barStyle="light-content" />
@@ -70,7 +71,8 @@ function AppBar({navigation}) {
   );
 }
 
-function Header() {
+function Header(props) {
+  console.log("header props:", props);
   return (
     <Center>
       <AppBar />

@@ -21,7 +21,7 @@ const DetailScreen = ({navigation}) => {
   return (
     <>
       <ScrollView mb={0.1 * h}>
-        <Header />
+        <Header info={navigation}/>
         <DetailCard />
       </ScrollView>
       <PurchaseFooter />

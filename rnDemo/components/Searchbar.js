@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   VStack,
   Input,
@@ -11,6 +11,7 @@ import {
   HStack,
   Divider,
   Text,
+  Pressable,
 } from 'native-base';
 import {Ionicons, MaterialIcons} from '@expo/vector-icons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -21,7 +22,9 @@ import {Spacer} from 'native-base/src/components/primitives/Flex';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-function SearchBar() {
+function SearchBar(props) {
+  console.log('search props', props);
+  // const navigation = useState(0);
   return (
     <Center>
       <HStack>
@@ -67,15 +70,13 @@ function SearchBar() {
             as={AntDesign}
             name={'scan1'}
           />
-          <Box margin={"auto"}>
-            <Link
-              to={{screen: 'QrCodeScanner', initial: false}}
-              style={styles.baseText}
-              // _text={{color: '#e5e5e5', size: '20', ml: '100'}}
-            >
+          <Box margin={'auto'}>
+            {/*<Pressable onPress={props.props.replace('QrCodeScanner')}>*/}
+            <Link to={{screen: 'QrCodeScanner', initial: false}}>
               <Text size={'md'} color={'gray.700'}>
                 扫码
               </Text>
+              {/*</Pressable>*/}
             </Link>
           </Box>
         </VStack>
