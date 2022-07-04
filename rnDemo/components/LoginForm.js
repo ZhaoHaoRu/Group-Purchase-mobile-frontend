@@ -14,10 +14,23 @@ import {
   Icon,
   Pressable,
 } from 'native-base';
-import {Link, StackActions} from '@react-navigation/native';
+import {Link} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useState} from 'react';
 
 const LoginForm = ({navigation}) => {
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleLogin = () => {
+    console.log('用户名');
+    console.log('name:', name);
+    console.log('password:', password);
+    console.log('login success!');
+    const data = {userName: name, password: password};
+    console.log('data:', data); // data可以直接发送给后端
+    navigation.replace('TabWrapper');
+  };
   return (
     <Center w="100%" margin="auto">
       <Box safeArea p="2" py="8" w="90%">
@@ -58,12 +71,12 @@ const LoginForm = ({navigation}) => {
         </Stack>
         <VStack space={3} mt="5">
           <FormControl>
-            <FormControl.Label>邮箱账号</FormControl.Label>
-            <Input />
+            <FormControl.Label>用户名称</FormControl.Label>
+            <Input onChangeText={text => setName(text)} />
           </FormControl>
           <FormControl>
             <FormControl.Label>密码</FormControl.Label>
-            <Input type="password" />
+            <Input type="password" onChangeText={text => setPassword(text)} />
             {/*<Link*/}
             {/*  _text={{*/}
             {/*    fontSize: 'xs',*/}
@@ -81,7 +94,7 @@ const LoginForm = ({navigation}) => {
             onPress={
               () => {
                 // navigation.dispatch(StackActions.popToTop());
-                navigation.replace("TabWrapper");
+                handleLogin();
               }
               // navigation.navigate("TabWrapper")}
             }>
@@ -96,7 +109,7 @@ const LoginForm = ({navigation}) => {
               }}>
               我没有账号{' '}
             </Text>
-            <Link to={{screen: "Register", initial: false}}>
+            <Link to={{screen: 'Register', initial: false}}>
               <Text color="danger.800" fontWeight="medium" fontSize="sm">
                 注册
               </Text>

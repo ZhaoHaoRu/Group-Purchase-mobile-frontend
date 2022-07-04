@@ -17,6 +17,22 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const RegisterForm = ({navigation}) => {
+  const [name, setName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [email, setEmail] = React.useState('');
+
+  const handleRegister = () => {
+    console.log('name:', name);
+    console.log('confirmPassword', confirmPassword);
+    console.log('password:', password);
+    if(confirmPassword != password) {alert("两次输入的密码不同！"); return;}
+    console.log('login success!');
+    const data = {userName: name, password: password, email: email};
+    console.log('data:', data); // data可以直接发送给后端
+    navigation.replace('Welcome')
+  };
+
   return (
     <Center w="100%" margin="auto">
       <Box safeArea p="2" w="90%" maxW="290" py="10">
@@ -57,25 +73,25 @@ const RegisterForm = ({navigation}) => {
         </Stack>
         <VStack space={3} mt="5">
           <FormControl>
-            <FormControl.Label>用户名</FormControl.Label>
-            <Input />
+            <FormControl.Label>邮箱</FormControl.Label>
+            <Input onChangeText={text => setEmail(text)}/>
           </FormControl>
           <FormControl>
-            <FormControl.Label>邮箱</FormControl.Label>
-            <Input />
+            <FormControl.Label>用户名</FormControl.Label>
+            <Input onChangeText={text => setName(text)} />
           </FormControl>
           <FormControl>
             <FormControl.Label>密码</FormControl.Label>
-            <Input type="password" />
+            <Input type="password" onChangeText={text => setPassword(text)}/>
           </FormControl>
           <FormControl>
             <FormControl.Label>确认密码</FormControl.Label>
-            <Input type="password" />
+            <Input type="password" onChangeText={text => setConfirmPassword(text)}/>
           </FormControl>
           <Button
             mt="2"
             backgroundColor="danger.600"
-            onPress={() => navigation.replace('Welcome')}>
+            onPress={() => handleRegister()}>
             注册
           </Button>
         </VStack>
