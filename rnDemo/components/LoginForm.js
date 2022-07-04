@@ -12,15 +12,45 @@ import {
   NativeBaseProvider,
   Stack,
   Icon,
+  useToast,
   Pressable,
 } from 'native-base';
 import {Link} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useState} from 'react';
+import {storage} from '../utils/storage';
+import {login} from '../service/userService';
 
 const LoginForm = ({navigation}) => {
   const [name, setName] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const toast = useToast();
+
+  const callback = data => {
+    // console.log('callback get:', data);
+    if (data.status === 1) {
+      // TODO storage的用法
+      storage.save('userId', data.data.userId);
+      // console.log('data.data.userId:', data.data.userId);
+      // storage.load('userId', data => {
+      //   console.log('userID: ', data);
+      // });
+
+      navigation.replace('TabWrapper');
+      // eslint-disable-next-line no-undef
+      toast.show({
+        description: data.message,
+        variant: 'subtle',
+        placement: 'top',
+      });
+    } else {
+      toast.show({
+        description: data.message,
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+  };
 
   const handleLogin = () => {
     console.log('用户名');
@@ -29,8 +59,9 @@ const LoginForm = ({navigation}) => {
     console.log('login success!');
     const data = {userName: name, password: password};
     console.log('data:', data); // data可以直接发送给后端
-    navigation.replace('TabWrapper');
+    login(data, callback);
   };
+
   return (
     <Center w="100%" margin="auto">
       <Box safeArea p="2" py="8" w="90%">

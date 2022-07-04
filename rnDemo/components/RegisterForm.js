@@ -8,10 +8,13 @@ import {
   Button,
   Center,
   Icon,
+  useToast,
   Stack,
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
+import {storage} from '../utils/storage';
+import {register} from '../service/userService';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -21,16 +24,45 @@ const RegisterForm = ({navigation}) => {
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
+  const toast = useToast();
+
+  const callback = data => {
+    console.log('register data:', data);
+    if (data.status === 4) {
+      navigation.replace('Welcome');
+      // eslint-disable-next-line no-undef
+      toast.show({
+        description: data.message,
+        variant: 'outline',
+        colorScheme: 'danger',
+        placement: 'top',
+      });
+    } else {
+      toast.show({
+        description: data.message,
+        variant: 'outline',
+        colorScheme: 'danger',
+        placement: 'top',
+      });
+    }
+  };
 
   const handleRegister = () => {
     console.log('name:', name);
     console.log('confirmPassword', confirmPassword);
     console.log('password:', password);
-    if(confirmPassword != password) {alert("两次输入的密码不同！"); return;}
+    if (confirmPassword != password) {
+      toast.show({
+        description: '两次输入的密码不同！',
+        variant: 'outline',
+        colorScheme: 'danger',
+        placement: 'top',
+      });
+    }
     console.log('login success!');
     const data = {userName: name, password: password, email: email};
     console.log('data:', data); // data可以直接发送给后端
-    navigation.replace('Welcome')
+    register(data, callback);
   };
 
   return (
@@ -74,7 +106,7 @@ const RegisterForm = ({navigation}) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>邮箱</FormControl.Label>
-            <Input onChangeText={text => setEmail(text)}/>
+            <Input onChangeText={text => setEmail(text)} />
           </FormControl>
           <FormControl>
             <FormControl.Label>用户名</FormControl.Label>
@@ -82,11 +114,14 @@ const RegisterForm = ({navigation}) => {
           </FormControl>
           <FormControl>
             <FormControl.Label>密码</FormControl.Label>
-            <Input type="password" onChangeText={text => setPassword(text)}/>
+            <Input type="password" onChangeText={text => setPassword(text)} />
           </FormControl>
           <FormControl>
             <FormControl.Label>确认密码</FormControl.Label>
-            <Input type="password" onChangeText={text => setConfirmPassword(text)}/>
+            <Input
+              type="password"
+              onChangeText={text => setConfirmPassword(text)}
+            />
           </FormControl>
           <Button
             mt="2"

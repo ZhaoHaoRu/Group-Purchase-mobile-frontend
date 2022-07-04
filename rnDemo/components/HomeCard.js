@@ -18,8 +18,8 @@ import {Link} from '@react-navigation/native';
 import DetailScreen from '../screens/DetailScreen';
 
 const HomeCard = ({props}) => {
-  console.log('props:', props);
-  console.log('picture:', props.picture);
+  // console.log('props:', props);
+  // console.log('picture:', props.picture);
   let title = props.groupTitle;
   if (props.groupTitle.length > 4) {
     title = props.groupTitle.substring(0, 4) + '...';

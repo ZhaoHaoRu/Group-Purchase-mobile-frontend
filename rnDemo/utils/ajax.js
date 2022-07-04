@@ -42,3 +42,5 @@ let getRequest = (url, json, callback) => {
       console.log(error);
     });
 };
+
+export {postRequest, getRequest};
