@@ -11,15 +11,24 @@ import {
 import {RNCamera} from 'react-native-camera';
 import ImagePicker from 'react-native-image-crop-picker';
 import LocalBarcodeRecognizer from 'react-native-local-barcode-recognizer';
+import {getCollectedGroups, getGroupById} from '../service/groupService';
+import {storage} from '../utils/storage';
+
 export default class ScannerScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       moveAnim: new Animated.Value(0),
       data: '',
+      group: {},
+      userId: '',
     };
   }
   componentDidMount() {
+    storage.load('userId', data => {
+      this.setState({userId: data});
+      console.log('userId:', data);
+    });
     this.startAnimation();
   }
   startAnimation = () => {
@@ -38,7 +47,6 @@ export default class ScannerScreen extends Component {
       alert('扫描结果:' + data);
       if (data === 'detail') {
         this.setState({data});
-        this.props.navigation.replace('Detail');
       }
     }
   };
@@ -60,11 +68,17 @@ export default class ScannerScreen extends Component {
   }
   recognize = async data => {
     let result = await LocalBarcodeRecognizer.decode(
-        data.replace('data:image/jpeg;base64,', ''),
-        {codeTypes: ['ean13', 'qr']},
+      data.replace('data:image/jpeg;base64,', ''),
+      {codeTypes: ['ean13', 'qr']},
     );
     // alert('识别结果：' + result);
-    this.props.navigation.replace('Detail');
+    getGroupById(parseInt(result), result => {
+      this.setState({group: result.data});
+      this.props.navigation.replace('Detail', {
+        props: this.state.group,
+        userId: this.state.userId,
+      });
+    });
   };
 
   render() {
@@ -101,21 +115,6 @@ export default class ScannerScreen extends Component {
   }
 }
 
-
-// export default function ({navigation}) {
-//   const moveAnim = new Animated.Value(0);
-//   const data = '';
-//
-//   const startAnimation = () => {
-// //     this.state.moveAnim.setValue(0);
-// //     Animated.timing(this.state.moveAnim, {
-// //       toValue: -200,
-// //       duration: 1500,
-// //       easing: Easing.linear,
-// //     }).start(() => this.startAnimation());
-// //   };
-//
-// }
 const styles = StyleSheet.create({
   btnText: {color: 'white', fontSize: 16},
   btnView: {position: 'absolute', right: 30, top: 50},

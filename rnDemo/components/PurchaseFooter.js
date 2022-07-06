@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   Box,
   Text,
@@ -12,13 +12,16 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
 import {Link} from '@react-navigation/native';
+import {getCart} from '../service/orderService';
+import {storage} from '../utils/storage';
+import {getCollectedGroups} from '../service/groupService';
 // 获得屏幕的宽度和高度，便于确定元素的大小，适配不同大小的屏幕
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-export default function PurchaseFooter() {
-  const [selected, setSelected] = React.useState(1);
-  console.log('selected:', selected);
+export default function PurchaseFooter({groupId, userId}) {
+
+  // console.log('PurchaseFooter:', groupId, userId);
   return (
     <Box
       // flex={1}
@@ -38,7 +41,7 @@ export default function PurchaseFooter() {
         w={w}
         padding={3}>
         <Center>
-          <Link to={{screen: '订单', initial: false}}>
+          <Link to={{screen: 'Cart', initial: false, params: {groupId: groupId, userId: userId}}}>
             <Icon
               as={AntDesign}
               name="shoppingcart"
@@ -76,9 +79,7 @@ export default function PurchaseFooter() {
             // mt={0.005 * h}
             // color="danger.800"
           >
-            <Link to={{screen: 'PaymentDetail', initial: false}}>
-              一键开团
-            </Link>
+            <Link to={{screen: 'PaymentDetail', initial: false, params: {groupId: groupId, userId: userId}}}>一键开团</Link>
           </Button>
         </Center>
       </HStack>

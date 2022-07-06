@@ -2183,6 +2183,13 @@
     "@react-aria/ssr" "^3.0.1"
     "@react-aria/utils" "^3.3.0"
 
+"@react-native-async-storage/async-storage@^1.17.7":
+  "integrity" "sha512-mDtWhCcpxzrZhA95f6zi0pnBsjBEZW1LKZWfxVXG0UfaWpPxDBCKowNk2xjRTytckZeVhjmPJPtBU+8QNQcR0A=="
+  "resolved" "https://registry.npmmirror.com/@react-native-async-storage/async-storage/-/async-storage-1.17.7.tgz"
+  "version" "1.17.7"
+  dependencies:
+    "merge-options" "^3.0.4"
+
 "@react-native-community/cli-debugger-ui@^7.0.3":
   "integrity" "sha512-G4SA6jFI0j22o+j+kYP8/7sxzbCDqSp2QiHA/X5E0lsGEd2o9qN2zbIjiFr8b8k+VVAYSUONhoC0+uKuINvmkA=="
   "resolved" "https://registry.npmmirror.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-7.0.3.tgz"
@@ -6333,6 +6340,11 @@
   "resolved" "https://registry.npmmirror.com/is-path-inside/-/is-path-inside-3.0.3.tgz"
   "version" "3.0.3"
 
+"is-plain-obj@^2.1.0":
+  "integrity" "sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA=="
+  "resolved" "https://registry.npmmirror.com/is-plain-obj/-/is-plain-obj-2.1.0.tgz"
+  "version" "2.1.0"
+
 "is-plain-object@^2.0.3", "is-plain-object@^2.0.4":
   "integrity" "sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og=="
   "resolved" "https://registry.npmmirror.com/is-plain-object/-/is-plain-object-2.0.4.tgz"
@@ -7454,6 +7466,13 @@
   "integrity" "sha512-OcjA+jzjOYzKmKS6IQVALHLVz+rNTMPoJvCztFaZxwG14wtAW7VRZjwTQu06vKCYOxh4jVnik7ya0SXTB0W+xA=="
   "resolved" "https://registry.npmmirror.com/memory-cache/-/memory-cache-0.2.0.tgz"
   "version" "0.2.0"
+
+"merge-options@^3.0.4":
+  "integrity" "sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ=="
+  "resolved" "https://registry.npmmirror.com/merge-options/-/merge-options-3.0.4.tgz"
+  "version" "3.0.4"
+  dependencies:
+    "is-plain-obj" "^2.1.0"
 
 "merge-stream@^2.0.0":
   "integrity" "sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w=="
@@ -8992,7 +9011,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.55.4", "react-native@>=0.57", "react-native@>=0.63.4", "react-native@0.68.2":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.69 || 1000.0.0", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.50.0", "react-native@>=0.55.4", "react-native@>=0.57", "react-native@>=0.63.4", "react-native@0.68.2":
   "integrity" "sha512-qNMz+mdIirCEmlrhapAtAG+SWVx6MAiSfCbFNhfHqiqu1xw1OKXdzIrjaBEPihRC2pcORCoCHduHGQe/Pz9Yuw=="
   "resolved" "https://registry.npmmirror.com/react-native/-/react-native-0.68.2.tgz"
   "version" "0.68.2"

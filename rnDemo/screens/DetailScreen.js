@@ -20,16 +20,19 @@ const h = Dimensions.get('window').height;
 
 const DetailScreen = ({route, navigation}) => {
   const {props} = route.params;
-  // console.log('data:', props);
+  const {userId} = route.params;
+  console.log('detail userIddd:', userId);
+  console.log('data:', props);
   return (
     <>
       <ScrollView mb={0.1 * h}>
         <Header />
         <DetailCard
         props={props}
+        userId = {userId}
         />
       </ScrollView>
-      <PurchaseFooter />
+      <PurchaseFooter groupId={props.groupId} userId={userId}/>
     </>
   );
 };

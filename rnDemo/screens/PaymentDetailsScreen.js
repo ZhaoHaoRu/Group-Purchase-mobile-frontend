@@ -18,16 +18,12 @@ import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const PaymentDetailsScreen = ({navigation}) => {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     titleText: 'Delivery method',
-  //     bodyText: ['137 Teaticket Hwy, East Falmouth MA 2536', '0123456789'],
-  //   };
-  // }
-  const titleText = 'Delivery method';
-  const bodyText = ['137 Teaticket Hwy, East Falmouth MA 2536', '0123456789'];
+const PaymentDetailsScreen = ({route, navigation}) => {
+  // const {cart} = route.params;
+  const {groupId} = route.params;
+  const {userId} = route.params;
+  console.log(' groupId:', groupId, ' userId:', userId);
+
 
   return (
     <>
@@ -41,7 +37,7 @@ const PaymentDetailsScreen = ({navigation}) => {
         />
       </Button>
       <ScrollView ml="1" mr="1" flex="1">
-        <DeliveryDetailsList />
+        <DeliveryDetailsList groupId={groupId} userId={userId} />
         <PaymentDetails />
         <Stack
           mb="2.5"

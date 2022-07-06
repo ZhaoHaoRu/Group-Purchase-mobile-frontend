@@ -35,7 +35,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import QrCodeScreen from './screens/QrCodeScreen';
-import QrCodeScannerScreen from './screens/QrCodeScannerScreen';
+import CartScreen from './screens/CartScreen';
 import PaymentDoneScreen from './screens/PaymentDoneScreen';
 import ScannerScreen from './screens/ScannerScreen';
 import PaymentDetails from './components/PaymentDetails';
@@ -172,7 +172,7 @@ export default function App() {
           <Route.Screen name="Login" component={LoginForm} />
           <Route.Screen name="Register" component={RegisterForm} />
           <Route.Screen name="Detail" component={DetailScreen} />
-          {/* <Route.Screen name="Payment" component={PaymentDetailsScreen} /> */}
+          <Route.Screen name="Cart" component={CartScreen} />
           <Route.Screen name="QrCode" component={QrCodeScreen} />
           <Route.Screen name="QrCodeScanner" component={ScannerScreen} />
           <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />

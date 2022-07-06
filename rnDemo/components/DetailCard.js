@@ -17,14 +17,20 @@ import {
   Avatar,
   Button,
   Center,
+  useToast,
 } from 'native-base';
 import {Dimensions} from 'react-native';
+import {timeStamp2String} from '../utils/parseTime';
+import {Link} from '@react-navigation/native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Link} from '@react-navigation/native';
 import Searchbar from './Searchbar';
 import BestSellerCarousel from './BestSellerCarousel';
 import HomeCard from './HomeCard';
+import {storage} from '../utils/storage';
+import {collectGroup} from '../service/groupService';
+import {addToCart} from '../service/orderService';
+
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -81,7 +87,36 @@ const CommentCard = () => {
   );
 };
 
-const GoodsCard = ({item}) => {
+const GoodsCard = ({item, userId, groupId}) => {
+  const toast = useToast();
+  const callback = data => {
+    // console.log('callback data:', data);
+    if (data.status === 1) {
+      toast.show({
+        description: '成功加入购物车',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    } else {
+      toast.show({
+        description: '请重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+  };
+
+  // TODO 这里假设每次只能加入一件物品
+  const onAddToCart = () => {
+    const data = {
+      userId: parseInt(userId),
+      groupId: parseInt(groupId),
+      goodsId: parseInt(item.goodsId),
+      goodsNumber: 1,
+    };
+    // console.log('on add to cart:', data);
+    addToCart(data, callback);
+  };
   return (
     <Box padding={0.01 * w} borderRadius={'md'} backgroundColor={'gray.100'}>
       <HStack alignItems="center" space={3}>
@@ -119,7 +154,8 @@ const GoodsCard = ({item}) => {
               variant="subtle"
               colorScheme="danger"
               mt={0.005 * h}
-              color="danger.800">
+              color="danger.800"
+              onPress={() => onAddToCart()}>
               加入购物车
             </Button>
           </HStack>
@@ -134,16 +170,53 @@ const GoodsCard = ({item}) => {
   );
 };
 
-const DetailCard = ({props}) => {
-  console.log('detailCard:', props);
-  console.log('user:', props.user.userName);
+const DetailCard = ({props, userId}) => {
+  // console.log('detailCard:', props);
+  // console.log('detailCard userId:', userId);
+  // console.log('user:', props.user.userName);
   const tmpName = props.goods[0].goodsName;
+  const startTime = timeStamp2String(props.startTime);
+  console.log('startTime:', startTime);
   const [goodName, setGoodName] = React.useState(props.goods[0].goodsName);
   const [picture, setPicture] = React.useState(props.goods[0].picture);
   const [goodsInfo, setGoodsInfo] = React.useState(props.goods[0].goodsInfo);
   const [price, setPrice] = React.useState(props.goods[0].price.toFixed(2));
   const [liked, setliked] = React.useState(0);
   const [collected, setColleted] = React.useState(0);
+  const toast = useToast();
+
+  const collectCallback = data => {
+    console.log('collectCallback:', data);
+    if (data.status === 0) {
+      if (collected === 0) {
+        setColleted(1);
+        toast.show({
+          description: '收藏成功！',
+          variant: 'subtle',
+          placement: 'top',
+        });
+      } else {
+        setColleted(0);
+        toast.show({
+          description: '取消收藏成功！',
+          variant: 'subtle',
+          placement: 'top',
+        });
+      }
+    } else {
+      toast.show({
+        description: '请重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+  };
+
+  const onCollectGroup = () => {
+    const data = {groupId: parseInt(props.groupId), userId: parseInt(userId)};
+    console.log('collectGroup:', data);
+    collectGroup(data, collectCallback);
+  };
   console.log('picture:', picture);
   console.log('goodsInfo:', goodsInfo);
   return (
@@ -219,9 +292,7 @@ const DetailCard = ({props}) => {
                   }}
                   ml="-0.5"
                   fontWeight="400">
-                  团购开始时间：{props.startTime.month}-{props.startTime.day}{' '}
-                  {props.startTime.hours}:{props.startTime.minutes}:
-                  {props.startTime.seconds}
+                  团购开始时间：{startTime}
                 </Text>
                 <Text
                   fontSize="xs"
@@ -234,7 +305,7 @@ const DetailCard = ({props}) => {
                   fontWeight="500"
                   ml="-0.5"
                   mt="-1">
-                  团购持续时间：{props.duration}
+                  团购持续时间：{props.duration}小时
                 </Text>
               </Stack>
               <VStack space={2} w={0.3 * w}>
@@ -262,20 +333,24 @@ const DetailCard = ({props}) => {
                   {/*  }}*/}
                   {/*/>*/}
                   <Pressable>
-                    {/*<Link to={{screen: 'QrCode', initial: false}}>*/}
-                    <Icon
-                      as={AntDesign}
-                      name="export"
-                      size="lg"
-                      color="danger.400"
-                      _dark={{
-                        color: 'danger.300',
-                      }}
-                      onPress={({navigation}) => navigation.replace('Register')}
-                    />
-                    {/*</Link>*/}
+                    <Link
+                      to={{
+                        screen: 'QrCode',
+                        initial: false,
+                        params: {props: props},
+                      }}>
+                      <Icon
+                        as={AntDesign}
+                        name="export"
+                        size="lg"
+                        color="danger.400"
+                        _dark={{
+                          color: 'danger.300',
+                        }}
+                      />
+                    </Link>
                   </Pressable>
-                  <Pressable onPress={() => setColleted(1)}>
+                  <Pressable onPress={() => onCollectGroup()}>
                     <Icon
                       as={AntDesign}
                       name={collected === 0 ? 'addfolder' : 'folder1'}
@@ -302,47 +377,45 @@ const DetailCard = ({props}) => {
             </HStack>
 
             <Box>
-            <Heading color="danger.600" fontWeight={'normal'} fontSize="18">
-              团购信息
-            </Heading>
-            <Box
-              backgroundColor={'gray.100'}
-              w={0.9 * w}
-              borderRadius={'md'}
-              padding={0.02 * w}>
-              <VStack space={0}>
-                <Text fontWeight="400">
-                  团购开始时间: {props.startTime.month}-{props.startTime.day}{' '}
-                  {props.startTime.hours}:{props.startTime.minutes}:
-                  {props.startTime.seconds}
-                </Text>
-                <Text fontWeight="400" mt={0.02 * h}>
-                  团购持续时间: {props.duration} 小时
-                </Text>
-                <Text fontWeight="400" mt={0.02 * h}>
-                  配送方式: {props.delivery}
-                </Text>
-                <Text fontWeight="400" mt={0.02 * h}>
-                  团购简介: {props.groupInfo}
-                </Text>
-              </VStack>
-            </Box>
+              <Heading color="danger.600" fontWeight={'normal'} fontSize="18">
+                团购信息
+              </Heading>
+              <Box
+                backgroundColor={'gray.100'}
+                w={0.9 * w}
+                borderRadius={'md'}
+                padding={0.02 * w}>
+                <VStack space={0}>
+                  <Text fontWeight="400">团购开始时间: {startTime}</Text>
+                  <Text fontWeight="400" mt={0.02 * h}>
+                    团购持续时间: {props.duration} 小时
+                  </Text>
+                  <Text fontWeight="400" mt={0.02 * h}>
+                    配送方式: {props.delivery}
+                  </Text>
+                  <Text fontWeight="400" mt={0.02 * h}>
+                    团购简介: {props.groupInfo}
+                  </Text>
+                </VStack>
+              </Box>
             </Box>
             <Box>
-            <Heading
-              color="danger.600"
-              fontWeight={'normal'}
-              fontSize="18">
-              商品
-            </Heading>
-            <FlatList
-              data={props.goods}
-              renderItem={({item}) =>
+              <Heading color="danger.600" fontWeight={'normal'} fontSize="18">
+                商品
+              </Heading>
+              <FlatList
+                data={props.goods}
+                renderItem={({item}) => (
                   <Box mt={0.01 * h}>
-                  <GoodsCard item={item} />
-                  </Box>}
-              keyExtractor={item => item.goodsId}
-            />
+                    <GoodsCard
+                      item={item}
+                      userId={userId}
+                      groupId={props.groupId}
+                    />
+                  </Box>
+                )}
+                keyExtractor={item => item.goodsId}
+              />
             </Box>
             <HStack
               alignItems="center"

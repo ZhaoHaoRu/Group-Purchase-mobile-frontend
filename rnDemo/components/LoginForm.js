@@ -14,7 +14,8 @@ import {
   Icon,
   useToast,
   Pressable,
-} from 'native-base';
+} from 'native-base'
+import {AsyncStorage} from 'react-native';
 import {Link} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useState} from 'react';
@@ -32,9 +33,9 @@ const LoginForm = ({navigation}) => {
       // TODO storage的用法
       storage.save('userId', data.data.userId);
       // console.log('data.data.userId:', data.data.userId);
-      // storage.load('userId', data => {
-      //   console.log('userID: ', data);
-      // });
+      storage.load('userId', data => {
+        console.log('userID: ', data);
+      });
 
       navigation.replace('TabWrapper');
       // eslint-disable-next-line no-undef
