@@ -6,21 +6,31 @@ import {Link} from '@react-navigation/native';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const BrowseCard = () => {
+const BrowseCard = ({props, userId}) => {
+  console.log('browseCard:', props, 'and userId: ', userId);
+  let title = props.groupTitle;
+  if (props.groupTitle.length > 9) {
+    title = props.groupTitle.substring(0, 9) + '...';
+  }
   return (
-    <Box width={0.45 * w} direction="column" margin={0.01 * w} height={0.4 * w}>
+    <Box width={0.47 * w} direction="column" margin={0.01 * w} height={0.4 * w}>
       <AspectRatio w="100%" ratio={{base: 4 / 3, md: 4 / 3}}>
         <Image
           source={{
-            uri: 'https://img.zcool.cn/community/01dec05680a3f26ac7251bb6972995.jpg@1280w_1l_2o_100sh.jpg',
+              uri: props.picture,
           }}
           alt="image"
           borderRadius="lg"
         />
       </AspectRatio>
-      <Link to={{screen: 'Detail', initial: false}}>
+      <Link
+        to={{
+          screen: 'Detail',
+          initial: false,
+          params: {props: props, userId: userId},
+        }}>
         <Text mt={0.02 * w} color="#71717a" bold size="xl">
-          团购名称
+          {title}
         </Text>
       </Link>
     </Box>

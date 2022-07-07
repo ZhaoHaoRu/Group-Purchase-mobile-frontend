@@ -10,12 +10,23 @@ export const getCollectedGroups = (data, callback) => {
 
 export const getGroupById = (data, callback) => {
   const url = `${config.backendUrl}/group/getGroupById?id=${data}`;
-  console.log('getGroupById data:', data);
+  // console.log('getGroupById data:', data);
   getRequest(url, data, callback);
 };
 
 export const collectGroup = (data, callback) => {
   const url = `${config.backendUrl}/group/collectGroup?userId=${data.userId}&groupId=${data.groupId}`;
-  console.log('collectGroup data:', data);
+  // console.log('collectGroup data:', data);
+  postRequest(url, data, callback);
+};
+
+export const getGroupByTag = (data, callback) => {
+  const url = `${config.backendUrl}/group/getGroupByTag?tag=${data.tag}`;
+  console.log('getGroupByTag data:', data);
+  postRequest(url, data, callback);
+};
+
+export const getAllGroup = (data, callback) => {
+  const url = `${config.backendUrl}/group/getAllGroups`;
   postRequest(url, data, callback);
 };

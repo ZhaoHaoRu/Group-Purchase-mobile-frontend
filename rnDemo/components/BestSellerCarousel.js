@@ -2,7 +2,8 @@ import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import * as React from 'react';
 import {Text, View, Dimensions, StyleSheet} from 'react-native';
 import {Box} from 'native-base';
-import {HStack} from 'native-base';
+import {timeStampToDay} from '../utils/parseTime';
+
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -52,6 +53,8 @@ class BestSellerCarousel extends React.Component {
   }
 
   render() {
+    const nowDate = new Date().getTime();
+    const dateString = timeStampToDay(nowDate);
     return (
       <View style={styles.carousel_container}>
         <Box ml={0.1 * w}>
@@ -66,7 +69,7 @@ class BestSellerCarousel extends React.Component {
           hasParallaxImages={true}
         />
         <Box ml={0.1 * w} width={w}>
-          <Text style={styles.date}>今日日期</Text>
+          <Text style={styles.date}>{dateString}</Text>
         </Box>
       </View>
     );

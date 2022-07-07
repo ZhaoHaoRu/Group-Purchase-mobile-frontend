@@ -29,8 +29,6 @@ const HomeCard = ({props, userId}) => {
   if (storeName.length > 6) {
     storeName = props.user.userName.substring(0, 6) + '...';
   }
-
-  const screen = {Detail: <DetailScreen />};
   return (
     <Box
       alignItems="center"

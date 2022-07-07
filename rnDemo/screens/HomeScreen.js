@@ -1,17 +1,29 @@
 import React, {Component, useState} from 'react';
 import {Dimensions} from 'react-native';
-import {Center, ScrollView, Flex, FlatList} from 'native-base';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Footer from '../components/Footer';
+import {
+  Center,
+  ScrollView,
+  Flex,
+  FlatList,
+  HStack,
+  VStack,
+  Box,
+  Divider,
+  Input,
+  Icon,
+  Text,
+  Select,
+  CheckIcon,
+} from 'native-base';
 import BestSellerCarousel from '../components/BestSellerCarousel';
 import HomeCard from '../components/HomeCard';
-import Searchbar from '../components/Searchbar';
-import DetailScreen from './DetailScreen';
 import {storage} from '../utils/storage';
-import {AsyncStorage} from 'react-native';
+import {sortByKeyReverse, sortByKey} from '../utils/sort';
 import {getCollectedGroups} from '../service/groupService';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LogBox} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Link} from '@react-navigation/native';
 
 // 忽略版本报错信息
 LogBox.ignoreLogs([
@@ -23,23 +35,19 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const HomeScreen = ({navigation}) => {
-  // React.useEffect(() => {
-  //   navigation.dispatch(StackActions.popToTop());
-  //   navigation.replace('TabWrapper');
-  // }, [navigation]);
   // TODO 修改接口后内容也也要有所修改
   const [groups, setGroups] = useState([]);
   const [Id, setId] = useState(0);
+  const [groupAfterFiltrated, setGroupAfterFiltrated] = useState([]);
+  let [service, setService] = React.useState('');
+  const [searchInput, setSearchInput] = useState('');
   const callback = data => {
-    // console.log('group data:', data);
     if (data.status === 0) {
       setGroups(data.data);
-      // console.log('groups:', groups);
-      // console.log('groups length: ', groups.length);
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // 获取当前用户
   React.useEffect(() => {
     storage.load('userId', data => {
       setId(data);
@@ -49,74 +57,223 @@ const HomeScreen = ({navigation}) => {
     });
   }, []);
 
-  // console.log('groups:', groups);
+  // 对于团购的内容进行搜索过滤,基于团长或者是团购名称
+  const searchItems = searchValue => {
+    // console.log('searchValue:', searchValue);
+    setSearchInput(searchValue);
+    // console.log('searchInput:', searchInput);
+    if (searchValue !== '') {
+      let filteredData = [];
+      groups.forEach(group => {
+        // console.log(
+        //   'debug: ',
+        //   group.groupTitle.indexOf(searchInput),
+        //   group.groupTitle,
+        // );
+        if (
+          group.groupTitle.indexOf(searchValue) === -1 &&
+          group.user.userName.indexOf(searchValue) === -1
+        ) {
+          // console.log('group.groupTitle:', group.groupTitle);
+          return;
+        }
+        filteredData.push(group);
+      });
+      setGroupAfterFiltrated(filteredData);
+    } else {
+      // console.log('get here!');
+      setGroupAfterFiltrated(groups);
+    }
+  };
+
+  // 对于团购的内容进行过滤
+  const sortGroup = data => {
+    console.log('get here!');
+    if (data === 'timeOrder') {
+      setGroups(sortByKey(groups, 'startTime'));
+      setGroupAfterFiltrated(sortByKey(groupAfterFiltrated, 'startTime'));
+    } else if (data === 'timeReverseOrder') {
+      setGroups(sortByKeyReverse(groups, 'startTime'));
+      setGroupAfterFiltrated(
+        sortByKeyReverse(groupAfterFiltrated, 'startTime'),
+      );
+    } else if (data === 'groupName') {
+      setGroups(sortByKeyReverse(groups, 'groupTitle'));
+      setGroupAfterFiltrated(
+        sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
+      );
+    }
+  };
+
   if (groups != []) {
-    // console.log('groups:', groups);
+    // console.log('after search array:', groupAfterFiltrated.length);
     return (
       <>
-        {/*<ScrollView*/}
-        {/*  width="100%"*/}
-        {/*  height={0.95 * h}*/}
-        {/*  // mb={0.1 * h}*/}
-        {/*  _contentContainerStyle={{*/}
-        {/*    mt: '1%',*/}
-        {/*    mb: '50px',*/}
-        {/*    mr: '0',*/}
-        {/*    ml: '0',*/}
-        {/*  }}>*/}
+        <Center>
+          <HStack>
+            <VStack
+              my={0.05 * w}
+              space={4}
+              w="80%"
+              ml={0.03 * w}
+              divider={
+                <Box px="2">
+                  <Divider />
+                </Box>
+              }>
+              <VStack w="100%" space={5} alignSelf="center">
+                <Input
+                  placeholder="按团长\商品名称进行查找"
+                  width="100%"
+                  borderRadius="4"
+                  // py="3"
+                  // px="1"
+                  fontSize="14"
+                  InputLeftElement={
+                    <Icon
+                      m="2"
+                      ml="3"
+                      size="6"
+                      color="gray.400"
+                      as={AntDesign}
+                      name={'search1'}
+                    />
+                  }
+                  onChangeText={text => {
+                    setSearchInput(text);
+                    searchItems(text);
+                  }}
+                />
+              </VStack>
+            </VStack>
+            <VStack my={0.03 * w} space={0}>
+              <Icon
+                m="2"
+                ml="3"
+                // my={0.05 * w}
+                // space={4}
+                size="3xl"
+                color="gray.400"
+                as={AntDesign}
+                name={'scan1'}
+              />
+              <Box margin={'auto'}>
+                <Link to={{screen: 'QrCodeScanner', initial: false}}>
+                  <Text size={'md'} color={'gray.700'}>
+                    扫码
+                  </Text>
+                </Link>
+              </Box>
+            </VStack>
+          </HStack>
+        </Center>
         <Flex
           direction="column"
           // mb="2.5" mt="1.5"
         >
-          {/*<Searchbar />*/}
-          {/*<Center*/}
-          {/*  width={w}*/}
-          {/*  height={0.35 * h}*/}
-          {/*  _text={{*/}
-          {/*    color: 'coolGray.800',*/}
-          {/*  }}*/}
-          {/*  mt={0.05 * h}>*/}
-          {/*  <BestSellerCarousel />*/}
-          {/*</Center>*/}
           <Center width={w}>
-            {/*/!*<Link to={{screen: 'Detail'}}>*!/*/}
-            {/*<HomeCard />*/}
-            {/*/!*</Link>*!/*/}
-            {/*<HomeCard />*/}
-            {/*<HomeCard />*/}
-            {/*<HomeCard />*/}
-            {/*<HomeCard />*/}
-            <FlatList
-              ListHeaderComponent={
-                <>
-                  <Searchbar />
-                  <Center
-                    width={w}
-                    height={0.35 * h}
-                    _text={{
-                      color: 'coolGray.800',
-                    }}
-                    mt={0.05 * h}>
-                    <BestSellerCarousel />
-                  </Center>
-                </>
-              }
-              data={groups}
-              renderItem={({item}) => <HomeCard props={item} userId={Id} />}
-              keyExtractor={item => item.groupId}
-            />
+            {searchInput.length >= 1 ? (
+              <FlatList
+                ListHeaderComponent={
+                  <>
+                    {/*SearchBar的部分*/}
+
+                    <Center
+                      width={w}
+                      height={0.35 * h}
+                      _text={{
+                        color: 'coolGray.800',
+                      }}
+                      mt={0.05 * h}>
+                      <BestSellerCarousel />
+                      {/*根据时间顺序和逆序排序*/}
+                      <Box backgroundColor={'pink.100'} h={'auto'}>
+                        <Select
+                          selectedValue={service}
+                          width={0.05 * h}
+                          accessibilityLabel="默认"
+                          placeholder="默认"
+                          _selectedItem={{
+                            bg: 'danger.600',
+                            endIcon: <CheckIcon size="5" />,
+                          }}
+                          ml={-0.5 * w}
+                          mt={1}
+                          onValueChange={itemValue => console.log(itemValue)}>
+                          <Select.Item
+                            key="1"
+                            label="1"
+                            value="timeOrder"
+                          />
+                          <Select.Item
+                            key="2"
+                            label="2"
+                            value="timeReverseOrder"
+                          />
+                          <Select.Item
+                            key="3"
+                            label="3"
+                            value="groupName"
+                          />
+                        </Select>
+                      </Box>
+                    </Center>
+                  </>
+                }
+                ListFooterComponent={<Box h={0.15 * h} />}
+                // data={groups}
+                data={groupAfterFiltrated}
+                renderItem={({item}) => <HomeCard props={item} userId={Id} />}
+                keyExtractor={item => item.groupId}
+              />
+            ) : (
+              <FlatList
+                ListHeaderComponent={
+                  <>
+                    <Center
+                      width={w}
+                      height={0.4 * h}
+                      _text={{
+                        color: 'coolGray.800',
+                      }}
+                      mt={0.05 * h}>
+                      <BestSellerCarousel />
+                      <Box ml={0.6 * w} h={'auto'} w={0.35 * w} mt={-0.04 * h}>
+                        <Select
+                          selectedValue={service}
+                          width={0.32 * w}
+                          fontSize={'2xs'}
+                          height={0.04 * h}
+                          accessibilityLabel="默认"
+                          placeholder="默认"
+                          _selectedItem={{
+                            bg: 'danger.200',
+                            endIcon: <CheckIcon size="1" />,
+                          }}
+                          onValueChange={itemValue => sortGroup(itemValue)}>
+                          <Select.Item label="按时间顺序" value="timeOrder" />
+                          <Select.Item
+                            label="按时间逆序"
+                            value="timeReverseOrder"
+                          />
+                          <Select.Item label="按团购名称" value="groupName" />
+                        </Select>
+                      </Box>
+                    </Center>
+                  </>
+                }
+                ListFooterComponent={<Box h={0.15 * h} />}
+                data={groups}
+                // data={groupAfterFiltrated}
+                renderItem={({item}) => <HomeCard props={item} userId={Id} />}
+                keyExtractor={item => item.groupId}
+              />
+            )}
           </Center>
         </Flex>
-        {/*</ScrollView>*/}
-        {/*<Footer />*/}
       </>
     );
   }
-  // } else {
-  //     // return(
-  //     //
-  //     // );
-  // }
 };
 
 export default HomeScreenWrapper;
@@ -133,24 +290,6 @@ export function HomeScreenWrapper() {
         options={{headerShown: false}}
       />
     </HomeWrapper.Navigator>
-  );
-  return navigationContainer;
-}
-
-export function HomeScreenRoute() {
-  let navigationContainer = (
-    <StackNav.Navigator screenOptions={{headerShown: false}}>
-      <StackNav.Screen
-        name="TrueHome"
-        component={HomeScreenWrapper}
-        options={{headerShown: false}}
-      />
-      <StackNav.Screen
-        name="Detail"
-        component={DetailScreen}
-        options={{headerShown: false}}
-      />
-    </StackNav.Navigator>
   );
   return navigationContainer;
 }

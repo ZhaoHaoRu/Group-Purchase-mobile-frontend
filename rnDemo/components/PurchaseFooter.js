@@ -20,6 +20,13 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 export default function PurchaseFooter({groupId, userId}) {
+  const defaultAddress = {
+    addressId: 0,
+    location: '',
+    phone: '',
+    receiver: '',
+    region: '',
+  };
 
   // console.log('PurchaseFooter:', groupId, userId);
   return (
@@ -41,7 +48,12 @@ export default function PurchaseFooter({groupId, userId}) {
         w={w}
         padding={3}>
         <Center>
-          <Link to={{screen: 'Cart', initial: false, params: {groupId: groupId, userId: userId}}}>
+          <Link
+            to={{
+              screen: 'Cart',
+              initial: false,
+              params: {groupId: groupId, userId: userId},
+            }}>
             <Icon
               as={AntDesign}
               name="shoppingcart"
@@ -79,7 +91,18 @@ export default function PurchaseFooter({groupId, userId}) {
             // mt={0.005 * h}
             // color="danger.800"
           >
-            <Link to={{screen: 'PaymentDetail', initial: false, params: {groupId: groupId, userId: userId}}}>一键开团</Link>
+            <Link
+              to={{
+                screen: 'PaymentDetail',
+                initial: false,
+                params: {
+                  groupId: groupId,
+                  userId: userId,
+                  address: defaultAddress,
+                },
+              }}>
+              一键开团
+            </Link>
           </Button>
         </Center>
       </HStack>

@@ -7,16 +7,6 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
 import {extendTheme, NativeBaseProvider} from 'native-base';
 import Footer from './components/Footer';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -35,6 +25,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import QrCodeScreen from './screens/QrCodeScreen';
+import DeliveryInfoScreen from './screens/DeliveryInfoScreen';
 import CartScreen from './screens/CartScreen';
 import PaymentDoneScreen from './screens/PaymentDoneScreen';
 import ScannerScreen from './screens/ScannerScreen';
@@ -143,24 +134,6 @@ export function TabWrapper() {
   );
 }
 
-// export function UserStackWrapper() {
-//   return (
-//     <Stack.Navigator
-//       initialRouteName="Welcome"
-//       screenOptions={{headerShown: false}}>
-//       <Stack.Screen name="Welcome" component={WelcomeScreen} />
-//       <Stack.Screen name="Login" component={LoginForm} />
-//       <Stack.Screen name="Register" component={RegisterForm} />
-//       <Stack.Screen name="Detail" component={DetailScreen} />
-//       <Stack.Screen
-//         name="TabWrapper"
-//         component={TabWrapper}
-//         options={{headerShown: false}}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
-
 export default function App() {
   return (
     <NativeBaseProvider>
@@ -173,15 +146,11 @@ export default function App() {
           <Route.Screen name="Register" component={RegisterForm} />
           <Route.Screen name="Detail" component={DetailScreen} />
           <Route.Screen name="Cart" component={CartScreen} />
+          <Route.Screen name="Address" component={DeliveryInfoScreen} />
           <Route.Screen name="QrCode" component={QrCodeScreen} />
           <Route.Screen name="QrCodeScanner" component={ScannerScreen} />
           <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />
           <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
-          {/*<Route.Screen*/}
-          {/*  name="WelcomeSys"*/}
-          {/*  component={UserStackWrapper}*/}
-          {/*  options={{headerShown: false}}*/}
-          {/*/>*/}
           <Route.Screen
             name="TabWrapper"
             component={TabWrapper}
