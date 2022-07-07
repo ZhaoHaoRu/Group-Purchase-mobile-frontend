@@ -86,9 +86,10 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  // 对于团购的内容进行过滤
+  // 对于团购的内容进行排序
   const sortGroup = data => {
     console.log('get here!');
+    setService(data);
     if (data === 'timeOrder') {
       setGroups(sortByKey(groups, 'startTime'));
       setGroupAfterFiltrated(sortByKey(groupAfterFiltrated, 'startTime'));
@@ -251,12 +252,12 @@ const HomeScreen = ({navigation}) => {
                             endIcon: <CheckIcon size="1" />,
                           }}
                           onValueChange={itemValue => sortGroup(itemValue)}>
-                          <Select.Item label="按时间顺序" value="timeOrder" />
+                          <Select.Item label="按时间升序" value="timeOrder" />
                           <Select.Item
-                            label="按时间逆序"
+                            label="按时间降序"
                             value="timeReverseOrder"
                           />
-                          <Select.Item label="按团购名称" value="groupName" />
+                          <Select.Item label="按名称升序" value="groupName" />
                         </Select>
                       </Box>
                     </Center>
