@@ -15,7 +15,7 @@ import DetailScreen from './screens/DetailScreen';
 import PaymentDetailsScreen from './screens/PaymentDetailsScreen';
 import {Icon} from 'native-base';
 import BrowseScreen from './screens/BrowseScreen';
-import MyProfileScreen from './screens/MyProfileScreen';
+import MyProfileScreenRoute from './screens/MyProfileScreen';
 import OrderScreen from './screens/OrderScreen';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
@@ -31,6 +31,11 @@ import PaymentDoneScreen from './screens/PaymentDoneScreen';
 import ScannerScreen from './screens/ScannerScreen';
 import PaymentDetails from './components/PaymentDetails';
 import {LogBox} from 'react-native';
+import OrderDetailScreen from './screens/OrderDetailScreen';
+import Wallet from './components/Wallet';
+import EditGroupDetails from './components/EditGroupDetails';
+import AdminOrderList from './components/AdminOrderList';
+import AdminGroupList from './components/AdminGroupList';
 
 LogBox.ignoreLogs([
   'ViewPropTypes will be removed',
@@ -127,7 +132,7 @@ export function TabWrapper() {
       />
       <Tab.Screen
         name="个人"
-        component={MyProfileScreen}
+        component={MyProfileScreenRoute}
         options={{headerShown: false}}
       />
     </Tab.Navigator>
@@ -151,6 +156,11 @@ export default function App() {
           <Route.Screen name="QrCodeScanner" component={ScannerScreen} />
           <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />
           <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
+          <Route.Screen name="OrderDetail" component={OrderDetailScreen} />
+          {/*<Route.Screen name="Wallet" component={Wallet} />*/}
+          {/*<Route.Screen name="EditGroupDetails" component={EditGroupDetails} />*/}
+          {/*<Route.Screen name="AdminOrderList" component={AdminOrderList} />*/}
+          {/*<Route.Screen name="AdminGroupList" component={AdminGroupList} />*/}
           <Route.Screen
             name="TabWrapper"
             component={TabWrapper}

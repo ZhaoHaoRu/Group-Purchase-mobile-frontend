@@ -14,12 +14,21 @@ import {
   Button,
   Pressable,
 } from 'native-base';
+import {Link} from '@react-navigation/native';
 
-const ProfileFuncRow1 = () => {
+const ProfileFuncRow1 = ({userId}) => {
   return (
     <Box bg={'#fff'} mb={2}>
       <HStack justifyContent="space-between" mt={2}>
-        <Pressable py="3" flex={1} alignItems="center">
+        <Pressable
+          py="3"
+          flex={1}
+          alignItems="center"
+          // onPress={() => {
+          //   navigation.replace('Wallet');
+          //   // this.props.navigate('Wallet');
+          // }}
+        >
           <Image
             mb="5%"
             opacity={0.4}
@@ -27,7 +36,9 @@ const ProfileFuncRow1 = () => {
             size="30px"
             alt="wallet"
           />
-          <Text fontSize="xs">钱包</Text>
+          <Link to={{screen: 'Wallet', initial: false, params:{userId:userId}}}>
+            <Text fontSize="xs">钱包</Text>
+          </Link>
         </Pressable>
         <Divider
           bg="darkText"

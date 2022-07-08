@@ -16,10 +16,9 @@ import {getAddress} from '../service/userService';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-export default function DeliveryInfoScreen({route, navigation}) {
+export default function ProfileAddressScreen({route, navigation}) {
   const toast = useToast();
   const {userId} = route.params;
-  const {groupId} = route.params;
   const [addresses, setAddresses] = useState([]);
   const addressCallback = data => {
     // console.log('addressCallback:', data);
@@ -72,55 +71,40 @@ export default function DeliveryInfoScreen({route, navigation}) {
                 pl="4"
                 pr="5"
                 py="2">
-                <HStack space={3} justifyContent="space-around">
-                  <VStack w={0.7 * w}>
-                    <Text
-                      _dark={{
-                        color: 'warmGray.50',
-                      }}
-                      color="coolGray.800"
-                      width="90%"
-                      paddingTop={0.01 * h}
-                      bold>
-                      收货地址：{item.region} {item.location}
-                    </Text>
-                    <Text
-                      fontSize="xs"
-                      color="coolGray.600"
-                      paddingTop={3}
-                      width={'80%'}
-                      numberOfLines={1}
-                      _dark={{
-                        color: 'warmGray.200',
-                      }}>
-                      电话：{item.phone}
-                    </Text>
-                    <Text
-                      fontSize="xs"
-                      color="coolGray.600"
-                      paddingBottom={3}
-                      width={'80%'}
-                      numberOfLines={1}
-                      _dark={{
-                        color: 'danger.500',
-                      }}>
-                      收件人：{item.receiver}
-                    </Text>
-                  </VStack>
-                  <Button
-                    w={0.19 * w}
-                    backgroundColor={'transparent'}
-                    onPress={() => {
-                      /* 1. Navigate to the Details route with params */
-                      navigation.navigate('PaymentDetail', {
-                        groupId: groupId,
-                        userId: userId,
-                        address: item,
-                      });
+                <VStack w={0.9 * w}>
+                  <Text
+                    _dark={{
+                      color: 'warmGray.50',
+                    }}
+                    color="coolGray.800"
+                    width="90%"
+                    paddingTop={0.01 * h}
+                    bold>
+                    收货地址：{item.region} {item.location}
+                  </Text>
+                  <Text
+                    fontSize="xs"
+                    color="coolGray.600"
+                    paddingTop={3}
+                    width={'80%'}
+                    numberOfLines={1}
+                    _dark={{
+                      color: 'warmGray.200',
                     }}>
-                    <Text color={'gray.700'}>应用</Text>
-                  </Button>
-                </HStack>
+                    电话：{item.phone}
+                  </Text>
+                  <Text
+                    fontSize="xs"
+                    color="coolGray.600"
+                    paddingBottom={3}
+                    width={'80%'}
+                    numberOfLines={1}
+                    _dark={{
+                      color: 'danger.500',
+                    }}>
+                    收件人：{item.receiver}
+                  </Text>
+                </VStack>
               </Box>
             </Box>
           )}

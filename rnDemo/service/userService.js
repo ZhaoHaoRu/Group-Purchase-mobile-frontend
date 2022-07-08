@@ -24,3 +24,15 @@ export const setAddress = (data, callback) => {
   const url = `${config.backendUrl}/user/setNewAddress?userId=${data.userId}&receiver=${data.receiver}&phone=${data.phone}&region=${data.region}&location=${data.location}`;
   getRequest(url, data, callback);
 };
+
+export const getUserById = (data, callback) => {
+  const url = `${config.backendUrl}/user/getUserById?id=${data.userId}`;
+  // console.log("getUerByID:" , url, data);
+  getRequest(url, data, callback);
+};
+
+export const getCreatedGroup = (data, callback) => {
+  const url = `${config.backendUrl}/user/getCreatedGroup?userId=${data.userId}`;
+  console.log("getCreatedGroup:", url);
+  getRequest(url, data, callback);
+}

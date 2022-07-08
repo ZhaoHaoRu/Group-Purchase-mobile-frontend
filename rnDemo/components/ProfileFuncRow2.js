@@ -1,5 +1,5 @@
 import {View, Dimensions} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Text,
@@ -13,38 +13,224 @@ import {
   Spacer,
 } from 'native-base';
 import {Link} from '@react-navigation/native';
+import {useEffect} from 'react';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const ProfileFuncRow2 = ({navigation}) => {
+// 团长功能
+const AdminOptions = ({userId}) => {
+  return (
+    <>
+      <Pressable py="3" flex={1} alignItems="center">
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/script.png')}
+          size="30px"
+          alt="feedback"
+        />
+        <Link to={{screen: 'AdminOrderList', initial: false}}>
+          <Text fontSize="xs">订单管理</Text>
+        </Link>
+      </Pressable>
+
+      <Pressable py="3" flex={1} alignItems="center">
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/group.png')}
+          size="30px"
+          alt="delivery"
+        />
+        <Link to={{screen: 'AdminGroupList', initial: false, params:{userId: userId}}}>
+          <Text fontSize="xs">团购管理</Text>
+        </Link>
+        {/* <Text fontSize="xs">配送地址</Text> */}
+      </Pressable>
+
+      <Pressable
+        py="3"
+        flex={1}
+        alignItems="center"
+        /*onPress={() => navigation.replace('QrCodeScanner')}*/
+      >
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/qrscan.png')}
+          size="30px"
+          alt="refresh"
+        />
+        <Link to={{screen: 'QrCodeScanner', initial: false}}>
+          <Text fontSize="xs">扫码</Text>
+        </Link>
+      </Pressable>
+
+      <Pressable py="3" flex={1} alignItems="center">
+        {/* <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/location.png')}
+          size="30px"
+          alt="address"
+        />
+        <Link to={{screen: 'AdminGroupList', initial: false}}>
+        <Text fontSize="xs">收货地址</Text>
+        </Link> */}
+      </Pressable>
+    </>
+  );
+};
+
+// 团员功能
+const UserOptions = ({userId}) => {
+  return (
+    <>
+      <Pressable py="3" flex={1} alignItems="center">
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/location.png')}
+          size="30px"
+          alt="address"
+        />
+        <Link
+          to={{
+            screen: 'ProfileAddress',
+            initial: false,
+            params: {userId: userId},
+          }}>
+          <Text fontSize="xs">收货地址</Text>
+        </Link>
+      </Pressable>
+
+      <Pressable
+        py="3"
+        flex={1}
+        alignItems="center"
+        /*onPress={() => navigation.replace('QrCodeScanner')}*/
+      >
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/qrscan.png')}
+          size="30px"
+          alt="refresh"
+        />
+        <Link to={{screen: 'QrCodeScanner', initial: false}}>
+          <Text fontSize="xs">扫码</Text>
+        </Link>
+      </Pressable>
+
+      <Pressable py="3" flex={1} alignItems="center">
+        {/* <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/inbox.png')}
+          size="30px"
+          alt="feedback"
+        />
+        <Link to={{screen: 'AdminOrderList', initial: false}}>
+          <Text fontSize="xs">订单管理</Text>
+        </Link> */}
+      </Pressable>
+
+      <Pressable py="3" flex={1} alignItems="center">
+        {/* <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/script.png')}
+          size="30px"
+          alt="delivery"
+        />
+        <Link to={{screen: 'AdminGroupList', initial: false}}>
+          <Text fontSize="xs">团购管理</Text>
+        </Link> */}
+      </Pressable>
+    </>
+  );
+};
+
+const ProfileFuncRow2 = ({userId}) => {
+  const [option, setOption] = useState(1);
+  const [hint, setHint] = useState('切换团长功能');
+  const [title, setTitle] = useState('团员功能');
+
+  // 切换团长/团员功能
+  const changeOption = () => {
+    setOption(prevOption => prevOption * -1);
+    // console.log('checking', option);
+  };
+
+  const applyOption = () => {
+    // console.log("here0")
+    if (option === 1) {
+      // console.log('here1');
+      return <UserOptions userId={userId} />;
+    } else if (option === -1) {
+      return <AdminOptions userId={userId} />;
+    }
+  };
+
+  const changeHintOption = () => {
+    if (option === 1) {
+      // console.log('here1');
+      setHint('切换团员功能');
+    } else if (option === -1) {
+      setHint('切换团长功能');
+    }
+  };
+
+  const changeOptionTitle = () => {
+    if (option === 1) {
+      // console.log('here1');
+      setTitle('团长功能');
+    } else if (option === -1) {
+      setTitle('团员功能');
+    }
+  };
+
+  useEffect(() => {
+    // console.log('checking2', option);
+  });
+
   return (
     <View>
       <VStack>
         <Box bg={'#fff'} mb={2}>
           <HStack>
             <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
-              团员功能
+              {title}
             </Heading>
             <Spacer />
             <Box mr="4" alignSelf={'center'}>
               <Center>
                 <HStack>
-                  <Heading
-                    fontSize="11"
-                    ml="4"
-                    mt="4"
-                    // mr="4"
-                    alignSelf={'center'}
-                    opacity={0.4}>
-                    切换团长功能
-                  </Heading>
+                  <Pressable
+                    onPress={() => {
+                      changeOption();
+                      changeHintOption();
+                      changeOptionTitle();
+                      // console.log('pressed');
+                    }}>
+                    <Heading
+                      fontSize="11"
+                      ml="4"
+                      mt="4"
+                      // mr="4"
+                      alignSelf={'center'}
+                      opacity={0.4}>
+                      {/* 切换团长功能 */}
+                      {hint}
+                    </Heading>
+                  </Pressable>
                   <Image
                     mt="15%"
                     opacity={0.3}
                     source={require('../image/arrowR.png')}
                     size="18px"
-                    alt="arrpwR"
+                    alt="arrowR"
                   />
                 </HStack>
               </Center>
@@ -64,55 +250,8 @@ const ProfileFuncRow2 = ({navigation}) => {
           />
           <Box bg={'#fff'} mb={2}>
             <HStack justifyContent="space-between" mt={1}>
-              <Pressable py="3" flex={1} alignItems="center">
-                <Image
-                  mb="5%"
-                  opacity={0.5}
-                  source={require('../image/script.png')}
-                  size="30px"
-                  alt="address"
-                />
-                <Text fontSize="xs">收货地址</Text>
-              </Pressable>
-
-              <Pressable py="3" flex={1} alignItems="center">
-                <Image
-                  mb="5%"
-                  opacity={0.5}
-                  source={require('../image/inbox.png')}
-                  size="30px"
-                  alt="feedback"
-                />
-                <Text fontSize="xs">反馈与客服</Text>
-              </Pressable>
-
-              <Pressable py="3" flex={1} alignItems="center">
-                <Image
-                  mb="5%"
-                  opacity={0.5}
-                  source={require('../image/delivery.png')}
-                  size="30px"
-                  alt="delivery"
-                />
-                <Text fontSize="xs">配送地址</Text>
-              </Pressable>
-
-              <Pressable
-                py="3"
-                flex={1}
-                alignItems="center"
-                /*onPress={() => navigation.replace('QrCodeScanner')}*/>
-                <Image
-                  mb="5%"
-                  opacity={0.5}
-                  source={require('../image/refresh.png')}
-                  size="30px"
-                  alt="refresh"
-                />
-                <Link to={{screen: 'QrCodeScanner', initial: false}}>
-                  <Text fontSize="xs">扫码</Text>
-                </Link>
-              </Pressable>
+              {/* <UserOptions /> */}
+              {applyOption()}
             </HStack>
           </Box>
         </Box>

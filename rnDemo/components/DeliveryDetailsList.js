@@ -7,10 +7,6 @@ import {
   HStack,
   VStack,
   Text,
-  Spacer,
-  Center,
-  NativeBaseProvider,
-  Image,
   Button,
   Column,
 } from 'native-base';
@@ -66,22 +62,8 @@ const DeliveryDetailsList = () => {
             </Button>
           </HStack>
         </Box>
-
-        {/* )}
-        keyExtractor={item => item.id}
-      /> */}
       </Box>
     </VStack>
-  );
-};
-
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Center flex={1} px="1" mt="2">
-        <DeliveryDetailsList />
-      </Center>
-    </NativeBaseProvider>
   );
 };
 

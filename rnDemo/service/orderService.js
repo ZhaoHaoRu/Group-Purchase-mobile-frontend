@@ -13,9 +13,18 @@ export const getCart = (data, callback) => {
   getRequest(url, data, callback);
 };
 
-
 export const addOrder = (data, callback) => {
   const url = `${config.backendUrl}/order/addOrder?userId=${data.userId}&groupId=${data.groupId}&addressId=${data.addressId}&time=${data.time}`;
   console.log('addOrder data:', data);
   getRequest(url, data, callback);
-}
+};
+
+export const getOrderById = (data, callback) => {
+  const url = `${config.backendUrl}/order/getOrderByUserId?userId=${data.userId}`;
+  getRequest(url, data, callback);
+};
+
+export const deleteOneOrder = (data, callback) => {
+  const url = `${config.backendUrl}/order/deleteOneOrder?orderId=${data.orderId}`;
+  getRequest(url, data, callback);
+};

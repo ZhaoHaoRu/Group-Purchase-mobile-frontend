@@ -61,6 +61,7 @@ function GrpDetailsForm() {
 
 const GroupDetailsForm = () => {
   const [text, setText] = useState('');
+  const [formData, setData] = React.useState({});
   return (
     <Box bg={'#fff'} borderRadius={15} height={'auto'} pb="2" m="2">
       <VStack>
