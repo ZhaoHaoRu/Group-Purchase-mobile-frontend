@@ -30,3 +30,9 @@ export const getAllGroup = (data, callback) => {
   const url = `${config.backendUrl}/group/getAllGroups`;
   postRequest(url, data, callback);
 };
+
+export const deleteGroup = (data, callback) => {
+  const url = `${config.backendUrl}/group/deleteGroup?groupId=${data.groupId}`;
+  console.log('deleteGroup url:', url);
+  getRequest(url, data, callback);
+};

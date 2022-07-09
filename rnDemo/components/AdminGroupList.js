@@ -13,9 +13,12 @@ import {
   Image,
   Input,
   useToast,
+  AlertDialog,
+  Button,
 } from 'native-base';
 import {Dimensions, Pressable, StyleSheet} from 'react-native';
 import {getCreatedGroup, getUserById} from '../service/userService';
+import {deleteGroup} from '../service/groupService';
 import {storage} from '../utils/storage';
 
 const w = Dimensions.get('window').width;
@@ -24,13 +27,19 @@ const h = Dimensions.get('window').height;
 const AdminGroupList = ({route, navigation}) => {
   const userId = route.params.userId;
   const [groups, setGroups] = useState([]);
+  const [groupId, setGroupId] = useState(0);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const onClose = () => setIsOpen(false);
+  const cancelRef = React.useRef(null);
   const toast = useToast();
+
   const callback = data => {
-    console.log('user data:', data);
+    // console.log('user data:', data);
     if (data.status === 0) {
       setGroups(data.data);
       // console.log('admin groups :', groups);
-      console.log('item goods:', groups[0].goods[0]);
+      // console.log('item goods:', groups[0].goods[0]);
+      Screen.location.reload();
     } else {
       toast.show({
         description: '出错了，请重试！',
@@ -42,60 +51,39 @@ const AdminGroupList = ({route, navigation}) => {
 
   // 获取当前用户
   React.useEffect(() => {
-    console.log('userId::::::', userId);
+    // console.log('userId::::::', userId);
     const request = {userId: parseInt(userId)};
     getCreatedGroup(request, callback);
   }, []);
 
-  const data = [
-    {
-      id: '1',
-      fullName: '团购A',
-      description: 'Volume: 500ml',
-      price: 'RMB 30',
-      image:
-        'https://www.healthifyme.com/blog/wp-content/uploads/2022/02/Red-Wine.-benefits-1.jpg',
-    },
-    {
-      id: '2',
-      fullName: '团购B',
-      description: 'Volume: 500ml',
-      price: 'RMB 58',
-      image: 'https://scx2.b-cdn.net/gfx/news/hires/2016/howcuttingdo.jpg',
-    },
-    {
-      id: '3',
-      fullName: '团购C',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '4',
-      fullName: '团购D',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '5',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '6',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-  ];
+  // 删除团购的按键响应函数
+  const onPressDelete = data => {
+    setGroupId(data.groupId);
+    setIsOpen(!isOpen);
+  };
+
+  // 删除团购
+  const onDelete = () => {
+    const callbackAfter = data => {
+      console.log('delete callback:', data);
+      if (data.data === 0) {
+        const request = {userId: parseInt(userId)};
+        getCreatedGroup(request, callback);
+      }
+    };
+    if (groupId != 0) {
+      const data = {groupId: groupId};
+      deleteGroup(data, callbackAfter);
+      setGroupId(0);
+    } else {
+      toast.show({
+        description: '出错了，请重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+    onClose();
+  };
 
   return (
     <NativeBaseProvider>
@@ -155,7 +143,10 @@ const AdminGroupList = ({route, navigation}) => {
                     alignSelf={'center'}
                     bg="transparent"
                     onPress={() => {
-                      navigation.replace('EditGroupDetails');
+                      navigation.navigate('EditGroup', {
+                        userId: userId,
+                        group: item,
+                      });
                     }}>
                     <Image
                       // mt="15%"
@@ -168,16 +159,46 @@ const AdminGroupList = ({route, navigation}) => {
                       alt="map"
                     />
                   </Pressable>
-                  <Image
-                    // mt="15%"
-                    mr="4"
-                    // mt="4"
-                    alignSelf={'center'}
-                    opacity={0.3}
-                    source={require('../image/trash.png')}
-                    size="20px"
-                    alt="map"
-                  />
+                  <Pressable onPress={() => onPressDelete(item)}>
+                    <Image
+                      // mt="15%"
+                      mr="4"
+                      mt="4"
+                      alignSelf={'center'}
+                      opacity={0.3}
+                      source={require('../image/trash.png')}
+                      size="20px"
+                      alt="map"
+                    />
+                  </Pressable>
+                  <AlertDialog
+                    leastDestructiveRef={cancelRef}
+                    isOpen={isOpen}
+                    onClose={onClose}>
+                    <AlertDialog.Content>
+                      <AlertDialog.CloseButton />
+                      {/*<AlertDialog.Header>Delete Customer</AlertDialog.Header>*/}
+                      <AlertDialog.Body>您确定要删除团购吗？</AlertDialog.Body>
+                      <AlertDialog.Footer>
+                        <Button.Group space={2}>
+                          <Button
+                            variant="unstyled"
+                            colorScheme="coolGray"
+                            onPress={onClose}
+                            size="xs"
+                            ref={cancelRef}>
+                            Cancel
+                          </Button>
+                          <Button
+                            colorScheme="danger"
+                            size="xs"
+                            onPress={() => onDelete()}>
+                            Delete
+                          </Button>
+                        </Button.Group>
+                      </AlertDialog.Footer>
+                    </AlertDialog.Content>
+                  </AlertDialog>
                 </HStack>
                 <FlatList
                   data={item.goods}

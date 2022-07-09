@@ -13,42 +13,33 @@ import {
   Image,
   Input,
   useToast,
+  Divider,
+  Button,
 } from 'native-base';
 import {Dimensions, Pressable, StyleSheet} from 'react-native';
 import {getCreatedGroup, getUserById} from '../service/userService';
 import {storage} from '../utils/storage';
+import {timeStamp2String} from '../utils/parseTime';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const AdminGroupList = ({route, navigation}) => {
+const AdminEditFormScreen = ({route, navigation}) => {
   const userId = route.params.userId;
   const group = route.params.group;
+  const [groupTitle, setGroupTitle] = useState(group.groupTitle);
+  const [groupInfo, setGroupInfo] = useState(group.groupInfo);
+  const [category, setCategory] = useState(group.category);
+  const [delivery, setDelivery] = useState(group.delivery);
+  const [startTime, setStartTime] = useState(timeStamp2String(group.startTime));
+  const [duration, setDuration] = useState(group.duration);
+  const [goodsId, setGoodsId] = useState([]);
+  const [goodsInfo, setGoodsInfo] = useState([]);
+  const [goodsPrice, setGoodsPrice] = useState([]);
   const toast = useToast();
+
   return (
     <NativeBaseProvider>
-      <Input
-        placeholder="搜索团购"
-        width="90%"
-        variant="rounded"
-        //   borderColor={'danger.600'}
-        borderWidth="2"
-        mb={3}
-        py="3"
-        px="1"
-        fontSize="14"
-        alignSelf={'center'}
-        style={styles.input}
-        InputLeftElement={
-          <Image
-            ml="3"
-            opacity={0.3}
-            source={require('../image/search.png')}
-            size="18px"
-            alt="arrowR"
-          />
-        }
-      />
       <Center flex={1} px="1">
         <Box>
           <Box
@@ -62,42 +53,71 @@ const AdminGroupList = ({route, navigation}) => {
             // mr="2"
             pb="2">
             <HStack>
-              <Heading fontSize="15" ml="4" mt="4" mb="3" color={'muted.600'}>
-                团购: {group.groupTitle}
-              </Heading>
-              <Spacer />
-              <Pressable
-                size="auto"
-                // m="3"
-                alignSelf={'center'}
-                bg="transparent"
-                onPress={() => {
-                  navigation.replace('EditGroupDetails');
-                }}>
-                <Image
-                  // mt="15%"
-                  mr="4"
-                  // mt="4"
-                  alignSelf={'center'}
-                  opacity={0.3}
-                  source={require('../image/edit.png')}
-                  size="17px"
-                  alt="map"
+              <VStack space={0}>
+                <Heading
+                  fontSize="14"
+                  ml={0.03 * w}
+                  mb={0.01 * h}
+                  mt={0.02 * h}>
+                  团购基本信息
+                </Heading>
+                <Divider />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购名称: ' + group.groupTitle}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setGroupTitle(text)}
                 />
-              </Pressable>
-              <Image
-                // mt="15%"
-                mr="4"
-                // mt="4"
-                alignSelf={'center'}
-                opacity={0.3}
-                source={require('../image/trash.png')}
-                size="20px"
-                alt="map"
-              />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购简介: ' + group.groupInfo}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setGroupInfo(text)}
+                />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购类型: ' + group.category}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setCategory(text)}
+                />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购开始时间: ' + startTime}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setStartTime(text)}
+                />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购持续时间: ' + group.duration + ' (小时)'}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setDuration(text)}
+                />
+                <Input
+                  variant="unstyled"
+                  placeholder={'团购配送方式: ' + group.delivery}
+                  fontSize="13"
+                  w={0.9 * w}
+                  onChangeText={text => setDelivery(text)}
+                />
+                <Spacer />
+                <Heading
+                  fontSize="14"
+                  ml={0.03 * w}
+                  mb={0.01 * h}
+                  mt={0.02 * h}>
+                  团购商品信息
+                </Heading>
+                <Spacer />
+              </VStack>
             </HStack>
             <FlatList
               data={group.goods}
+              maxH={0.4 * h}
               renderItem={({item}) => (
                 <Box
                   borderTopWidth="1"
@@ -129,24 +149,36 @@ const AdminGroupList = ({route, navigation}) => {
                         bold>
                         {item.goodsName}
                       </Text>
-                      <Text
+                      {/*<Text*/}
+                      {/*  fontSize="xs"*/}
+                      {/*  color="coolGray.600"*/}
+                      {/*  // width={'80%'}*/}
+                      {/*  numberOfLines={1}*/}
+                      {/*  _dark={{*/}
+                      {/*    color: 'warmGray.200',*/}
+                      {/*  }}>*/}
+                      {/*  {item.goodsInfo}*/}
+                      {/*</Text>*/}
+                      <Input
+                        variant="unstyled"
+                        placeholder={'商品简介: ' + item.goodsInfo}
                         fontSize="xs"
                         color="coolGray.600"
-                        paddingBottom={3}
-                        // width={'80%'}
+                        size="2xs"
+                        ml={-0.03 * w}
                         numberOfLines={1}
-                        _dark={{
-                          color: 'warmGray.200',
-                        }}>
-                        {item.goodsInfo}
-                      </Text>
-                      <Text
-                        color="danger.500"
-                        _dark={{
-                          color: 'danger.500',
-                        }}>
-                        ￥{item.price.toFixed(2)}
-                      </Text>
+                        w={0.6 * w}
+                      />
+                      <Input
+                        variant="unstyled"
+                        placeholder={'商品单价: ￥' + item.price.toFixed(2)}
+                        fontSize="xs"
+                        textColor="danger.500"
+                        size="2xs"
+                        ml={-0.03 * w}
+                        numberOfLines={1}
+                        w={0.6 * w}
+                      />
                     </VStack>
                   </HStack>
                 </Box>
@@ -155,6 +187,9 @@ const AdminGroupList = ({route, navigation}) => {
             />
           </Box>
         </Box>
+        <Button size="sm" colorScheme="danger" width={0.9 * w}>
+          确认修改
+        </Button>
       </Center>
     </NativeBaseProvider>
   );
@@ -178,4 +213,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminGroupList;
+export default AdminEditFormScreen;

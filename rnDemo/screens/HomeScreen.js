@@ -191,31 +191,22 @@ const HomeScreen = ({navigation}) => {
                       <Box backgroundColor={'pink.100'} h={'auto'}>
                         <Select
                           selectedValue={service}
-                          width={0.05 * h}
+                          width={0.32 * w}
+                          fontSize={'2xs'}
+                          height={0.04 * h}
                           accessibilityLabel="默认"
                           placeholder="默认"
                           _selectedItem={{
-                            bg: 'danger.600',
-                            endIcon: <CheckIcon size="5" />,
+                            bg: 'danger.200',
+                            endIcon: <CheckIcon size="1" />,
                           }}
-                          ml={-0.5 * w}
-                          mt={1}
-                          onValueChange={itemValue => console.log(itemValue)}>
+                          onValueChange={itemValue => sortGroup(itemValue)}>
+                          <Select.Item label="按时间升序" value="timeOrder" />
                           <Select.Item
-                            key="1"
-                            label="1"
-                            value="timeOrder"
-                          />
-                          <Select.Item
-                            key="2"
-                            label="2"
+                            label="按时间降序"
                             value="timeReverseOrder"
                           />
-                          <Select.Item
-                            key="3"
-                            label="3"
-                            value="groupName"
-                          />
+                          <Select.Item label="按名称升序" value="groupName" />
                         </Select>
                       </Box>
                     </Center>
