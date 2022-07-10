@@ -27,6 +27,7 @@ const h = Dimensions.get('window').height;
 const AdminGroupList = ({route, navigation}) => {
   const userId = route.params.userId;
   const [groups, setGroups] = useState([]);
+  const [tmpGroups, setTmpGroups] = useState([]);
   const [groupId, setGroupId] = useState(0);
   const [isOpen, setIsOpen] = React.useState(false);
   const onClose = () => setIsOpen(false);
@@ -39,7 +40,7 @@ const AdminGroupList = ({route, navigation}) => {
       setGroups(data.data);
       // console.log('admin groups :', groups);
       // console.log('item goods:', groups[0].goods[0]);
-      Screen.location.reload();
+      // Screen.location.reload();
     } else {
       toast.show({
         description: '出错了，请重试！',
@@ -66,15 +67,24 @@ const AdminGroupList = ({route, navigation}) => {
   const onDelete = () => {
     const callbackAfter = data => {
       console.log('delete callback:', data);
-      if (data.data === 0) {
-        const request = {userId: parseInt(userId)};
-        getCreatedGroup(request, callback);
+      if (data.status === 1) {
+        // const request = {userId: parseInt(userId)};
+        // getCreatedGroup(request, callback);
+        let data = groups.filter((item) => item.groupId == groupId);
+        let index = groups.indexOf(data[0]);
+        console.log('index: ', index);
+        let tmpGroup = groups;
+        index !== -1 && tmpGroup.splice(index, 1);
+        console.log('tmpGroup.length: ', tmpGroup.length);
+        setGroups(tmpGroup);
+        setTmpGroups(tmpGroup);
+        console.log('after change groups: ', groups);
       }
     };
     if (groupId != 0) {
       const data = {groupId: groupId};
       deleteGroup(data, callbackAfter);
-      setGroupId(0);
+      // setGroupId(0);
     } else {
       toast.show({
         description: '出错了，请重试！',
@@ -115,7 +125,7 @@ const AdminGroupList = ({route, navigation}) => {
       <Center flex={1} px="1">
         <Box>
           <FlatList
-            data={groups}
+            data={tmpGroups.length === 0 ? groups : tmpGroups}
             renderItem={({item}) => (
               <Box
                 bg={'white'}
@@ -138,6 +148,28 @@ const AdminGroupList = ({route, navigation}) => {
                   </Heading>
                   <Spacer />
                   <Pressable
+                      size="auto"
+                      // m="3"
+                      alignSelf={'center'}
+                      bg="transparent"
+                      onPress={() => {
+                        navigation.navigate('AdminOrderList', {
+                          userId: userId,
+                          group: item,
+                        });
+                      }}>
+                    <Image
+                        // mt="15%"
+                        mr="4"
+                        // mt="4"
+                        alignSelf={'center'}
+                        opacity={0.3}
+                        source={require('../image/order.png')}
+                        size="17px"
+                        alt="map"
+                    />
+                  </Pressable>
+                  <Pressable
                     size="auto"
                     // m="3"
                     alignSelf={'center'}
@@ -159,6 +191,7 @@ const AdminGroupList = ({route, navigation}) => {
                       alt="map"
                     />
                   </Pressable>
+
                   <Pressable onPress={() => onPressDelete(item)}>
                     <Image
                       // mt="15%"

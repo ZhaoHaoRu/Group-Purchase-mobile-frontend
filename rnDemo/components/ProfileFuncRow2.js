@@ -35,20 +35,6 @@ const AdminOptions = ({userId}) => {
         </Link>
       </Pressable>
 
-      <Pressable py="3" flex={1} alignItems="center">
-        <Image
-          mb="5%"
-          opacity={0.5}
-          source={require('../image/group.png')}
-          size="30px"
-          alt="delivery"
-        />
-        <Link to={{screen: 'AdminGroupList', initial: false, params:{userId: userId}}}>
-          <Text fontSize="xs">团购管理</Text>
-        </Link>
-        {/* <Text fontSize="xs">配送地址</Text> */}
-      </Pressable>
-
       <Pressable
         py="3"
         flex={1}
@@ -66,6 +52,20 @@ const AdminOptions = ({userId}) => {
           <Text fontSize="xs">扫码</Text>
         </Link>
       </Pressable>
+
+        <Pressable py="3" flex={1} alignItems="center">
+        {/*<Image*/}
+        {/*  mb="5%"*/}
+        {/*  opacity={0.5}*/}
+        {/*  source={require('../image/group.png')}*/}
+        {/*  size="30px"*/}
+        {/*  alt="delivery"*/}
+        {/*/>*/}
+        {/*<Link to={{screen: 'AdminGroupList', initial: false, params:{userId: userId}}}>*/}
+        {/*  <Text fontSize="xs">团购管理</Text>*/}
+        {/*</Link>*/}
+        {/* <Text fontSize="xs">配送地址</Text> */}
+        </Pressable>
 
       <Pressable py="3" flex={1} alignItems="center">
         {/* <Image

@@ -28,3 +28,8 @@ export const deleteOneOrder = (data, callback) => {
   const url = `${config.backendUrl}/order/deleteOneOrder?orderId=${data.orderId}`;
   getRequest(url, data, callback);
 };
+
+export const getOrderByGroupId = (data, callback) => {
+  const url = `${config.backendUrl}/order/getOrderByGroupId?groupId=${data.groupId}`;
+  getRequest(url, data, callback);
+};

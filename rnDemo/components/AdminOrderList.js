@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   FlatList,
@@ -12,192 +11,285 @@ import {
   NativeBaseProvider,
   Image,
   Input,
+  useToast,
+  Button,
+  Modal,
 } from 'native-base';
-import {Dimensions, StyleSheet} from 'react-native';
+import React, {Component, useEffect, useState} from 'react';
+import {TextInput, View, StyleSheet, Pressable, Dimensions} from 'react-native';
+import {deleteOneOrder, getOrderByGroupId} from '../service/orderService';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-const AdminOrderList = () => {
-  const data = [
-    {
-      id: '1',
-      fullName: 'Empreinte Tradition 2011 - Cotes Du Jura',
-      description: '用户: A',
-      price: 'RMB 30',
-      image:
-        'https://www.healthifyme.com/blog/wp-content/uploads/2022/02/Red-Wine.-benefits-1.jpg',
-    },
-    {
-      id: '2',
-      fullName: 'Brunch at the Rug Restaurant',
-      description: '用户: B',
-      price: 'RMB 58',
-      image: 'https://scx2.b-cdn.net/gfx/news/hires/2016/howcuttingdo.jpg',
-    },
-    {
-      id: '3',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: '用户: C',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '4',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '5',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-    {
-      id: '6',
-      fullName: 'Yellow Pig Bagel & Brunch',
-      description: 'Set menu for two on weekdays only',
-      price: 'RMB 68',
-      image:
-        'https://www.kingarthurbaking.com/sites/default/files/2021-10/pumpernickel-bagels-.jpg',
-    },
-  ];
+const AdminOrderList = ({route, navigation}) => {
+  const toast = useToast();
+  const {userId} = route.params;
+  console.log('adminorderlist1', route.params);
+  const {group} = route.params;
+  const [orders, setOrders] = useState([]);
+  const [changedOrders, setChangedOrders] = useState([]);
+  const [orderId, setOrderId] = useState(0);
+
+  const orderCallback = data => {
+    console.log('orderCallback:', data);
+    if (data.status === 1) {
+      setOrders(data.data);
+    } else {
+      toast.show({
+        description: '出错了，请重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+  };
+
+  const onGetOrders = () => {
+    const data = {groupId: parseInt(group.groupId)};
+    console.log('data: ', data);
+    getOrderByGroupId(data, orderCallback);
+  };
+
+  const onGetOrderItems = () => {
+    const data = {groupId: parseInt(group.groupId)};
+    console.log('data: ', data);
+    getOrderByGroupId(data, orderCallback);
+  };
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible2, setModalVisible2] = React.useState(false);
+  console.log(modalVisible);
+
+  const handleClick = () => {
+    console.log('clicked!');
+    setModalVisible(!modalVisible);
+  };
+  const handleClick2 = () => {
+    console.log('clicked2!');
+    console.log('orderId', orderId);
+    setModalVisible2(!modalVisible2);
+  };
+
+  const callback = data => {
+    console.log(data);
+    if (data.status === 1) {
+      let data = orders.filter(item => item.orderId == orderId);
+      let index = orders.indexOf(data[0]);
+      console.log('index: ', index);
+      let tmpOrders = orders;
+      index !== -1 && tmpOrders.splice(index, 1);
+      console.log('tmpGroup.length: ', tmpOrders.length);
+      setOrders(tmpOrders);
+      setChangedOrders(tmpOrders);
+      toast.show({
+        description: '删除成功！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    } else {
+      toast.show({
+        description: '出错了，请重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    }
+  };
+
+  const cancelOrder = () => {
+    setModalVisible(false);
+    setModalVisible2(false);
+    console.log('check cancelOrder,', orderId);
+    const id = {orderId: orderId};
+    deleteOneOrder(id, callback);
+  };
+
+  React.useEffect(() => {
+    onGetOrders();
+    console.log('check orderId in use effect', orderId);
+  }, []);
+
   return (
     <NativeBaseProvider>
       <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
         团购订单
       </Heading>
-      <Input
-        placeholder="搜索订单号"
-        width="90%"
-        variant="rounded"
-        //   borderColor={'danger.600'}
-        borderWidth="2"
-        mb={3}
-        py="3"
-        px="1"
-        fontSize="14"
-        alignSelf={'center'}
-        style={styles.input}
-        InputLeftElement={
-          <Image
-            ml="3"
-            opacity={0.3}
-            source={require('../image/search.png')}
-            size="18px"
-            alt="arrowR"
-          />
-        }
-      />
-      <Center flex={1} px="1">
-        <Box>
-          <FlatList
-            data={data}
-            renderItem={({item}) => (
+      <Box w={'100%'}>
+        <FlatList
+          data={changedOrders.length === 0 ? orders : changedOrders}
+          renderItem={({item}) => (
+            <Box
+              bg={'white'}
+              borderRadius="15"
+              height="auto"
+              mt="3"
+              ml="2"
+              mr="2"
+              pb="2">
               <Box
-                bg={'white'}
-                width={0.95 * w}
-                borderRadius="15"
-                height="auto"
-                mt="0"
-                mb="2"
-                // ml="2"
-                // mr="2"
-                pb="2">
-                <HStack>
-                  <Heading
-                    fontSize="15"
-                    ml="4"
-                    mt="4"
-                    mb="3"
-                    color={'muted.600'}>
-                    订单号: XXX
-                  </Heading>
-                  <Spacer />
-                  <Image
-                    // mt="15%"
-                    mr="4"
-                    // mt="4"
-                    alignSelf={'center'}
-                    opacity={0.3}
-                    source={require('../image/refund.png')}
-                    size="17px"
-                    alt="map"
-                  />
-                  <Image
-                    // mt="15%"
-                    mr="4"
-                    // mt="4"
-                    alignSelf={'center'}
-                    opacity={0.3}
-                    source={require('../image/trash.png')}
-                    size="20px"
-                    alt="map"
-                  />
-                </HStack>
-                <Box
-                  borderTopWidth="1"
-                  _dark={{
-                    borderColor: 'gray.600',
-                  }}
-                  borderColor="coolGray.200"
-                  pl="4"
-                  pr="5"
-                  py="2">
-                  <HStack space={3} justifyContent="flex-start">
-                    <Image
-                      size="75px"
-                      borderRadius={5}
-                      alignSelf="center"
-                      source={{
-                        uri: item.image,
-                      }}
-                      alt={'image'}
-                    />
-                    <VStack>
-                      <Text
-                        _dark={{
-                          color: 'warmGray.50',
-                        }}
-                        color="coolGray.800"
-                        // flex={1}
-                        width="90%"
-                        bold>
-                        {item.fullName}
-                      </Text>
+                // borderTopWidth="1"
+                _dark={{
+                  borderColor: 'gray.600',
+                }}
+                borderColor="coolGray.200"
+                pl="4"
+                pr="5"
+                py="2">
+                <HStack space={3} justifyContent="space-around">
+                  <VStack w={0.8 * w}>
+                    <HStack>
+                      <Heading fontSize="15" mt="3" color={'muted.600'}>
+                        订单号: {item.orderId}
+                      </Heading>
+                      <Spacer />
+                      <Pressable onPress={handleClick}>
+                        <Image
+                          // mt="15%"
+                          mr="3"
+                          mt="3"
+                          alignSelf={'center'}
+                          opacity={0.3}
+                          source={require('../image/refund.png')}
+                          size="17px"
+                          alt="map"
+                        />
+                      </Pressable>
+                      <Pressable
+                        onPress={() => {
+                          console.log('check orderID', item.orderId);
+                          setOrderId(item.orderId);
+                          handleClick2();
+                        }}>
+                        <Image
+                          // mt="15%"
+                          // mr="4"
+                          mt="2.5"
+                          alignSelf={'center'}
+                          opacity={0.3}
+                          source={require('../image/trash.png')}
+                          size="21px"
+                          alt="map"
+                        />
+                      </Pressable>
+                    </HStack>
+                    <HStack>
                       <Text
                         fontSize="xs"
                         color="coolGray.600"
-                        paddingBottom={3}
+                        paddingTop={3}
                         width={'80%'}
                         numberOfLines={1}
                         _dark={{
                           color: 'warmGray.200',
                         }}>
-                        {item.description}
+                        用户：{item.customerId} ({item.customerName})
                       </Text>
                       <Text
+                        fontSize="xs"
                         color="danger.500"
+                        paddingTop={3}
+                        width={'80%'}
+                        numberOfLines={1}
                         _dark={{
                           color: 'danger.500',
                         }}>
-                        {item.price}
+                        总共：￥{item.orderPrice}
                       </Text>
-                    </VStack>
-                  </HStack>
-                </Box>
+                    </HStack>
+                    <HStack>
+                      <Text
+                        fontSize="xs"
+                        color="coolGray.600"
+                        // paddingTop={3}
+                        // width={'80%'}
+                        numberOfLines={1}
+                        _dark={{
+                          color: 'warmGray.200',
+                        }}>
+                        商品：
+                      </Text>
+                      <FlatList
+                        data={item.orderItems}
+                        // horizontal = {true}
+                        renderItem={({item}) => (
+                          <Text
+                            fontSize="xs"
+                            color="coolGray.600"
+                            // paddingBottom={3}
+                            // width={'80%'}
+                            // numberOfLines={1}
+                            _dark={{
+                              color: 'danger.500',
+                            }}>
+                            {item.goodsName} x{item.number}
+                          </Text>
+                        )}
+                        keyExtractor={item => item.orderItemId}
+                      />
+                    </HStack>
+                  </VStack>
+                </HStack>
               </Box>
-            )}
-            keyExtractor={item => item.id}
-          />
-        </Box>
-      </Center>
+            </Box>
+          )}
+          keyExtractor={item => item.orderId}
+        />
+      </Box>
+      <Box
+        width="100%"
+        height="10%"
+        position="absolute"
+        bottom="0"
+        alignSelf="center"
+        borderColor="gray.100"
+        borderTopWidth="3">
+        <Center flex={1} />
+        <Modal isOpen={modalVisible}>
+          <Modal.Content>
+            <Modal.CloseButton onPress={handleClick} />
+            <Modal.Header>申请退款</Modal.Header>
+            <Modal.Body>
+              <Text>退款会取消订单，您确定退款吗？</Text>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button size="xs" colorScheme="danger" onPress={handleClick}>
+                  取消
+                </Button>
+                <Button size="xs" colorScheme="danger" onPress={cancelOrder}>
+                  确认退款
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+        <Modal isOpen={modalVisible2}>
+          <Modal.Content>
+            <Modal.CloseButton onPress={handleClick2} />
+            <Modal.Header>申请取消订单</Modal.Header>
+            <Modal.Body>
+              <Text>确定取消订单吗？</Text>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button size="xs" colorScheme="danger" onPress={handleClick2}>
+                  取消
+                </Button>
+                <Button size="xs" colorScheme="danger" onPress={cancelOrder}>
+                  确认取消订单
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+        <HStack
+          alignItems="stretch"
+          safeAreaBottom
+          shadow={6}
+          space={3}
+          w={w}
+          padding={3}
+        />
+      </Box>
     </NativeBaseProvider>
   );
 };
