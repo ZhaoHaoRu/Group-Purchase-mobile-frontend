@@ -34,6 +34,7 @@ const Wallet = ({route, navigation}) => {
   const callback = data => {
     if (data.status === 0) {
       setUser(data.data);
+      console.log('user: ', user);
     } else {
       toast.show({
         description: '出错了，请重试！',
@@ -79,7 +80,7 @@ const Wallet = ({route, navigation}) => {
               <Text style={styles.wallet}>总金额</Text>
               {/* {stu.map(stu => ( */}
               <Text color={'danger.500'} fontSize={'2xl'} style={styles.money}>
-                ￥{user.wallet.toFixed(2)}
+                ￥{parseFloat(user.wallet).toFixed(2)}
               </Text>
               {/* ))} */}
               <Button

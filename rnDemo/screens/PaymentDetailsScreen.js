@@ -28,6 +28,8 @@ const PaymentDetailsScreen = ({route, navigation}) => {
   const {groupId} = route.params;
   const {userId} = route.params;
   const {address} = route.params;
+  console.log('address detail: ', address);
+  let totalPrice = 0;
   const [addressId, setAddressId] = useState(0);
   const [receiver, setReceiver] = useState('');
   const [region, setRegion] = useState('');
@@ -39,6 +41,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
   const cartCallback = data => {
     // console.log('payment cartCallback:', data);
     setCart(data.data);
+    totalPrice = parseFloat(cart.totalPrice);
   };
   //获取本团购购物车中的内容
   const onGetCart = () => {
@@ -75,14 +78,14 @@ const PaymentDetailsScreen = ({route, navigation}) => {
       navigation.replace('PaymentDone');
     } else {
       toast.show({
-        description: data.data,
+        description: '失败，请重试！',
         variant: 'subtle',
         placement: 'top',
       });
     }
   };
 
-  // 保存对于订单信息的修改
+  // 保存对于地址信息的修改
   const onPressSave = () => {
     const data = {
       userId: parseInt(userId),
@@ -99,24 +102,31 @@ const PaymentDetailsScreen = ({route, navigation}) => {
   const onPressBuy = () => {
     let timestamp = new Date().getTime();
     const time = timeStamp2String(timestamp);
+    if (address.addressId != 0) {
+      setAddressId(address.addressId);
+    }
     const data = {
       userId: parseInt(userId),
       groupId: parseInt(groupId),
       addressId: addressId,
       time: time,
     };
-    // console.log('onPressBuy data:', data);
-    addOrder(data, buyCallback);
+    console.log('onPressBuy data:', data);
+    if (addressId === 0) {
+      toast.show({
+        description: '新地址还没有保存编辑，保存后重试！',
+        variant: 'subtle',
+        placement: 'top',
+      });
+    } else {
+      addOrder(data, buyCallback);
+    }
   };
 
   React.useEffect(() => {
     onGetCart();
   }, []);
   // console.log('paymentScreen props:', cart.totalPrice);
-  const totalPrice = parseFloat(cart.totalPrice);
-  if (address.addressId != 0) {
-    setAddressId(address.addressId);
-  }
   return (
     <>
       <Button size="30px" m="3" bg="transparent">
@@ -284,7 +294,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
                 mt="4"
                 height="9">
                 {' '}
-                ￥ {totalPrice.toFixed(2)}
+                ￥ {parseFloat(cart.totalPrice).toFixed(2)}
               </Text>
             </HStack>
             <Divider
@@ -309,7 +319,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
                 mt="2"
                 alignSelf={'center'}>
                 {' '}
-                ￥ {(totalPrice + 3).toFixed(2)}
+                ￥ {(parseFloat(cart.totalPrice) + 3).toFixed(2)}
               </Text>
             </HStack>
           </VStack>

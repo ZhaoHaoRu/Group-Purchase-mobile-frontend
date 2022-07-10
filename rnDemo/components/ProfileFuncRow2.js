@@ -26,13 +26,19 @@ const AdminOptions = ({userId}) => {
         <Image
           mb="5%"
           opacity={0.5}
-          source={require('../image/script.png')}
+          source={require('../image/group.png')}
           size="30px"
-          alt="feedback"
+          alt="delivery"
         />
-        <Link to={{screen: 'AdminOrderList', initial: false}}>
-          <Text fontSize="xs">订单管理</Text>
+        <Link
+          to={{
+            screen: 'AdminGroupList',
+            initial: false,
+            params: {userId: userId},
+          }}>
+          <Text fontSize="xs">团购管理</Text>
         </Link>
+        {/*<Text fontSize="xs">配送地址</Text>*/}
       </Pressable>
 
       <Pressable
@@ -53,19 +59,18 @@ const AdminOptions = ({userId}) => {
         </Link>
       </Pressable>
 
-        <Pressable py="3" flex={1} alignItems="center">
+      <Pressable py="3" flex={1} alignItems="center">
         {/*<Image*/}
-        {/*  mb="5%"*/}
-        {/*  opacity={0.5}*/}
-        {/*  source={require('../image/group.png')}*/}
-        {/*  size="30px"*/}
-        {/*  alt="delivery"*/}
+        {/*    mb="5%"*/}
+        {/*    opacity={0.5}*/}
+        {/*    source={require('../image/script.png')}*/}
+        {/*    size="30px"*/}
+        {/*    alt="feedback"*/}
         {/*/>*/}
-        {/*<Link to={{screen: 'AdminGroupList', initial: false, params:{userId: userId}}}>*/}
-        {/*  <Text fontSize="xs">团购管理</Text>*/}
+        {/*<Link to={{screen: 'AdminOrderList', initial: false}}>*/}
+        {/*  <Text fontSize="xs">订单管理</Text>*/}
         {/*</Link>*/}
-        {/* <Text fontSize="xs">配送地址</Text> */}
-        </Pressable>
+      </Pressable>
 
       <Pressable py="3" flex={1} alignItems="center">
         {/* <Image

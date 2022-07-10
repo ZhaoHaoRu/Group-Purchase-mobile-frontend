@@ -70,7 +70,7 @@ const AdminGroupList = ({route, navigation}) => {
       if (data.status === 1) {
         // const request = {userId: parseInt(userId)};
         // getCreatedGroup(request, callback);
-        let data = groups.filter((item) => item.groupId == groupId);
+        let data = groups.filter(item => item.groupId == groupId);
         let index = groups.indexOf(data[0]);
         console.log('index: ', index);
         let tmpGroup = groups;
@@ -148,25 +148,25 @@ const AdminGroupList = ({route, navigation}) => {
                   </Heading>
                   <Spacer />
                   <Pressable
-                      size="auto"
-                      // m="3"
-                      alignSelf={'center'}
-                      bg="transparent"
-                      onPress={() => {
-                        navigation.navigate('AdminOrderList', {
-                          userId: userId,
-                          group: item,
-                        });
-                      }}>
+                    size="auto"
+                    // m="3"
+                    alignSelf={'center'}
+                    bg="transparent"
+                    onPress={() => {
+                      navigation.navigate('AdminOrderList', {
+                        userId: userId,
+                        group: item,
+                      });
+                    }}>
                     <Image
-                        // mt="15%"
-                        mr="4"
-                        // mt="4"
-                        alignSelf={'center'}
-                        opacity={0.3}
-                        source={require('../image/order.png')}
-                        size="17px"
-                        alt="map"
+                      // mt="15%"
+                      mr="4"
+                      // mt="4"
+                      alignSelf={'center'}
+                      opacity={0.3}
+                      source={require('../image/order.png')}
+                      size="17px"
+                      alt="map"
                     />
                   </Pressable>
                   <Pressable

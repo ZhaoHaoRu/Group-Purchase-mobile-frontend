@@ -112,7 +112,7 @@ export default function DeliveryInfoScreen({route, navigation}) {
                     backgroundColor={'transparent'}
                     onPress={() => {
                       /* 1. Navigate to the Details route with params */
-                      navigation.navigate('PaymentDetail', {
+                      navigation.replace('PaymentDetail', {
                         groupId: groupId,
                         userId: userId,
                         address: item,

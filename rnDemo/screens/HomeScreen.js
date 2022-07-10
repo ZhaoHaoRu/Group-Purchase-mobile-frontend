@@ -188,23 +188,23 @@ const HomeScreen = ({navigation}) => {
                       mt={0.05 * h}>
                       <BestSellerCarousel />
                       {/*根据时间顺序和逆序排序*/}
-                      <Box backgroundColor={'pink.100'} h={'auto'}>
+                      <Box ml={0.6 * w} h={'auto'} w={0.35 * w} mt={-0.04 * h}>
                         <Select
-                          selectedValue={service}
-                          width={0.32 * w}
-                          fontSize={'2xs'}
-                          height={0.04 * h}
-                          accessibilityLabel="默认"
-                          placeholder="默认"
-                          _selectedItem={{
-                            bg: 'danger.200',
-                            endIcon: <CheckIcon size="1" />,
-                          }}
-                          onValueChange={itemValue => sortGroup(itemValue)}>
+                            selectedValue={service}
+                            width={0.32 * w}
+                            fontSize={'2xs'}
+                            height={0.04 * h}
+                            accessibilityLabel="默认"
+                            placeholder="默认"
+                            _selectedItem={{
+                              bg: 'danger.200',
+                              endIcon: <CheckIcon size="1" />,
+                            }}
+                            onValueChange={itemValue => sortGroup(itemValue)}>
                           <Select.Item label="按时间升序" value="timeOrder" />
                           <Select.Item
-                            label="按时间降序"
-                            value="timeReverseOrder"
+                              label="按时间降序"
+                              value="timeReverseOrder"
                           />
                           <Select.Item label="按名称升序" value="groupName" />
                         </Select>
