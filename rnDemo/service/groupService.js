@@ -10,7 +10,7 @@ export const getCollectedGroups = (data, callback) => {
 
 export const getGroupById = (data, callback) => {
   const url = `${config.backendUrl}/group/getGroupById?id=${data}`;
-  // console.log('getGroupById data:', data);
+  console.log('getGroupById data:', url);
   getRequest(url, data, callback);
 };
 

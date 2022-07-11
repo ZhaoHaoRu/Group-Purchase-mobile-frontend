@@ -70,7 +70,7 @@ const HomeCard = ({props, userId}) => {
                   // ml={0.05 * w}
                   mt={0.03 * w}
                   color="gray.700">
-                  卖家：{storeName}
+                  团长：{storeName}
                 </Text>
               </Box>
               <Button

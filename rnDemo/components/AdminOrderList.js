@@ -141,18 +141,18 @@ const AdminOrderList = ({route, navigation}) => {
                         订单号: {item.orderId}
                       </Heading>
                       <Spacer />
-                      <Pressable onPress={handleClick}>
-                        <Image
-                          // mt="15%"
-                          mr="3"
-                          mt="3"
-                          alignSelf={'center'}
-                          opacity={0.3}
-                          source={require('../image/refund.png')}
-                          size="17px"
-                          alt="map"
-                        />
-                      </Pressable>
+                      {/*<Pressable onPress={handleClick}>*/}
+                      {/*  <Image*/}
+                      {/*    // mt="15%"*/}
+                      {/*    mr="3"*/}
+                      {/*    mt="3"*/}
+                      {/*    alignSelf={'center'}*/}
+                      {/*    opacity={0.3}*/}
+                      {/*    source={require('../image/refund.png')}*/}
+                      {/*    size="17px"*/}
+                      {/*    alt="map"*/}
+                      {/*  />*/}
+                      {/*</Pressable>*/}
                       <Pressable
                         onPress={() => {
                           console.log('check orderID', item.orderId);
@@ -267,7 +267,7 @@ const AdminOrderList = ({route, navigation}) => {
             <Modal.CloseButton onPress={handleClick2} />
             <Modal.Header>申请取消订单</Modal.Header>
             <Modal.Body>
-              <Text>确定取消订单吗？</Text>
+              <Text>确定取消订单并退款吗？</Text>
             </Modal.Body>
             <Modal.Footer>
               <Button.Group space={2}>

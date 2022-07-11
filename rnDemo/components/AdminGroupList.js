@@ -50,6 +50,7 @@ const AdminGroupList = ({route, navigation}) => {
     }
   };
 
+
   // 获取当前用户
   React.useEffect(() => {
     // console.log('userId::::::', userId);
@@ -100,28 +101,6 @@ const AdminGroupList = ({route, navigation}) => {
       <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
         团购管理
       </Heading>
-      <Input
-        placeholder="搜索团购"
-        width="90%"
-        variant="rounded"
-        //   borderColor={'danger.600'}
-        borderWidth="2"
-        mb={3}
-        py="3"
-        px="1"
-        fontSize="14"
-        alignSelf={'center'}
-        style={styles.input}
-        InputLeftElement={
-          <Image
-            ml="3"
-            opacity={0.3}
-            source={require('../image/search.png')}
-            size="18px"
-            alt="arrowR"
-          />
-        }
-      />
       <Center flex={1} px="1">
         <Box>
           <FlatList

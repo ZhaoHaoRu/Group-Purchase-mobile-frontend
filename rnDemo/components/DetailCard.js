@@ -24,10 +24,6 @@ import {timeStamp2String} from '../utils/parseTime';
 import {Link} from '@react-navigation/native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Searchbar from './Searchbar';
-import BestSellerCarousel from './BestSellerCarousel';
-import HomeCard from './HomeCard';
-import {storage} from '../utils/storage';
 import {collectGroup} from '../service/groupService';
 import {addToCart} from '../service/orderService';
 

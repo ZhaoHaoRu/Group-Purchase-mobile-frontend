@@ -24,6 +24,7 @@ export function timeStamp2String(time) {
   );
 }
 
+// 时间戳转换为日期
 export function timeStampToDay(time) {
   const datetime = new Date();
   datetime.setTime(time);
