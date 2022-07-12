@@ -23,7 +23,7 @@ const OrderList = props => {
     setDataSource(props.data);
   }, [props.data]);
 
-  console.log('dataSource:', dataSource);
+  // console.log('dataSource:', dataSource);
   return (
     <Box>
       <FlatList
@@ -115,7 +115,7 @@ const OrderList = props => {
             </Box>
           </Box>
         )}
-        keyExtractor={item => item.groupId}
+        keyExtractor={item => item.orderId}
       />
     </Box>
   );

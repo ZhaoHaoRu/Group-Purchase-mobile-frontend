@@ -6,7 +6,7 @@ import {View, Button, Box, Text, VStack} from 'native-base';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 const QrCodeScreen = ({route, navigation}) => {
-  // console.log('QRCode:', route.params);
+  console.log('QRCode:', route.params.props);
   // console.log("QRCode data:", route.params.props.groupId);
   return (
     <>

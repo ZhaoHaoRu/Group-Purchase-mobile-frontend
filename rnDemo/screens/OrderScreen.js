@@ -136,7 +136,7 @@ export default function OrderScreen({navigation}) {
       const UserId = {userId: userId};
       getOrderById(UserId, getOrders);
     });
-    console.log(1);
+    // console.log(1);
   }, [fresh]);
 
   const changeFresh = () => {

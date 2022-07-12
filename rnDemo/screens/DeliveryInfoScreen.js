@@ -38,6 +38,14 @@ export default function DeliveryInfoScreen({route, navigation}) {
     getAddress(data, addressCallback);
   };
 
+  const onPressUse = () => {
+    toast.show({
+      description: '应用成功！',
+      variant: 'subtle',
+      placement: 'top',
+    });
+
+  }
   React.useEffect(() => {
     onGetAddress();
   }, []);
@@ -112,6 +120,7 @@ export default function DeliveryInfoScreen({route, navigation}) {
                     backgroundColor={'transparent'}
                     onPress={() => {
                       /* 1. Navigate to the Details route with params */
+                      onPressUse();
                       navigation.replace('PaymentDetail', {
                         groupId: groupId,
                         userId: userId,

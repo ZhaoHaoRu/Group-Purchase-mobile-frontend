@@ -58,11 +58,12 @@ const RegisterForm = ({navigation}) => {
         colorScheme: 'danger',
         placement: 'top',
       });
+    } else {
+      console.log('login success!');
+      const data = {userName: name, password: password, email: email};
+      console.log('data:', data); // data可以直接发送给后端
+      register(data, callback);
     }
-    console.log('login success!');
-    const data = {userName: name, password: password, email: email};
-    console.log('data:', data); // data可以直接发送给后端
-    register(data, callback);
   };
 
   return (

@@ -36,3 +36,14 @@ export const deleteGroup = (data, callback) => {
   console.log('deleteGroup url:', url);
   getRequest(url, data, callback);
 };
+
+export const changeGroup = (data, callback) => {
+  const url = `${config.backendUrl}/group/changeGroup`;
+  postRequest(url, data, callback);
+};
+
+export const createGroup = (data, callback) => {
+  const url = `${config.backendUrl}/group/createGroup`;
+  postRequest(url, data, callback);
+};
+

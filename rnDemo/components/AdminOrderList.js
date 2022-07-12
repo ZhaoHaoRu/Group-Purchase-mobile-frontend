@@ -115,6 +115,7 @@ const AdminOrderList = ({route, navigation}) => {
       </Heading>
       <Box w={'100%'}>
         <FlatList
+            h={0.87 * h}
           data={changedOrders.length === 0 ? orders : changedOrders}
           renderItem={({item}) => (
             <Box
@@ -281,14 +282,14 @@ const AdminOrderList = ({route, navigation}) => {
             </Modal.Footer>
           </Modal.Content>
         </Modal>
-        <HStack
-          alignItems="stretch"
-          safeAreaBottom
-          shadow={6}
-          space={3}
-          w={w}
-          padding={3}
-        />
+        {/*<HStack*/}
+        {/*  alignItems="stretch"*/}
+        {/*  safeAreaBottom*/}
+        {/*  shadow={0}*/}
+        {/*  space={3}*/}
+        {/*  w={w}*/}
+        {/*  padding={3}*/}
+        {/*/>*/}
       </Box>
     </NativeBaseProvider>
   );

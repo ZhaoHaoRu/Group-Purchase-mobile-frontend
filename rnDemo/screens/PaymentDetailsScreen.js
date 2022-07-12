@@ -105,14 +105,17 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     if (address.addressId != 0) {
       setAddressId(address.addressId);
     }
-    const data = {
+    let data = {
       userId: parseInt(userId),
       groupId: parseInt(groupId),
       addressId: addressId,
       time: time,
     };
+    if (address.addressId != 0) {
+      data.addressId = address.addressId;
+    }
     console.log('onPressBuy data:', data);
-    if (addressId === 0) {
+    if (address.addressId === 0 && addressId === 0) {
       toast.show({
         description: '新地址还没有保存编辑，保存后重试！',
         variant: 'subtle',

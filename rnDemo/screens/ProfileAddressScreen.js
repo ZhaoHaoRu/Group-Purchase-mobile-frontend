@@ -52,6 +52,7 @@ export default function ProfileAddressScreen({route, navigation}) {
       </VStack>
       <Box w={'100%'}>
         <FlatList
+            maxH={0.87 * h}
           data={addresses}
           renderItem={({item}) => (
             <Box
