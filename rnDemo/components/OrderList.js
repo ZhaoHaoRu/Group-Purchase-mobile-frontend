@@ -17,9 +17,11 @@ import OrderDetailScreen from '../screens/OrderDetailScreen';
 import {Link} from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 
-const OrderList = props => {
+const OrderList = (props) => {
   const [dataSource, setDataSource] = useState([]);
+  const userId = props.userId;
   useEffect(() => {
+    console.log("order list userId: ", userId)
     setDataSource(props.data);
   }, [props.data]);
 
@@ -84,6 +86,7 @@ const OrderList = props => {
                         screen: 'OrderDetail',
                         initial: false,
                         params: {
+                          userId: userId,
                           data: item,
                           changeFresh: props.changeFresh,
                           navigation: props.navigation,

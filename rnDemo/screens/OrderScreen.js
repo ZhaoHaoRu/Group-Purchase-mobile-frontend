@@ -117,6 +117,7 @@ import {storage} from '../utils/storage';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
+
 export let fresh = 1;
 export default function OrderScreen({navigation}) {
   const [dataSource, setDataSource] = useState([]);
@@ -124,6 +125,7 @@ export default function OrderScreen({navigation}) {
   const [filterData, setFilterData] = useState([]);
   const [text, setText] = useState('');
   const [fresh, setFresh] = useState(false);
+
   const getOrders = data => {
     storage.load('userId', userId => {
       setUserId(userId);
@@ -131,6 +133,7 @@ export default function OrderScreen({navigation}) {
       setFilterData(data.data);
     });
   };
+  
   React.useEffect(() => {
     storage.load('userId', userId => {
       const UserId = {userId: userId};
@@ -178,9 +181,9 @@ export default function OrderScreen({navigation}) {
           placeholder="搜索团名/商品名"
           width="90%"
           variant="rounded"
-          borderColor={'danger.600'}
+          // borderColor={'danger.600'}
           borderWidth="2"
-          mt={5}
+          mb="2"
           py="3"
           px="1"
           fontSize="14"
@@ -202,11 +205,12 @@ export default function OrderScreen({navigation}) {
       </VStack>
       {/*<OrderList data={dataSource} />*/}
       <NativeBaseProvider>
-        <Center flex={1} px="1">
+        <Center flex={1} mb={2}>
           <OrderList
             data={filterData}
             changeFresh={changeFresh}
             navigation={navigation}
+            userId={userId}
           />
         </Center>
       </NativeBaseProvider>

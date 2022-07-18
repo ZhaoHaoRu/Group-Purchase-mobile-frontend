@@ -64,6 +64,7 @@ const RenderScreen = props => {
     }
   }, []);
   return (
+    <ScrollView>
     <View>
       <Flex direction="row" margin="1%" flexWrap="wrap" justifyContent="center">
         <FlatList
@@ -84,6 +85,7 @@ const RenderScreen = props => {
         />
       </Flex>
     </View>
+    </ScrollView>
   );
 };
 

@@ -16,10 +16,17 @@ import {
   AlertDialog,
   Button,
 } from 'native-base';
-import {Dimensions, Pressable, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+} from 'react-native';
 import {getCreatedGroup, getUserById} from '../service/userService';
 import {deleteGroup} from '../service/groupService';
 import {storage} from '../utils/storage';
+import {sortByKey, sortByKeyReverse} from '../utils/sort';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -30,14 +37,18 @@ const AdminGroupList = ({route, navigation}) => {
   const [tmpGroups, setTmpGroups] = useState([]);
   const [groupId, setGroupId] = useState(0);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(true);
+
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef(null);
   const toast = useToast();
 
   const callback = data => {
     // console.log('user data:', data);
+    setRefreshing(false);
     if (data.status === 0) {
-      setGroups(data.data);
+      // setGroups(data.data);
+      setGroups(sortByKey(data.data, 'startTime'));
       // console.log('admin groups :', groups);
       // console.log('item goods:', groups[0].goods[0]);
       // Screen.location.reload();
@@ -50,12 +61,15 @@ const AdminGroupList = ({route, navigation}) => {
     }
   };
 
-
-  // 获取当前用户
-  React.useEffect(() => {
+  const showGroups = () => {
     // console.log('userId::::::', userId);
     const request = {userId: parseInt(userId)};
     getCreatedGroup(request, callback);
+  };
+
+  // 获取当前用户
+  React.useEffect(() => {
+    showGroups();
   }, []);
 
   // 删除团购的按键响应函数
@@ -86,7 +100,8 @@ const AdminGroupList = ({route, navigation}) => {
       const data = {groupId: groupId};
       deleteGroup(data, callbackAfter);
       // setGroupId(0);
-    } else {
+    }
+    {
       toast.show({
         description: '出错了，请重试！',
         variant: 'subtle',
@@ -96,6 +111,10 @@ const AdminGroupList = ({route, navigation}) => {
     onClose();
   };
 
+  // const sortGroup = data => {
+  //   setGroups(sortByKeyReverse(groups, 'startTime'));
+  // };
+
   return (
     <NativeBaseProvider>
       <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
@@ -103,12 +122,13 @@ const AdminGroupList = ({route, navigation}) => {
       </Heading>
       <Center flex={1} px="1">
         <Box>
+          {refreshing ? <ActivityIndicator /> : null}
           <FlatList
             data={tmpGroups.length === 0 ? groups : tmpGroups}
             renderItem={({item}) => (
               <Box
                 bg={'white'}
-                width={0.9 * w}
+                width={0.95 * w}
                 borderRadius="15"
                 height="auto"
                 mt="0"
@@ -199,13 +219,13 @@ const AdminGroupList = ({route, navigation}) => {
                             onPress={onClose}
                             size="xs"
                             ref={cancelRef}>
-                            Cancel
+                            取消
                           </Button>
                           <Button
                             colorScheme="danger"
                             size="xs"
                             onPress={() => onDelete()}>
-                            Delete
+                            删除
                           </Button>
                         </Button.Group>
                       </AlertDialog.Footer>
@@ -215,6 +235,7 @@ const AdminGroupList = ({route, navigation}) => {
                 <FlatList
                   data={item.goods}
                   renderItem={({item}) => (
+                    // sortGroup(item);
                     <Box
                       borderTopWidth="1"
                       _dark={{
@@ -271,6 +292,9 @@ const AdminGroupList = ({route, navigation}) => {
                 />
               </Box>
             )}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={showGroups} />
+            }
             keyExtractor={item => item.groupId}
           />
         </Box>

@@ -37,6 +37,7 @@ import EditGroupDetails from './components/EditGroupDetails';
 import AdminOrderList from './components/AdminOrderList';
 import AdminGroupList from './components/AdminGroupList';
 import AdminEditFormScreen from './screens/AdminEditFormScreen';
+import OrderList from './components/OrderList';
 
 LogBox.ignoreLogs([
   'ViewPropTypes will be removed',
@@ -158,6 +159,7 @@ export default function App() {
           <Route.Screen name="PaymentDone" component={PaymentDoneScreen} />
           <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
           <Route.Screen name="OrderDetail" component={OrderDetailScreen} />
+          <Route.Screen name="OrderScreen" component={OrderScreen} />
           {/*<Route.Screen name="Wallet" component={Wallet} />*/}
           <Route.Screen
             name="EditGroup"

@@ -10,11 +10,12 @@ const {width, height} = Dimensions.get('window');
 
 const OrderDetailScreen = props => {
   const [dataSource, setDataSource] = useState([]);
+  const userId = props.route.params.userId;
+  console.log("order detail screen -userId- :", props.route.params.data.groupId);
   useEffect(() => {
     setDataSource(props.route.params.data);
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   }, [props.route.params.data]);
-  console.log(props.route.params);
   return (
     <>
       <ScrollView mb={0.1 * height}>
@@ -55,6 +56,8 @@ const OrderDetailScreen = props => {
         state={dataSource.state}
         changeFresh={props.route.params.changeFresh}
         navigation={props.route.params.navigation}
+        userId={props.route.params.userId}
+        groupId={props.route.params.data.groupId}
       />
     </>
   );

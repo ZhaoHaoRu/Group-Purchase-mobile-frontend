@@ -25,19 +25,23 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const PaymentDetailsScreen = ({route, navigation}) => {
+  console.log('payment details screen -route.params-', route.params);
   const {groupId} = route.params;
   const {userId} = route.params;
   const {address} = route.params;
+  console.log('check receiver', address.receiver);
+  // const {receiver} = route.params;
   console.log('address detail: ', address);
   let totalPrice = 0;
   const [addressId, setAddressId] = useState(0);
-  const [receiver, setReceiver] = useState('');
+  const [receiver, setReceiver] = useState('我');
   const [region, setRegion] = useState('');
   const [location, setLocation] = useState('');
   const [phone, setPhone] = useState('');
   const toast = useToast();
 
   const [cart, setCart] = useState([]);
+
   const cartCallback = data => {
     // console.log('payment cartCallback:', data);
     setCart(data.data);
@@ -126,8 +130,20 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     }
   };
 
+  const updateAddressColumns = () => {
+    setReceiver(address.receiver);
+    setPhone(address.phone);
+    setRegion(address.region);
+    setLocation(address.location);
+  };
+
   React.useEffect(() => {
     onGetCart();
+    // updateAddressColumns();
+    setReceiver(address.receiver);
+    setPhone(address.phone);
+    setRegion(address.region);
+    setLocation(address.location);
   }, []);
   // console.log('paymentScreen props:', cart.totalPrice);
   return (
@@ -189,28 +205,36 @@ const PaymentDetailsScreen = ({route, navigation}) => {
                     height={0.05 * h}
                     placeholder="收件人"
                     onChangeText={text => setReceiver(text)}
-                  />
+                  >
+                    {receiver}
+                    </Input>
                   <Input
                     size="sm"
                     width="100%"
                     height={0.05 * h}
                     placeholder="收件人联系电话"
                     onChangeText={text => setPhone(text)}
-                  />
+                  >
+                    {phone}
+                    </Input>
                   <Input
                     size="sm"
                     width="100%"
                     height={0.05 * h}
                     placeholder="收件地区"
                     onChangeText={text => setRegion(text)}
-                  />
+                  >
+                    {region}
+                  </Input>
                   <Input
                     size="sm"
                     width="100%"
                     height={0.05 * h}
                     placeholder="收件人详细地址"
                     onChangeText={text => setLocation(text)}
-                  />
+                  >
+                    {location}
+                  </Input>
                 </VStack>
                 {/* <Spacer /> */}
                 {/*<Button alignSelf="center" style={styles.changeButton} mt="-2">*/}

@@ -17,6 +17,7 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 export default function DeliveryInfoScreen({route, navigation}) {
+  console.log("deliveryInfoScreen")
   const toast = useToast();
   const {userId} = route.params;
   const {groupId} = route.params;

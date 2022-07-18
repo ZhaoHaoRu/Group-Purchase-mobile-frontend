@@ -21,7 +21,7 @@ const h = Dimensions.get('window').height;
 export default function OrderFooter(data) {
   const [modalVisible, setModalVisible] = React.useState(false);
   console.log(modalVisible);
-  console.log(data);
+  console.log('order footer -data-:', data.groupId);
   const handleClick = () => {
     setModalVisible(!modalVisible);
   };
@@ -33,10 +33,11 @@ export default function OrderFooter(data) {
   };
 
   const cancelOrder = () => {
+    console.log('cancel order');
     const orderId = {orderId: data.orderId};
     deleteOneOrder(orderId, callback);
     data.changeFresh();
-    data.navigation.replace('TabWrapper');
+    data.navigation.replace('OrderScreen');
   };
   return (
     <Box
@@ -57,8 +58,21 @@ export default function OrderFooter(data) {
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
-              <Button onPress={handleClick}>取消</Button>
-              <Button onPress={cancelOrder}>确认退款</Button>
+              <Button size="xs" colorScheme="danger" onPress={handleClick}>
+                取消
+              </Button>
+              <Button
+                size="xs"
+                colorScheme="danger"
+                onPress={() => {
+                  cancelOrder();
+                  // navigation.navigate('AdminOrderList', {
+                  //   // userId: userId,
+                  //   // group: item,
+                  // });
+                }}>
+                确认退款
+              </Button>
             </Button.Group>
           </Modal.Footer>
         </Modal.Content>

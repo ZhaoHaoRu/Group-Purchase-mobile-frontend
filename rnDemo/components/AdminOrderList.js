@@ -106,6 +106,8 @@ const AdminOrderList = ({route, navigation}) => {
   React.useEffect(() => {
     onGetOrders();
     console.log('check orderId in use effect', orderId);
+    console.log('adminorderlist1', route.params);
+
   }, []);
 
   return (

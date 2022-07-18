@@ -59,7 +59,13 @@
 // export default CreateGroupScreen;
 //
 
-import {View, Dimensions, StyleSheet, TextInput} from 'react-native';
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  TextInput,
+  ImageBackground,
+} from 'react-native';
 import React, {useState} from 'react';
 import {
   Box,
@@ -81,11 +87,17 @@ import {
   Checkbox,
   IconButton,
   Icon,
+  Pressable,
+  Modal,
+  Center,
 } from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {register} from '../service/userService';
 import {createGroup} from '../service/groupService';
 import {storage} from '../utils/storage';
+import ImagePicker from 'react-native-image-crop-picker';
+import DatePicker from 'react-native-date-picker';
+
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -93,18 +105,33 @@ const CreateGroupScreen = ({navigation}) => {
   const [list, setList] = React.useState([]);
   const [goodsInfo, setGoodsInfo] = React.useState('');
   const [goodsName, setGoodsName] = React.useState('');
-  const [inventory, setInventory] = React.useState(0);
-  const [picture, setPicture] = React.useState('');
-  const [price, setPrice] = React.useState(0);
+  const [inventory, setInventory] = React.useState('');
+  // product picture
+  const [picture, setPicture] = React.useState(
+    'http://assets.stickpng.com/thumbs/584abf102912007028bd9332.png',
+  );
+  const [price, setPrice] = React.useState('');
   const [delivery, setDelivery] = React.useState('');
   const [duration, setDuration] = React.useState('');
   const [groupInfo, setGroupInfo] = React.useState('');
   const [groupTitle, setGroupTitle] = React.useState('');
+  const [groupType, setGroupType] = React.useState(''); // 团购类型（水果鲜花、肉禽蛋等）
   const [startTime, setStartTime] = React.useState('');
   const toast = useToast();
   const [state, setState] = React.useState('');
   const [formData, setData] = React.useState({});
   const [errors, setErrors] = React.useState({});
+  // groupImage
+  const [image, setImage] = React.useState(
+    'http://assets.stickpng.com/thumbs/584abf102912007028bd9332.png',
+  );
+  // easier to determine group or product's picture
+  const [option, setOption] = React.useState('');
+  // const [image2, setImage2] = React.useState('http://assets.stickpng.com/thumbs/584abf102912007028bd9332.png')
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+  const [showDate, setShowDate] = React.useState('请选择团购开始时间');
+  var correctDate;
   const validate = () => {
     if (formData.name === undefined) {
       setErrors({...errors, name: '请填写团购名称'});
@@ -155,7 +182,14 @@ const CreateGroupScreen = ({navigation}) => {
     });
   };
 
-  const handleCreate = (form, lst, durat, star, deli, sta) => {
+  const handleCreate = (form, lst, durat, star, deli, sta, grpType) => {
+    if ( lst === '' || duration === '' || star === '' || deli === '' || sta === '' || grpType === '' ) {
+      toast.show({
+        title: 'Please Fill In The Details',
+        status: 'warning',
+      });
+      return;
+    }
     let stat = 0;
     storage.load('userId', userId => {
       if (sta === 'yes') {
@@ -174,6 +208,7 @@ const CreateGroupScreen = ({navigation}) => {
           delivery: deli,
           userId: userId,
           state: stat,
+          groupType: grpType,
         };
       });
       const D = {
@@ -181,16 +216,89 @@ const CreateGroupScreen = ({navigation}) => {
         groupTitle: form.groupTitle,
         picture: form.picture,
         goods: lst,
-        duration: '1',
-        startTime: '2022-07-07 20:00:00',
+        duration: durat,
+        startTime: star,
         delivery: deli,
         userId: userId,
         state: stat,
-        category: '肉禽蛋',
+        category: grpType,
       };
       console.log('create Group data:', D); // data可以直接发送给后端*/
       createGroup(D, callback);
     });
+  };
+
+  // const [kdate, setKdate] = useState('');
+
+  // for (let i = 0; i < 9; i++) {
+  //     setKdate(() => {
+  //       kdate[i] = showDate[i];
+  //     });
+  // }
+
+  // console.log("kdate ----", kdate);
+
+  //   function getIndexOfJson(json, index) {
+  //     /*json = json.substring(1, json.length - 1);*/
+  //     var beginindex = 0;
+  //     var endindex = findStrIndex(json, "T", index);
+  //     json = json.substring(beginindex, endindex);
+  //     return json;
+  // }
+
+  const takePhotoFromCamera = () => {
+    console.log('take photo from camera');
+    setModalVisible(!modalVisible);
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      if (option === 'group') {
+        setImage(image.path);
+        setData({...formData, picture: image.path});
+      } else if (option === 'product') {
+        setPicture(image.path);
+      }
+      console.log('camera image:', image);
+      console.log('image path: ', image.path);
+    });
+  };
+
+  const choosePhotoFromLibrary = () => {
+    console.log('choose photo from library');
+    setModalVisible(!modalVisible);
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      if (option === 'group') {
+        setImage(image.path);
+        setData({...formData, picture: image.path});
+      } else if (option === 'product') {
+        setPicture(image.path);
+      }
+      console.log('album image:', image);
+    });
+  };
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+
+  const handleClick = data => {
+    console.log('handle click, data ==>', data);
+    setModalVisible(!modalVisible);
+    setOption(data);
+  };
+
+  const handleRefresh = () => {
+    setGoodsInfo('');
+    setGoodsName('');
+    setInventory('');
+    setPrice('');
+    setPicture(
+      'http://assets.stickpng.com/thumbs/584abf102912007028bd9332.png',
+    );
   };
 
   return (
@@ -258,12 +366,53 @@ const CreateGroupScreen = ({navigation}) => {
               orientation="horizontal"
             />
             <FormControl isRequired>
-              <Input
+              {/* <Input
                 placeholder="图片链接"
                 variant="unstyled"
                 borderColor={'transparent'}
                 onChangeText={value => setData({...formData, picture: value})}
-              />
+              /> */}
+              {/* <Pressable onPress={takePhotoFromCamera}>
+              <Text ml="3" mt="3" mb="2" fontSize={"xs"} opacity="0.45">
+              图片链接
+              </Text>
+              </Pressable> */}
+              <HStack>
+                {/* <Text ml="3" mt="3" mb="2" fontSize={"xs"} opacity="0.45">
+              团购图片
+              </Text> */}
+                <Pressable
+                  onPress={() => {
+                    console.log('pressed');
+                    {
+                      handleClick('group');
+                    }
+                    // choosePhotoFromLibrary();
+                    // setData({...formData, picture: image.path});
+                  }}>
+                  <ImageBackground
+                    source={{
+                      uri: image,
+                    }}
+                    style={{
+                      height: 50,
+                      width: 50,
+                      marginTop: 3,
+                      marginLeft: 10,
+                    }}
+                    imageStyle={{borderRadius: 15}}
+                    ml="3"
+                    mt="2">
+                    {/* <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                </View> */}
+                  </ImageBackground>
+                </Pressable>
+              </HStack>
             </FormControl>
           </VStack>
         </Box>
@@ -280,7 +429,7 @@ const CreateGroupScreen = ({navigation}) => {
               <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
                 团购商品
               </Heading>
-              <Spacer />
+              {/* <Spacer />
               <Image
                 // mt="15%"
                 mr="4"
@@ -289,7 +438,7 @@ const CreateGroupScreen = ({navigation}) => {
                 source={require('../image/bin.png')}
                 size="18px"
                 alt="map"
-              />
+              /> */}
             </HStack>
             <Divider
               bg="darkText"
@@ -315,8 +464,9 @@ const CreateGroupScreen = ({navigation}) => {
                   variant="unstyled"
                   borderColor={'transparent'}
                   // mx={0.18 * w}
-                  onChangeText={value => setGoodsName(value)}
-                />
+                  onChangeText={value => setGoodsName(value)}>
+                  {goodsName}
+                </Input>
               </FormControl>
             </HStack>
             <Divider
@@ -341,8 +491,9 @@ const CreateGroupScreen = ({navigation}) => {
                   variant="unstyled"
                   borderColor={'transparent'}
                   // mx={0.1 * w}
-                  onChangeText={value => setGoodsInfo(value)}
-                />
+                  onChangeText={value => setGoodsInfo(value)}>
+                  {goodsInfo}
+                </Input>
               </FormControl>
             </HStack>
             <Divider
@@ -361,7 +512,37 @@ const CreateGroupScreen = ({navigation}) => {
                 }}>
                 商品图片
               </FormControl.Label>
-              <FormControl isRequired>
+              <Pressable
+                onPress={() => {
+                  console.log('pressed');
+                  {
+                    handleClick('product');
+                  }
+                }}>
+                <ImageBackground
+                  source={{
+                    uri: picture,
+                  }}
+                  style={{
+                    height: 50,
+                    width: 50,
+                    marginTop: 3,
+                    marginLeft: 30,
+                    marginBottom: 3,
+                  }}
+                  imageStyle={{borderRadius: 15}}
+                  ml="3"
+                  mt="2">
+                  {/* <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                </View> */}
+                </ImageBackground>
+              </Pressable>
+              {/* <FormControl isRequired>
                 <Input
                   // position= 'absolute'
                   placeholder="      添加图片"
@@ -371,15 +552,15 @@ const CreateGroupScreen = ({navigation}) => {
                   // mx={0.1 * w}
                   onChangeText={value => setPicture(value)}
                 />
-              </FormControl>
-              <Spacer />
+              </FormControl> */}
+              {/* <Spacer />
               <Image
                 mt="5%"
                 opacity={0.3}
                 source={require('../image/arrowR.png')}
                 size="18px"
                 alt="arrowR"
-              />
+              /> */}
             </HStack>
             <Divider
               bg="darkText"
@@ -403,8 +584,9 @@ const CreateGroupScreen = ({navigation}) => {
                   variant="unstyled"
                   borderColor={'transparent'}
                   // mx={0.185 * w}
-                  onChangeText={value => setPrice(value)}
-                />
+                  onChangeText={value => setPrice(value)}>
+                  {price}
+                </Input>
               </FormControl>
             </HStack>
             <Divider
@@ -429,8 +611,9 @@ const CreateGroupScreen = ({navigation}) => {
                   variant="unstyled"
                   borderColor={'transparent'}
                   // mx={0.185 * w}
-                  onChangeText={value => setInventory(value)}
-                />
+                  onChangeText={value => setInventory(value)}>
+                  {inventory}
+                </Input>
               </FormControl>
             </HStack>
             <Stack
@@ -452,11 +635,12 @@ const CreateGroupScreen = ({navigation}) => {
                 width={0.9 * w}
                 onPress={() => {
                   addItem(goodsInfo, goodsName, inventory, picture, price);
-                  setGoodsInfo('');
-                  setGoodsName('');
-                  setInventory('');
-                  setPrice('');
-                  setPicture('');
+                  handleRefresh();
+                  // setGoodsInfo('');
+                  // setGoodsName('');
+                  // setInventory('');
+                  // setPrice('');
+                  // setPicture('');
                 }}>
                 + 增添此商品
               </Button>
@@ -555,7 +739,8 @@ const CreateGroupScreen = ({navigation}) => {
                 }}>
                 开始时间
               </FormControl.Label>
-              <Select
+              {/* <DatePicker date={date} onDateChange={setDate} /> */}
+              {/* <Select
                 selectedValue={startTime}
                 minWidth="95%"
                 mx="0.5"
@@ -574,7 +759,44 @@ const CreateGroupScreen = ({navigation}) => {
                 <Select.Item label="8pm" value="8pm" />
                 <Select.Item label="10pm" value="10pm" />
                 <Select.Item label="12am" value="12am" />
-              </Select>
+              </Select> */}
+              {/* <DatePicker date={date} onDateChange={setDate} /> */}
+              <DatePicker
+                modal
+                open={open}
+                date={date}
+                onConfirm={date => {
+                  setOpen(false);
+                  setDate(date);
+                  console.log('date--', date);
+                  setShowDate(JSON.stringify(date));
+                  console.log('showdate--', showDate);
+                  // console.log("kdate!!!!",getIndexOfJson(date, 0));
+                  var kdate = JSON.stringify(date).substring(1, 11);
+                  console.log('kdate!!!!', kdate);
+                  var ktime = JSON.stringify(date).substring(12, 20);
+                  console.log('ktime!!!!', ktime);
+                  const combined = kdate + ' ' + ktime;
+                  console.log('combined!!!!', combined);
+                  correctDate = combined;
+                  console.log('correctDate!!!!', correctDate);
+                  setStartTime(correctDate);
+                  console.log('startTime!!!!', startTime);
+                }}
+                onCancel={() => {
+                  setOpen(false);
+                }}
+              />
+              <Pressable
+                py="3"
+                opacity={0.45}
+                ml="6"
+                // alignItems="center"
+                onPress={() => {
+                  setOpen(true);
+                }}>
+                <Text fontSize="xs">{showDate}</Text>
+              </Pressable>
             </HStack>
             <Divider
               bg="darkText"
@@ -602,15 +824,46 @@ const CreateGroupScreen = ({navigation}) => {
                 height={'10'}
                 borderColor={'transparent'}
                 onValueChange={itemValue => setDuration(itemValue)}>
-                <Select.Item label="2h" value="2h" />
-                <Select.Item label="4h" value="4h" />
-                <Select.Item label="6h" value="6h" />
-                <Select.Item label="8h" value="8h" />
-                <Select.Item label="10h" value="10h" />
-                <Select.Item label="12h" value="12h" />
-                <Select.Item label="24h" value="24h" />
-                <Select.Item label="48h" value="48h" />
-                <Select.Item label="72h" value="72h" />
+                <Select.Item label="2h" value="2" />
+                <Select.Item label="6h" value="6" />
+                <Select.Item label="10h" value="10" />
+                <Select.Item label="12h" value="12" />
+                <Select.Item label="24h" value="24" />
+                <Select.Item label="48h" value="48" />
+                <Select.Item label="72h" value="72" />
+              </Select>
+            </HStack>
+            <Divider
+              bg="darkText"
+              thickness="1.5"
+              alignSelf={'center'}
+              width={0.9 * w}
+              opacity={0.05}
+              orientation="horizontal"
+            />
+            <HStack ml={4}>
+              <FormControl.Label
+                alignSelf={'center'}
+                _text={{
+                  bold: true,
+                }}>
+                团购类型
+              </FormControl.Label>
+              <Select
+                selectedValue={groupType}
+                minWidth="95%"
+                mx="0.5"
+                accessibilityLabel="请选择团购类型"
+                placeholder="请选择团购类型"
+                alignSelf={'center'}
+                height={'10'}
+                borderColor={'transparent'}
+                onValueChange={itemValue => setGroupType(itemValue)}>
+                <Select.Item label="水果鲜花" value="水果鲜花" />
+                <Select.Item label="肉禽蛋" value="肉禽蛋" />
+                <Select.Item label="水产海鲜" value="水产海鲜" />
+                <Select.Item label="乳品烘培" value="乳品烘培" />
+                <Select.Item label="酒水饮料" value="酒水饮料" />
               </Select>
             </HStack>
             <Divider
@@ -650,6 +903,7 @@ const CreateGroupScreen = ({navigation}) => {
             </HStack>
           </VStack>
         </Box>
+
         <Stack
           mb="2.5"
           mt="1.5"
@@ -665,8 +919,10 @@ const CreateGroupScreen = ({navigation}) => {
           <Button
             size="sm"
             colorScheme="danger"
+            mb={20}
             width={0.9 * w}
             onPress={() => {
+              console.log('pressed create group');
               handleCreate(
                 formData,
                 list,
@@ -674,6 +930,7 @@ const CreateGroupScreen = ({navigation}) => {
                 startTime,
                 delivery,
                 state,
+                groupType,
               );
               /*navigation.replace('QrCode');*/
             }}>
@@ -681,6 +938,41 @@ const CreateGroupScreen = ({navigation}) => {
           </Button>
         </Stack>
       </VStack>
+      <Box
+        width="100%"
+        height="10%"
+        position="absolute"
+        bottom="0"
+        alignSelf="center"
+        borderColor="gray.100"
+        borderTopWidth="0">
+        <Center flex={1} />
+        <Modal isOpen={modalVisible}>
+          <Modal.Content>
+            <Modal.CloseButton onPress={handleClick} />
+            <Modal.Header>提取照片</Modal.Header>
+            <Modal.Body>
+              <Text>请选择相机/从相册获取照片</Text>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button
+                  size="xs"
+                  colorScheme="danger"
+                  onPress={takePhotoFromCamera}>
+                  相机
+                </Button>
+                <Button
+                  size="xs"
+                  colorScheme="danger"
+                  onPress={choosePhotoFromLibrary}>
+                  相册
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+      </Box>
     </ScrollView>
   );
 };

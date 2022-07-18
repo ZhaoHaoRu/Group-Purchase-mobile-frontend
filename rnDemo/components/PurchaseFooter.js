@@ -30,7 +30,7 @@ export default function PurchaseFooter({groupId, userId}) {
     region: '',
   };
   const callback = data => {
-    // console.log("callback data: ", data);
+    console.log("callback data: ", data);
     if (data.status === 1) {
       setStatus(judgeTime(data.data));
       console.log('status: ', status);
@@ -113,7 +113,7 @@ export default function PurchaseFooter({groupId, userId}) {
               // mt={0.005 * h}
               // color="danger.800"
             >
-              {status === 2 ? '团购已结束' : "团购未开始"}
+              {status === 2 ? '团购已结束' : '团购未开始'}
             </Button>
           )}
         </Center>
@@ -123,17 +123,16 @@ export default function PurchaseFooter({groupId, userId}) {
 }
 
 const styles = StyleSheet.create({
-
   cardItemTimeRemainTxt: {
     fontSize: 20,
-    color: '#ee394b'
+    color: '#ee394b',
   },
   container: {
     backgroundColor: '#000',
     padding: 5,
     borderRadius: 5,
     flexDirection: 'row',
-    marginTop:20
+    marginTop: 20,
   },
   text: {
     fontSize: 30,
@@ -151,28 +150,29 @@ const styles = StyleSheet.create({
   },
   //冒号
   colon: {
-    fontSize: 12, color: 'rgba(85, 85, 85, 1)'
+    fontSize: 12,
+    color: 'rgba(85, 85, 85, 1)',
   },
 
-  cardItemMask:{
+  cardItemMask: {
     position: 'absolute',
     top: 15,
-    right:10,
-    backgroundColor: 'transparent'
+    right: 10,
+    backgroundColor: 'transparent',
   },
-  cardItemTimer:{
+  cardItemTimer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cardItemTimerIcon: {
-    width:11,
+    width: 11,
     height: 11,
   },
   cardItem: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
-    backgroundColor:'red',
-    marginTop:20,
+    backgroundColor: 'red',
+    marginTop: 20,
     width: 370,
     height: 370 * 0.65625,
   },

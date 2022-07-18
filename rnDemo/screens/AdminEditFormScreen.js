@@ -215,7 +215,7 @@
 //
 // export default AdminEditFormScreen;
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Box,
   FlatList,
@@ -232,6 +232,7 @@ import {
   useToast,
   Divider,
   Button,
+  Link,
 } from 'native-base';
 import {Dimensions, Pressable, StyleSheet} from 'react-native';
 import {getCreatedGroup, getUserById} from '../service/userService';
@@ -481,13 +482,25 @@ const AdminEditFormScreen = ({route, navigation}) => {
           </Box>
         </Box>
 
-        <Button
-          size="sm"
-          colorScheme="danger"
-          width={0.9 * w}
-          onPress={() => setGroup()}>
-          确认修改
-        </Button>
+        <Link
+          to={{
+            screen: 'AdminGroupList',
+            initial: false,
+            params: {userId: userId},
+          }}>
+          <Button
+            size="sm"
+            colorScheme="danger"
+            width={0.9 * w}
+            onPress={() => {
+              setGroup();
+              navigation.navigate('AdminGroupList', {
+                userId: userId,
+              });
+            }}>
+            确认修改
+          </Button>
+        </Link>
       </Center>
     </NativeBaseProvider>
   );
