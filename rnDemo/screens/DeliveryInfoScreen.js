@@ -17,10 +17,11 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 export default function DeliveryInfoScreen({route, navigation}) {
-  console.log("deliveryInfoScreen")
+  console.log('deliveryInfoScreen');
   const toast = useToast();
   const {userId} = route.params;
   const {groupId} = route.params;
+  const {flag} = route.params;
   const [addresses, setAddresses] = useState([]);
   const addressCallback = data => {
     // console.log('addressCallback:', data);
@@ -42,11 +43,9 @@ export default function DeliveryInfoScreen({route, navigation}) {
   const onPressUse = () => {
     toast.show({
       description: '应用成功！',
-      variant: 'subtle',
       placement: 'top',
     });
-
-  }
+  };
   React.useEffect(() => {
     onGetAddress();
   }, []);
@@ -60,7 +59,7 @@ export default function DeliveryInfoScreen({route, navigation}) {
           收货地址
         </Heading>
       </VStack>
-      <Box w={'100%'}>
+      <Box w={'100%'} h={0.9 * h}>
         <FlatList
           data={addresses}
           renderItem={({item}) => (
@@ -116,20 +115,38 @@ export default function DeliveryInfoScreen({route, navigation}) {
                       收件人：{item.receiver}
                     </Text>
                   </VStack>
-                  <Button
-                    w={0.19 * w}
-                    backgroundColor={'transparent'}
-                    onPress={() => {
-                      /* 1. Navigate to the Details route with params */
-                      onPressUse();
-                      navigation.replace('PaymentDetail', {
-                        groupId: groupId,
-                        userId: userId,
-                        address: item,
-                      });
-                    }}>
-                    <Text color={'gray.700'}>应用</Text>
-                  </Button>
+                  {flag === 2 ? (
+                    <Button
+                      w={0.19 * w}
+                      backgroundColor={'transparent'}
+                      onPress={() => {
+                        /* 1. Navigate to the Details route with params */
+                        onPressUse();
+                        navigation.replace('PaymentDetail', {
+                          groupId: groupId,
+                          userId: userId,
+                          address: item,
+                        });
+                      }}>
+                      <Text color={'gray.700'}>应用</Text>
+                    </Button>
+                  ) : (
+                    <Button
+                      w={0.19 * w}
+                      backgroundColor={'transparent'}
+                      onPress={() => {
+                        /* 1. Navigate to the Details route with params */
+                        onPressUse();
+                        navigation.replace('SecKill', {
+                          props: route.params.props,
+                          userId: userId,
+                          addressId: item.addressId,
+                          address: item,
+                        });
+                      }}>
+                      <Text color={'gray.700'}>应用</Text>
+                    </Button>
+                  )}
                 </HStack>
               </Box>
             </Box>

@@ -48,9 +48,11 @@ allprojects {
             }
         }
         google()
+//        jcenter {url "http://jcenter.bintray.com/"}
         maven { url 'https://www.jitpack.io' }
 
         // ADD THIS
-        maven { url 'https://maven.google.com' }
+//        maven { url 'https://maven.google.com' }
+        maven { url 'https://dl.google.com/dl/android/maven2/' }
     }
 }

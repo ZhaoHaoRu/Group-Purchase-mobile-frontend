@@ -53,16 +53,29 @@ const HomeCard = ({props, userId}) => {
           <Stack height={0.1 * h}>
             <HStack height={0.05 * h}>
               <Box w={0.33 * w} mt={0.02 * w}>
-                <Link
-                  to={{
-                    screen: 'Detail',
-                    initial: false,
-                    params: {props: props, userId: userId},
-                  }}>
-                  <Heading size="md" ml="0" mt={0.02 * h} color="#52525b">
-                    {title}
-                  </Heading>
-                </Link>
+                {props.state === 2 ? (
+                  <Link
+                    to={{
+                      screen: 'SecKill',
+                      initial: false,
+                      params: {props: props, userId: userId, addressId: -1},
+                    }}>
+                    <Heading size="md" ml="0" mt={0.02 * h} color="#52525b">
+                      {title}
+                    </Heading>
+                  </Link>
+                ) : (
+                  <Link
+                    to={{
+                      screen: 'Detail',
+                      initial: false,
+                      params: {props: props, userId: userId},
+                    }}>
+                    <Heading size="md" ml="0" mt={0.02 * h} color="#52525b">
+                      {title}
+                    </Heading>
+                  </Link>
+                )}
               </Box>
               <Box width={0.35 * w} ml={0.05 * w}>
                 <Text

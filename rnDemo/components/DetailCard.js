@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {
   Box,
   Image,
@@ -18,8 +18,9 @@ import {
   Button,
   Center,
   useToast,
+  Input,
 } from 'native-base';
-import {Dimensions} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {timeStamp2String} from '../utils/parseTime';
 import {Link} from '@react-navigation/native';
 
@@ -83,7 +84,9 @@ const CommentCard = () => {
   );
 };
 
-const GoodsCard = ({item, userId, groupId}) => {
+
+
+export const GoodsCard = ({item, userId, groupId}) => {
   const toast = useToast();
   const callback = data => {
     // console.log('callback data:', data);
@@ -114,7 +117,7 @@ const GoodsCard = ({item, userId, groupId}) => {
     addToCart(data, callback);
   };
   return (
-    <Box padding={0.01 * w} borderRadius={'md'} backgroundColor={'gray.100'}>
+    <Box padding={0.01 * w} borderRadius={'md'} backgroundColor={'white'}>
       <HStack alignItems="center" space={3}>
         <Image
           size={0.3 * w}
@@ -166,13 +169,12 @@ const GoodsCard = ({item, userId, groupId}) => {
   );
 };
 
-const DetailCard = ({props, userId}) => {
+const DetailCard = ({props, userId, myAddressId}) => {
   // console.log('detailCard:', props);
   // console.log('detailCard userId:', userId);
   // console.log('user:', props.user.userName);
   const tmpName = props.goods[0].goodsName;
   const startTime = timeStamp2String(props.startTime);
-  console.log('startTime:', startTime);
   const [goodName, setGoodName] = React.useState(props.goods[0].goodsName);
   const [picture, setPicture] = React.useState(props.goods[0].picture);
   const [goodsInfo, setGoodsInfo] = React.useState(props.goods[0].goodsInfo);
@@ -180,6 +182,7 @@ const DetailCard = ({props, userId}) => {
   const [liked, setliked] = React.useState(0);
   const [collected, setColleted] = React.useState(0);
   const toast = useToast();
+
 
   const collectCallback = data => {
     console.log('collectCallback:', data);
@@ -210,9 +213,11 @@ const DetailCard = ({props, userId}) => {
 
   const onCollectGroup = () => {
     const data = {groupId: parseInt(props.groupId), userId: parseInt(userId)};
-    console.log('collectGroup:', data);
+    // console.log('collectGroup:', data);
     collectGroup(data, collectCallback);
   };
+
+
   console.log('picture:', picture);
   console.log('goodsInfo:', goodsInfo);
   return (
@@ -228,7 +233,7 @@ const DetailCard = ({props, userId}) => {
               height={0.4 * h}
               justifyContent="center"
               borderRadius="md"
-              backgroundColor="primary.500">
+              backgroundColor="white">
               <Image
                 source={{
                   uri: props.picture,
@@ -242,7 +247,7 @@ const DetailCard = ({props, userId}) => {
               width={w}
               height={0.4 * h}
               justifyContent="center"
-              backgroundColor="primary.500">
+              backgroundColor="white">
               <Image
                 source={{
                   uri: picture,
@@ -255,11 +260,19 @@ const DetailCard = ({props, userId}) => {
           </ScrollView>
         </Box>
         <Box backgroundColor="gray.800">
-          <Stack p="5%" space={4} backgroundColor="gray.50">
+          <Stack
+            paddingLeft="2%"
+            paddingRight={'2%'}
+            paddingY={'5%'}
+            space={4}
+            backgroundColor="gray.50">
             <HStack
               space={2}
+              paddingLeft="3%"
+              w={0.95 * w}
               justifyContent="space-between"
-              backgroundColor="gray.50">
+              borderRadius={'md'}
+              backgroundColor="white">
               <Stack space={1} h={0.2 * h} w={0.7 * w}>
                 <Heading size="md" ml="-1" bold>
                   {props.groupTitle}
@@ -372,15 +385,20 @@ const DetailCard = ({props, userId}) => {
               </VStack>
             </HStack>
 
-            <Box>
-              <Heading color="danger.600" fontWeight={'normal'} fontSize="18">
+            <Box
+              paddingLeft="3%"
+              w={0.95 * w}
+              backgroundColor={'white'}
+              borderRadius={'md'}>
+              <Heading fontWeight={'bold'} fontSize={'lg'} mb={0.02 * h}>
                 团购信息
               </Heading>
               <Box
-                backgroundColor={'gray.100'}
+                backgroundColor={'white'}
                 w={0.9 * w}
                 borderRadius={'md'}
-                padding={0.02 * w}>
+                // padding={0.02 * w}
+              >
                 <VStack space={0}>
                   <Text fontWeight="400">团购开始时间: {startTime}</Text>
                   <Text fontWeight="400" mt={0.02 * h}>
@@ -396,7 +414,11 @@ const DetailCard = ({props, userId}) => {
               </Box>
             </Box>
             <Box>
-              <Heading color="danger.600" fontWeight={'normal'} fontSize="18">
+              <Heading
+                color="danger.600"
+                fontWeight={'normal'}
+                fontSize="18"
+                paddingLeft="3%">
                 商品
               </Heading>
               <FlatList
@@ -413,17 +435,24 @@ const DetailCard = ({props, userId}) => {
                 keyExtractor={item => item.goodsId}
               />
             </Box>
-            <HStack
-              alignItems="center"
-              space={4}
-              justifyContent="space-between">
-              <HStack alignItems="center" />
-            </HStack>
           </Stack>
         </Box>
       </Box>
     </Box>
   );
 };
+
+export const styles = StyleSheet.create({
+  baseText: {
+    fontFamily: 'Cochin',
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  changeButton: {
+    backgroundColor: 'transparent',
+  },
+});
 
 export default DetailCard;

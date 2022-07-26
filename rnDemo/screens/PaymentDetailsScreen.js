@@ -181,6 +181,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
                   navigation.navigate('Address', {
                     userId: userId,
                     groupId: groupId,
+                    flag: 2,
                   });
                 }}>
                 <Text fontSize={'xs'} color={'gray.400'}>
