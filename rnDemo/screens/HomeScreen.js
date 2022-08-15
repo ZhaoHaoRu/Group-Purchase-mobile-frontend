@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import {Dimensions} from 'react-native';
+import {ActivityIndicator, Dimensions, RefreshControl} from 'react-native';
 import {
   Center,
   ScrollView,
@@ -42,6 +42,7 @@ const HomeScreen = ({navigation}) => {
   const [Id, setId] = useState(0);
   const [groupAfterFiltrated, setGroupAfterFiltrated] = useState([]);
   let [service, setService] = React.useState('');
+  let [defValue, setDefValue] = React.useState('allCollectedGroups');
   const [searchInput, setSearchInput] = useState('');
   // const [checkState, setCheckState] = useState(1); // 0 : don't show, 1 : show
 
@@ -49,6 +50,8 @@ const HomeScreen = ({navigation}) => {
   const [status, setStatus] = useState(1);
   const [grpSelected, setGrpSelected] = useState([]);
   // const [triggered, setTrigerred] = useState(0);
+
+  const [refreshing, setRefreshing] = useState(true);
 
   const getColGroups = data => {
     storage.load('userId', data => {
@@ -60,6 +63,8 @@ const HomeScreen = ({navigation}) => {
   };
 
   const callback = data => {
+    setRefreshing(false);
+
     if (data.status === 0) {
       setGroups(data.data);
       // setOri(data.data);
@@ -89,6 +94,11 @@ const HomeScreen = ({navigation}) => {
     // }
   };
 
+  const gp = () => {
+    getColGroups();
+    sortGroup(defValue);
+  };
+
   // 获取当前用户
   React.useEffect(() => {
     // getGroupById(parseInt(grpId), callback2);
@@ -98,8 +108,11 @@ const HomeScreen = ({navigation}) => {
     // }, 1000);
 
     // if (triggered === 1) {
-      getColGroups();
-      // setTrigerred(0);
+
+    getColGroups();
+    // sortGroup(defValue);
+    // gp();
+    // setTrigerred(0);
     // }
 
     // storage.load('userId', data => {
@@ -163,17 +176,30 @@ const HomeScreen = ({navigation}) => {
     console.log('groups: ', groups);
     console.log('ori: ', ori);
     setService(data);
+
     if (data === 'timeOrder') {
       setGroups(sortByKey(groups, 'startTime'));
+      setGrpSelected(sortByKey(grpSelected, 'startTime'));
       setGroupAfterFiltrated(sortByKey(groupAfterFiltrated, 'startTime'));
+    } else if (data === '') {
+      setGrpSelected(groups);
+    } else if (data === 'allCollectedGroups') {
+      // setGroups(sortByKeyReverse(groups, 'startTime'));
+      setGrpSelected(groups);
+      console.log('check!!', groups);
+      // setGroupAfterFiltrated(
+      //   sortByKeyReverse(groupAfterFiltrated, 'startTime'),
+      // );
     } else if (data === 'timeReverseOrder') {
       setGroups(sortByKeyReverse(groups, 'startTime'));
+      setGrpSelected(sortByKeyReverse(grpSelected, 'startTime'));
       console.log('check!!', groups);
       setGroupAfterFiltrated(
         sortByKeyReverse(groupAfterFiltrated, 'startTime'),
       );
     } else if (data === 'groupName') {
       setGroups(sortByKeyReverse(groups, 'groupTitle'));
+      setGrpSelected(sortByKeyReverse(grpSelected, 'groupTitle'));
       setGroupAfterFiltrated(
         sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
       );
@@ -213,6 +239,7 @@ const HomeScreen = ({navigation}) => {
         }
       });
       setGroups(filteredData);
+      setGrpSelected(filteredData);
     } else if (data === 'futureGroups') {
       console.log('future group');
 
@@ -230,6 +257,7 @@ const HomeScreen = ({navigation}) => {
         }
       });
       setGroups(filteredData);
+      setGrpSelected(filteredData);
       // setGroups(sortByKeyReverse(groups, 'groupTitle'));
       // setGroupAfterFiltrated(
       //   sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
@@ -251,6 +279,7 @@ const HomeScreen = ({navigation}) => {
         }
       });
       setGroups(filteredData);
+      setGrpSelected(filteredData);
       // setGroups(sortByKeyReverse(groups, 'groupTitle'));
       // setGroupAfterFiltrated(
       //   sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
@@ -258,11 +287,14 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+
   if (groups != []) {
     // console.log('after search array:', groupAfterFiltrated.length);
     return (
       <>
         <Center>
+          {refreshing ? <ActivityIndicator /> : null}
+
           <HStack>
             <VStack
               my={0.05 * w}
@@ -319,6 +351,9 @@ const HomeScreen = ({navigation}) => {
               </Box>
             </VStack>
           </HStack>
+
+          {/* <RefreshControl refreshing={refreshing}  /> */}
+          {/* </ScrollView> */}
         </Center>
         <Flex
           direction="column"
@@ -330,7 +365,6 @@ const HomeScreen = ({navigation}) => {
                 ListHeaderComponent={
                   <>
                     {/*SearchBar的部分*/}
-
                     <Center
                       width={w}
                       height={0.35 * h}
@@ -343,6 +377,7 @@ const HomeScreen = ({navigation}) => {
                       <Box ml={0.6 * w} h={'auto'} w={0.35 * w} mt={-0.04 * h}>
                         <Select
                           selectedValue={service}
+                          defaultValue={defValue}
                           width={0.32 * w}
                           fontSize={'2xs'}
                           height={0.04 * h}
@@ -353,9 +388,16 @@ const HomeScreen = ({navigation}) => {
                             endIcon: <CheckIcon size="1" />,
                           }}
                           onValueChange={itemValue => {
+                            // sortGroup("allGroupsCollected");
+                            console.log('itemvalue1: ', itemValue);
+                            console.log('defvalue: ', defValue);
                             sortGroup(itemValue);
                             // setTrigerred(1);
                           }}>
+                          <Select.Item
+                            label="收藏团购"
+                            value="allCollectedGroups"
+                          />
                           <Select.Item label="秒杀团购" value="fastGroups" />
                           <Select.Item
                             label="有效的团购"
@@ -401,6 +443,7 @@ const HomeScreen = ({navigation}) => {
                       <Box ml={0.6 * w} h={'auto'} w={0.35 * w} mt={-0.04 * h}>
                         <Select
                           selectedValue={service}
+                          defaultValue={defValue}
                           width={0.32 * w}
                           fontSize={'2xs'}
                           height={0.04 * h}
@@ -410,7 +453,15 @@ const HomeScreen = ({navigation}) => {
                             bg: 'danger.200',
                             endIcon: <CheckIcon size="1" />,
                           }}
-                          onValueChange={itemValue => sortGroup(itemValue)}>
+                          onValueChange={itemValue => {
+                            console.log('itemvalue2: ', itemValue);
+                            console.log('defvalue:!!!!!!!!!!!!!!!', defValue);
+                            sortGroup(itemValue);
+                          }}>
+                          <Select.Item
+                            label="收藏团购"
+                            value="allCollectedGroups"
+                          />
                           <Select.Item label="秒杀团购" value="fastGroups" />
                           <Select.Item
                             label="有效的团购"
@@ -436,9 +487,9 @@ const HomeScreen = ({navigation}) => {
                   </>
                 }
                 ListFooterComponent={<Box h={0.15 * h} />}
-                data={groups}
+                // data={groups}
                 // data={groupAfterFiltrated}
-                // data = {grpSelected}
+                data={grpSelected}
                 renderItem={({item}) => <HomeCard props={item} userId={Id} />}
                 keyExtractor={item => item.groupId}
               />
@@ -447,6 +498,9 @@ const HomeScreen = ({navigation}) => {
         </Flex>
       </>
     );
+  } else {
+    console.log("groupsssss: ", groups);
+    getColGroups();
   }
 };
 

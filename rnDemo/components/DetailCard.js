@@ -27,6 +27,7 @@ import {Link} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {collectGroup} from '../service/groupService';
 import {addToCart} from '../service/orderService';
+import CountDown from 'react-native-countdown-component';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;

@@ -29,16 +29,29 @@ import {addToCart, getCart} from '../service/orderService';
 import {secKill, getSecKillResult} from '../service/secKillService';
 import {GoodsCard, styles} from '../components/DetailCard';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {judgeTime} from '../utils/judgeTime';
+import {calCountdownTime, judgeTime} from '../utils/judgeTime';
+import CountDown from 'react-native-countdown-component';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const SecKillScreen = ({route, navigation}) => {
   const {props} = route.params;
+  console.log('seckill props:', props);
+
+  // let now = new Date().getTime();
+  // console.log("now judgeTime:", now);
+  const [timeleft, setTimeLeft] = React.useState(0);
+
+  let k = calCountdownTime(props);
+  // setTimeLeft(k);
+  // setTimeLeft (calCountdownTime(props));
+
   const {userId} = route.params;
   // const {myAddressId} = route.params;
   const tmpName = props.goods[0].goodsName;
   const startTime = timeStamp2String(props.startTime);
+  console.log('seckill startTime: ', startTime);
+
   const [goodName, setGoodName] = React.useState(props.goods[0].goodsName);
   const [picture, setPicture] = React.useState(props.goods[0].picture);
   const [goodsInfo, setGoodsInfo] = React.useState(props.goods[0].goodsInfo);
@@ -266,6 +279,8 @@ const SecKillScreen = ({route, navigation}) => {
     getCart(data, cartCallback);
     setStatus(judgeTime(props));
     // updateAddressColumns();
+
+    // setTimeLeft (calCountdownTime(props));
   }, []);
 
   // console.log('seckill status: ', status);
@@ -318,8 +333,21 @@ const SecKillScreen = ({route, navigation}) => {
                 paddingY={'5%'}
                 space={4}
                 backgroundColor="gray.50">
+                <CountDown
+                  size={8}
+                  until={k}
+                  // digitStyle={{
+                  //   backgroundColor: '#fff',
+                  //   borderColor: '#f43f5e',
+                  //   borderWidth: 2,
+                  // }}
+                  timeLabels={{d:"天",h:"時",m: "分", s:"秒"}}
+                  // timeCont = {{justifyContent: "flex-start"}}
+                />
+
                 <HStack
                   space={2}
+                  mt={0}
                   paddingLeft="3%"
                   w={0.95 * w}
                   justifyContent="space-between"
