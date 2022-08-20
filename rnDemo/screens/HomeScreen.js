@@ -489,7 +489,7 @@ const HomeScreen = ({navigation}) => {
                 ListFooterComponent={<Box h={0.15 * h} />}
                 // data={groups}
                 // data={groupAfterFiltrated}
-                data={grpSelected}
+                data={grpSelected.length === 0 ? groups : grpSelected}
                 renderItem={({item}) => <HomeCard props={item} userId={Id} />}
                 keyExtractor={item => item.groupId}
               />

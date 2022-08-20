@@ -199,12 +199,15 @@ const CreateGroupScreen = ({navigation}) => {
       width: 300,
       height: 400,
       cropping: true,
+      includeBase64: true,
     }).then(image => {
       if (option === 'group') {
-        setImage(image.path);
-        setData({...formData, picture: image.path});
+        // setImage(image.path);
+        setData({...formData, picture: `data:${image.mime};base64,${image.data}`});
+        setImage(`data:${image.mime};base64,${image.data}`);
       } else if (option === 'product') {
-        setPicture(image.path);
+        // setPicture(image.path);
+        setPicture(`data:${image.mime};base64,${image.data}`);
       }
       console.log('camera image:', image);
       console.log('image path: ', image.path);
@@ -218,12 +221,15 @@ const CreateGroupScreen = ({navigation}) => {
       width: 300,
       height: 400,
       cropping: true,
+      includeBase64: true,
     }).then(image => {
       if (option === 'group') {
-        setImage(image.path);
-        setData({...formData, picture: image.path});
+        // setImage(image.path);
+        setData({...formData, picture: `data:${image.mime};base64,${image.data}`});
+        setImage(`data:${image.mime};base64,${image.data}`);
       } else if (option === 'product') {
-        setPicture(image.path);
+        // setPicture(image.path);
+        setPicture(`data:${image.mime};base64,${image.data}`);
       }
       console.log('album image:', image);
     });
