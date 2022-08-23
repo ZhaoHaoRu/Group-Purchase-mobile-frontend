@@ -16,7 +16,7 @@ export const getGroupById = (data, callback) => {
 
 export const collectGroup = (data, callback) => {
   const url = `${config.backendUrl}/group/collectGroup?userId=${data.userId}&groupId=${data.groupId}`;
-  // console.log('collectGroup data:', data);
+  console.log('collectGroup data:', url);
   postRequest(url, data, callback);
 };
 

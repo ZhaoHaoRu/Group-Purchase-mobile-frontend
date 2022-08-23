@@ -1,8 +1,13 @@
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import * as React from 'react';
 import {Text, View, Dimensions, StyleSheet} from 'react-native';
-import {Box} from 'native-base';
+import {Box, HStack, VStack} from 'native-base';
 import {timeStampToDay} from '../utils/parseTime';
+import {recommend} from '../service/userService';
+import {storage} from '../utils/storage';
+import {Link} from '@react-navigation/native';
+import {getCollectedGroups} from '../service/groupService';
+import {useState} from 'react';
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -11,6 +16,7 @@ class BestSellerCarousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userId: this.props.userId,
       // 这个就是传入的数据，如果是请求后台的数据的话，只要和下面这个对象数组格式保持一致就好
       entries: [
         {
@@ -35,19 +41,59 @@ class BestSellerCarousel extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const callback = data => {
+      console.log('recommend data: ', data);
+      if (data.status === 0) {
+        let tmp = data.data;
+        tmp.map((o,i)=>{
+          tmp[i]['userId'] = this.state.userId;
+        });
+        this.setState({entries: tmp});
+        console.log('this.state.entries: ', this.state.entries);
+      }
+    };
+    storage.load('userId', data => {
+      const request = {userId: parseInt(data)};
+      this.setState({userId: parseInt(data)});
+      console.log('userId here:', request);
+      console.log('data data: ', request);
+      recommend(request, callback);
+    });
+  }
+
   _renderItem({item, index}, parallaxProps) {
     return (
       <View style={styles.item}>
         <ParallaxImage
-          source={{uri: item.illustration}}
+          source={{uri: item.picture}}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}
           {...parallaxProps}
         />
         <Text style={styles.title} numberOfLines={2}>
-          {item.title}
+          {item.groupTitle}
         </Text>
+        <Box
+          width={0.21 * w}
+          height={0.05 * w}
+          ml={'-0.1' * w}
+          position={'absolute'}
+          bottom={'5'}>
+          {item.userId === 0 ? (
+            <Text style={styles.link}>等待一下</Text>
+          ) : (
+            <Link
+              to={{
+                screen: 'Detail',
+                initial: false,
+                params: {props: item, userId: item.userId},
+              }}>
+              <Text style={styles.link}>进去看看</Text>
+            </Link>
+          )}
+        </Box>
       </View>
     );
   }
@@ -58,7 +104,7 @@ class BestSellerCarousel extends React.Component {
     return (
       <View style={styles.carousel_container}>
         <Box ml={0.1 * w}>
-          <Text style={styles.title_2}>今日热门团购</Text>
+          <Text style={styles.title_2}>猜你喜欢</Text>
         </Box>
         <Carousel
           sliderWidth={w}
@@ -112,6 +158,10 @@ const styles = StyleSheet.create({
     height: 45,
     lineHeight: 45,
     fontSize: 20,
+  },
+  link: {
+    fontSize: 12,
+    color: '#9f1239',
   },
   imageContainer: {
     flex: 1,

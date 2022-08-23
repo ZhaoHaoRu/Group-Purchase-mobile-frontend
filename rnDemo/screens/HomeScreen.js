@@ -64,9 +64,10 @@ const HomeScreen = ({navigation}) => {
 
   const callback = data => {
     setRefreshing(false);
-
+    // console.log('initial group: ', data);
     if (data.status === 0) {
       setGroups(data.data);
+      console.log('initial group: ', groups);
       // setOri(data.data);
     }
   };
@@ -114,13 +115,13 @@ const HomeScreen = ({navigation}) => {
     // gp();
     // setTrigerred(0);
     // }
-
-    // storage.load('userId', data => {
-    //   setId(data);
-    //   // console.log('userId:', data);
-    //   const request = {userId: data};
-    //   getCollectedGroups(request, callback);
-    // });
+    // TODO: 不理解这里为啥要删
+    storage.load('userId', data => {
+      setId(data);
+      console.log('userId here:', data);
+      const request = {userId: data};
+      getCollectedGroups(request, callback);
+    });
     // setGroupAfterFiltrated(groupAfterFiltrated);
   }, []);
 
@@ -372,7 +373,7 @@ const HomeScreen = ({navigation}) => {
                         color: 'coolGray.800',
                       }}
                       mt={0.05 * h}>
-                      <BestSellerCarousel />
+                      <BestSellerCarousel userId={Id} />
                       {/*根据时间顺序和逆序排序*/}
                       <Box ml={0.6 * w} h={'auto'} w={0.35 * w} mt={-0.04 * h}>
                         <Select
@@ -454,8 +455,8 @@ const HomeScreen = ({navigation}) => {
                             endIcon: <CheckIcon size="1" />,
                           }}
                           onValueChange={itemValue => {
-                            console.log('itemvalue2: ', itemValue);
-                            console.log('defvalue:!!!!!!!!!!!!!!!', defValue);
+                            // console.log('itemvalue2: ', itemValue);
+                            // console.log('defvalue:!!!!!!!!!!!!!!!', defValue);
                             sortGroup(itemValue);
                           }}>
                           <Select.Item

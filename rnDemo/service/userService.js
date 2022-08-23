@@ -35,4 +35,10 @@ export const getCreatedGroup = (data, callback) => {
   const url = `${config.backendUrl}/user/getCreatedGroup?userId=${data.userId}`;
   console.log("getCreatedGroup:", url);
   getRequest(url, data, callback);
-}
+};
+
+export const recommend = (data, callback) => {
+  const url = `${config.backendUrl}/user/recommend?userId=${data.userId}`;
+  console.log("recommend:", url);
+  getRequest(url, data, callback);
+};

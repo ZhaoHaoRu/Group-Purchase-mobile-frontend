@@ -196,7 +196,7 @@ const CreateGroupScreen = ({navigation}) => {
     console.log('take photo from camera');
     setModalVisible(!modalVisible);
     ImagePicker.openCamera({
-      width: 300,
+      width: 400,
       height: 400,
       cropping: true,
       includeBase64: true,
@@ -218,8 +218,8 @@ const CreateGroupScreen = ({navigation}) => {
     console.log('choose photo from library');
     setModalVisible(!modalVisible);
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      width: 400,
+      height: 300,
       cropping: true,
       includeBase64: true,
     }).then(image => {

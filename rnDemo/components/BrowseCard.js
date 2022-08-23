@@ -7,7 +7,7 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const BrowseCard = ({props, userId}) => {
-  console.log('browseCard:', props, 'and userId: ', userId);
+  // console.log('browseCard:', props, 'and userId: ', userId);
   let title = props.groupTitle;
   if (props.groupTitle.length > 9) {
     title = props.groupTitle.substring(0, 9) + '...';
