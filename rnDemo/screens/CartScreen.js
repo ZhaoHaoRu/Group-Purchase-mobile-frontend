@@ -1,8 +1,5 @@
 // import { MaterialIcons } from '@expo/vector-icons';
-import {
-  VStack,
-  Heading,
-} from 'native-base';
+import {VStack, Heading} from 'native-base';
 import React, {Component, useState} from 'react';
 import {TextInput, View, StyleSheet, Pressable, Dimensions} from 'react-native';
 import CartList from '../components/CartList';
@@ -27,7 +24,7 @@ export default function CartScreen({route}) {
   React.useEffect(() => {
     onGetCart();
   }, []);
-  console.log('CartScreen props:', cart);
+  // console.log('CartScreen props:', cart);
   return (
     <>
       {/* <View style={styles.container}> */}

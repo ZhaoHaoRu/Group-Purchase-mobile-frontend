@@ -1,4 +1,4 @@
-# 运行方式
+## 运行方式
 
 ```shsh
 npx react-native run-android
@@ -6,4 +6,7 @@ npx react-native run-android
 npm install
 npx react-native run-android
 ```
-
+## 运行前注意事项
+```
+在运行前尽量把团购日期改成当天，因为在主页加载时会把团购标记为过期
+```

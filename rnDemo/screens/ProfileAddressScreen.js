@@ -49,6 +49,7 @@ export default function ProfileAddressScreen({route, navigation}) {
         <Heading fontSize="md" alignSelf={'center'} style={styles.title}>
           收货地址
         </Heading>
+
       </VStack>
       <Box w={'100%'}>
         <FlatList

@@ -59,18 +59,37 @@ const AdminOptions = ({userId}) => {
         </Link>
       </Pressable>
 
-      <Pressable py="3" flex={1} alignItems="center">
-        {/*<Image*/}
-        {/*    mb="5%"*/}
-        {/*    opacity={0.5}*/}
-        {/*    source={require('../image/script.png')}*/}
-        {/*    size="30px"*/}
-        {/*    alt="feedback"*/}
-        {/*/>*/}
-        {/*<Link to={{screen: 'AdminOrderList', initial: false}}>*/}
-        {/*  <Text fontSize="xs">订单管理</Text>*/}
-        {/*</Link>*/}
-      </Pressable>
+        {/*董云鹏*/}
+        <Pressable
+            py="3"
+            flex={1}
+            alignItems="center"
+            /*onPress={() => navigation.replace('QrCodeScanner')}*/
+        >
+            <Image
+                mb="5%"
+                opacity={0.5}
+                source={require('../image/script.png')}
+                size="30px"
+                alt="refresh"
+            />
+            <Link to={{screen: 'OrderView', initial: false}}>
+                <Text fontSize="xs">订单统计</Text>
+            </Link>
+        </Pressable>
+
+      {/*<Pressable py="3" flex={1} alignItems="center">*/}
+      {/*  /!*<Image*!/*/}
+      {/*  /!*    mb="5%"*!/*/}
+      {/*  /!*    opacity={0.5}*!/*/}
+      {/*  /!*    source={require('../image/script.png')}*!/*/}
+      {/*  /!*    size="30px"*!/*/}
+      {/*  /!*    alt="feedback"*!/*/}
+      {/*  /!*>/*/}
+      {/*  /!*<Link to={{screen: 'AdminOrderList', initial: false}}>*!/*/}
+      {/*  /!*  <Text fontSize="xs">订单管理</Text>*!/*/}
+      {/*  /!*</Link>*!/*/}
+      {/*</Pressable>*/}
 
       <Pressable py="3" flex={1} alignItems="center">
         {/* <Image

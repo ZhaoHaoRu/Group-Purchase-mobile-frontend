@@ -30,6 +30,8 @@ import CartScreen from './screens/CartScreen';
 import PaymentDoneScreen from './screens/PaymentDoneScreen';
 import ScannerScreen from './screens/ScannerScreen';
 import SecKillScreen from './screens/SeckillScreen';
+import OrderViewScreen from "./screens/OrderViewScreen";
+import StatisticScreen from "./screens/StatisticScreen";
 import PaymentDetails from './components/PaymentDetails';
 import {LogBox} from 'react-native';
 import OrderDetailScreen from './screens/OrderDetailScreen';
@@ -161,6 +163,7 @@ export default function App() {
           <Route.Screen name="PaymentDetail" component={PaymentDetailsScreen} />
           <Route.Screen name="OrderDetail" component={OrderDetailScreen} />
           <Route.Screen name="OrderScreen" component={OrderScreen} />
+          <Route.Screen name="OrderView" component={StatisticScreen} />
           <Route.Screen name="SecKill" component={SecKillScreen} />
           <Route.Screen name="EditGroup" component={AdminEditFormScreen} />
           {/*<Route.Screen name="AdminOrderList" component={AdminOrderList} />*/}

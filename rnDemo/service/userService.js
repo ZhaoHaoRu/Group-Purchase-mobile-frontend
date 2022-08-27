@@ -39,6 +39,6 @@ export const getCreatedGroup = (data, callback) => {
 
 export const recommend = (data, callback) => {
   const url = `${config.backendUrl}/user/recommend?userId=${data.userId}`;
-  console.log("recommend:", url);
+  // console.log("recommend:", url);
   getRequest(url, data, callback);
 };

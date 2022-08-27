@@ -25,13 +25,13 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const PaymentDetailsScreen = ({route, navigation}) => {
-  console.log('payment details screen -route.params-', route.params);
+  // console.log('payment details screen -route.params-', route.params);
   const {groupId} = route.params;
   const {userId} = route.params;
   const {address} = route.params;
-  console.log('check receiver', address.receiver);
+  // console.log('check receiver', address.receiver);
   // const {receiver} = route.params;
-  console.log('address detail: ', address);
+  // console.log('address detail: ', address);
   let totalPrice = 0;
   const [addressId, setAddressId] = useState(0);
   const [receiver, setReceiver] = useState('我');
@@ -62,7 +62,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
         placement: 'top',
       });
       setAddressId(parseInt(data.data));
-      console.log('addressID:', addressId);
+      // console.log('addressID:', addressId);
     } else {
       toast.show({
         description: '保存失败，请重试！',
@@ -98,7 +98,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
       location: location,
       phone: phone,
     };
-    console.log('onPressSave data:', data);
+    // console.log('onPressSave data:', data);
     setAddress(data, addressCallback);
   };
 
@@ -118,7 +118,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     if (address.addressId != 0) {
       data.addressId = address.addressId;
     }
-    console.log('onPressBuy data:', data);
+    // console.log('onPressBuy data:', data);
     if (address.addressId === 0 && addressId === 0) {
       toast.show({
         description: '新地址还没有保存编辑，保存后重试！',

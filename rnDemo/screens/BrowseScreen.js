@@ -12,6 +12,7 @@ import {
   FlatList,
   Center,
   useToast,
+  Image,
 } from 'native-base';
 import {Dimensions} from 'react-native';
 import Footer from '../components/Footer';
@@ -63,30 +64,42 @@ const RenderScreen = props => {
       getGroupByTag(data, groupCallback);
     }
   }, []);
-  return (
-    <ScrollView>
-    <View>
-      <Flex direction="row" margin="1%" flexWrap="wrap" justifyContent="center">
-        <FlatList
-          data={groups}
-          numColumns={2}
-          renderItem={({item}) => <BrowseCard props={item} userId={Id} />}
-          keyExtractor={item => item.groupId}
-          ListFooterComponent={
-            <>
-              <Divider marginTop={0.01 * h} />
-              <Box textAlign="center" height={0.1 * h}>
-                <Text color="gray.300" size="xl" ml="30%">
-                  没有更多啦！w(ﾟДﾟ)w
-                </Text>
-              </Box>
-            </>
-          }
-        />
-      </Flex>
-    </View>
-    </ScrollView>
-  );
+  if (groups != []) {
+    return (
+      <ScrollView>
+        <View>
+          <Flex
+            direction="row"
+            margin="1%"
+            flexWrap="wrap"
+            justifyContent="center">
+            <FlatList
+              data={groups}
+              numColumns={2}
+              renderItem={({item}) => <BrowseCard props={item} userId={Id} />}
+              keyExtractor={item => item.groupId}
+              ListFooterComponent={
+                <>
+                  <Divider marginTop={0.01 * h} />
+                  <Box textAlign="center" height={0.1 * h}>
+                    <Text color="gray.300" size="xl" ml="30%">
+                      没有更多啦！w(ﾟДﾟ)w
+                    </Text>
+                  </Box>
+                </>
+              }
+            />
+          </Flex>
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <Center mt={0.3 * h}>
+        <Image source={require('../image/none.png')} h={0.3 * h} w={0.3 * h} />
+      </Center>
+    );
+  }
 };
 
 // TODO SwtichScreen 用于不同类别页面的渲染

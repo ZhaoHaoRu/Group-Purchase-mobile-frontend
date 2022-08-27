@@ -25,7 +25,7 @@ import {timeStamp2String} from '../utils/parseTime';
 import {Link} from '@react-navigation/native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {collectGroup} from '../service/groupService';
+import {collectGroup, judgeCollected} from '../service/groupService';
 import {addToCart} from '../service/orderService';
 import CountDown from 'react-native-countdown-component';
 
@@ -84,8 +84,6 @@ const CommentCard = () => {
     </Box>
   );
 };
-
-
 
 export const GoodsCard = ({item, userId, groupId}) => {
   const toast = useToast();
@@ -181,22 +179,32 @@ const DetailCard = ({props, userId, myAddressId}) => {
   const [goodsInfo, setGoodsInfo] = React.useState(props.goods[0].goodsInfo);
   const [price, setPrice] = React.useState(props.goods[0].price.toFixed(2));
   const [liked, setliked] = React.useState(0);
-  const [collected, setColleted] = React.useState(0);
+  const [collected, setCollected] = React.useState(0);
   const toast = useToast();
 
+  // 添加目前是否是已收藏团购的判断
+  const callback = (data) => {
+    if (data.status == 0) {
+      setCollected(1);
+    }
+  };
+  React.useEffect(() => {
+    const data = {userId: parseInt(userId), groupId: parseInt(props.groupId)};
+    judgeCollected(data, callback);
+  }, []);
 
   const collectCallback = data => {
     console.log('collectCallback:', data);
     if (data.status === 0) {
       if (collected === 0) {
-        setColleted(1);
+        setCollected(1);
         toast.show({
           description: '收藏成功！',
           variant: 'subtle',
           placement: 'top',
         });
       } else {
-        setColleted(0);
+        setCollected(0);
         toast.show({
           description: '取消收藏成功！',
           variant: 'subtle',
@@ -217,7 +225,6 @@ const DetailCard = ({props, userId, myAddressId}) => {
     // console.log('collectGroup:', data);
     collectGroup(data, collectCallback);
   };
-
 
   console.log('picture:', picture);
   console.log('goodsInfo:', goodsInfo);

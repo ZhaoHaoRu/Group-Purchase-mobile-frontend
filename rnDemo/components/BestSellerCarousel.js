@@ -43,14 +43,14 @@ class BestSellerCarousel extends React.Component {
 
   componentDidMount() {
     const callback = data => {
-      console.log('recommend data: ', data);
+      // console.log('recommend data: ', data);
       if (data.status === 0) {
         let tmp = data.data;
         tmp.map((o,i)=>{
           tmp[i]['userId'] = this.state.userId;
         });
         this.setState({entries: tmp});
-        console.log('this.state.entries: ', this.state.entries);
+        // console.log('this.state.entries: ', this.state.entries);
       }
     };
     storage.load('userId', data => {

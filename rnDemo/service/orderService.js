@@ -33,3 +33,8 @@ export const getOrderByGroupId = (data, callback) => {
   const url = `${config.backendUrl}/order/getOrderByGroupId?groupId=${data.groupId}`;
   getRequest(url, data, callback);
 };
+
+export const getOrderInfo = (data, callback) => {
+  const url = `${config.backendUrl}/order/getOrderInfo?userId=${data.userId}`;
+  getRequest(url, data, callback);
+};

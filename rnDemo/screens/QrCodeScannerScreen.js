@@ -34,11 +34,11 @@ const QrCodeScanner = ({navigation}) => {
           buttonPositive: '好吧',
         },
       );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('现在你获得摄像头权限了');
-      } else {
-        console.log('用户没有允许相机权限');
-      }
+      // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      //   console.log('现在你获得摄像头权限了');
+      // } else {
+      //   console.log('用户没有允许相机权限');
+      // }
     } catch (err) {
       console.warn(err);
     }
@@ -63,7 +63,7 @@ const QrCodeScanner = ({navigation}) => {
   };
   const onBarCodeRead = result => {
     const {data} = result; //拿到data
-    console.log('data:', data);
+    // console.log('data:', data);
     //扫码后的操作
     if (data === 'detail') navigation.replace('Detail');
   };

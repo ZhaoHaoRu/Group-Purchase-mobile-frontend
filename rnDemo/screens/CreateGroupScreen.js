@@ -106,7 +106,7 @@ const CreateGroupScreen = ({navigation}) => {
     });
   };
   const callback = data => {
-    console.log('create group callback:', data);
+    // console.log('create group callback:', data);
     setData(data.data);
     const props = data;
     navigation.replace('QrCode', {
@@ -169,7 +169,7 @@ const CreateGroupScreen = ({navigation}) => {
         state: stat,
         category: grpType,
       };
-      console.log('create Group data:', D); // data可以直接发送给后端*/
+      // console.log('create Group data:', D); // data可以直接发送给后端*/
       createGroup(D, callback);
     });
   };
@@ -193,7 +193,7 @@ const CreateGroupScreen = ({navigation}) => {
   // }
 
   const takePhotoFromCamera = () => {
-    console.log('take photo from camera');
+    // console.log('take photo from camera');
     setModalVisible(!modalVisible);
     ImagePicker.openCamera({
       width: 400,
@@ -209,13 +209,13 @@ const CreateGroupScreen = ({navigation}) => {
         // setPicture(image.path);
         setPicture(`data:${image.mime};base64,${image.data}`);
       }
-      console.log('camera image:', image);
-      console.log('image path: ', image.path);
+      // console.log('camera image:', image);
+      // console.log('image path: ', image.path);
     });
   };
 
   const choosePhotoFromLibrary = () => {
-    console.log('choose photo from library');
+    // console.log('choose photo from library');
     setModalVisible(!modalVisible);
     ImagePicker.openPicker({
       width: 400,
@@ -231,14 +231,14 @@ const CreateGroupScreen = ({navigation}) => {
         // setPicture(image.path);
         setPicture(`data:${image.mime};base64,${image.data}`);
       }
-      console.log('album image:', image);
+      // console.log('album image:', image);
     });
   };
 
   const [modalVisible, setModalVisible] = React.useState(false);
 
   const handleClick = data => {
-    console.log('handle click, data ==>', data);
+    // console.log('handle click, data ==>', data);
     setModalVisible(!modalVisible);
     setOption(data);
   };
@@ -335,7 +335,7 @@ const CreateGroupScreen = ({navigation}) => {
               </Text> */}
                 <Pressable
                   onPress={() => {
-                    console.log('pressed');
+                    // console.log('pressed');
                     {
                       handleClick('group');
                     }
@@ -466,7 +466,7 @@ const CreateGroupScreen = ({navigation}) => {
               </FormControl.Label>
               <Pressable
                 onPress={() => {
-                  console.log('pressed');
+                  // console.log('pressed');
                   {
                     handleClick('product');
                   }
@@ -720,20 +720,20 @@ const CreateGroupScreen = ({navigation}) => {
                 onConfirm={date => {
                   setOpen(false);
                   setDate(date);
-                  console.log('date--', date);
+                  // console.log('date--', date);
                   setShowDate(JSON.stringify(date));
-                  console.log('showdate--', showDate);
+                  // console.log('showdate--', showDate);
                   // console.log("kdate!!!!",getIndexOfJson(date, 0));
                   var kdate = JSON.stringify(date).substring(1, 11);
-                  console.log('kdate!!!!', kdate);
+                  // console.log('kdate!!!!', kdate);
                   var ktime = JSON.stringify(date).substring(12, 20);
-                  console.log('ktime!!!!', ktime);
+                  // console.log('ktime!!!!', ktime);
                   const combined = kdate + ' ' + ktime;
-                  console.log('combined!!!!', combined);
+                  // console.log('combined!!!!', combined);
                   correctDate = combined;
-                  console.log('correctDate!!!!', correctDate);
+                  // console.log('correctDate!!!!', correctDate);
                   setStartTime(correctDate);
-                  console.log('startTime!!!!', startTime);
+                  // console.log('startTime!!!!', startTime);
                 }}
                 onCancel={() => {
                   setOpen(false);
@@ -874,7 +874,7 @@ const CreateGroupScreen = ({navigation}) => {
             mb={20}
             width={0.9 * w}
             onPress={() => {
-              console.log('pressed create group');
+              // console.log('pressed create group');
               handleCreate(
                 formData,
                 list,

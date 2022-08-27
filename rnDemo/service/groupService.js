@@ -3,8 +3,8 @@ import {postRequest, getRequest} from '../utils/ajax';
 
 export const getCollectedGroups = (data, callback) => {
   // TODO 等待后端修改完后更换接口
-  // const url = `${config.backendUrl}/group/getCollectedGroups?userId=${data.userId}`;
-  const url = `${config.backendUrl}/group/getAllGroups`;
+  const url = `${config.backendUrl}/group/getCollectedGroups?userId=${data.userId}`;
+  // const url = `${config.backendUrl}/group/getAllGroups`;
   postRequest(url, data, callback);
 };
 
@@ -47,3 +47,7 @@ export const createGroup = (data, callback) => {
   postRequest(url, data, callback);
 };
 
+export const judgeCollected = (data, callback) => {
+  const url = `${config.backendUrl}/group/judgeCollected?userId=${data.userId}&groupId=${data.groupId}`;
+  getRequest(url, data, callback);
+};

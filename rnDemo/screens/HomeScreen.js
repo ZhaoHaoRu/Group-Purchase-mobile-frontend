@@ -14,6 +14,7 @@ import {
   Text,
   Select,
   CheckIcon,
+  Image,
 } from 'native-base';
 import BestSellerCarousel from '../components/BestSellerCarousel';
 import HomeCard from '../components/HomeCard';
@@ -44,6 +45,7 @@ const HomeScreen = ({navigation}) => {
   let [service, setService] = React.useState('');
   let [defValue, setDefValue] = React.useState('allCollectedGroups');
   const [searchInput, setSearchInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   // const [checkState, setCheckState] = useState(1); // 0 : don't show, 1 : show
 
   const [grpId, setGrpId] = useState(0);
@@ -67,15 +69,23 @@ const HomeScreen = ({navigation}) => {
     // console.log('initial group: ', data);
     if (data.status === 0) {
       setGroups(data.data);
-      console.log('initial group: ', groups);
+      // console.log('initial group: ', groups);
       // setOri(data.data);
+      setIsLoading(false);
     }
+  };
+
+  const loadData = () => {
+    setIsLoading(true);
+    console.log('refresh:', isLoading);
+    const request = {userId: Id};
+    getCollectedGroups(request, callback);
   };
 
   const refreshGroups = data => {
     setGroups([]);
 
-    console.log('refresh groups - groups-', groups);
+    // console.log('refresh groups - groups-', groups);
     ori.forEach(ori => {});
   };
 
@@ -83,8 +93,8 @@ const HomeScreen = ({navigation}) => {
     const num = judgeTime(data);
     setStatus(num);
     // setStatus(judgeTime(data));
-    console.log('available group -groupId-', data.groupId);
-    console.log('available group -status-', num);
+    // console.log('available group -groupId-', data.groupId);
+    // console.log('available group -status-', num);
     // filteredData.push(data);
 
     // console.log('callback2 data: ', data.status);
@@ -118,7 +128,7 @@ const HomeScreen = ({navigation}) => {
     // TODO: 不理解这里为啥要删
     storage.load('userId', data => {
       setId(data);
-      console.log('userId here:', data);
+      // console.log('userId here:', data);
       const request = {userId: data};
       getCollectedGroups(request, callback);
     });
@@ -172,10 +182,10 @@ const HomeScreen = ({navigation}) => {
   const sortGroup = data => {
     // refreshGroups();
     getColGroups();
-    console.log('get here!');
-    console.log('data: ', data);
-    console.log('groups: ', groups);
-    console.log('ori: ', ori);
+    // console.log('get here!');
+    // console.log('data: ', data);
+    // console.log('groups: ', groups);
+    // console.log('ori: ', ori);
     setService(data);
 
     if (data === 'timeOrder') {
@@ -187,14 +197,14 @@ const HomeScreen = ({navigation}) => {
     } else if (data === 'allCollectedGroups') {
       // setGroups(sortByKeyReverse(groups, 'startTime'));
       setGrpSelected(groups);
-      console.log('check!!', groups);
+      // console.log('check!!', groups);
       // setGroupAfterFiltrated(
       //   sortByKeyReverse(groupAfterFiltrated, 'startTime'),
       // );
     } else if (data === 'timeReverseOrder') {
       setGroups(sortByKeyReverse(groups, 'startTime'));
       setGrpSelected(sortByKeyReverse(grpSelected, 'startTime'));
-      console.log('check!!', groups);
+      // console.log('check!!', groups);
       setGroupAfterFiltrated(
         sortByKeyReverse(groupAfterFiltrated, 'startTime'),
       );
@@ -210,11 +220,11 @@ const HomeScreen = ({navigation}) => {
         if (
           group.state === 2 // 秒杀
         ) {
-          console.log('fastGroups -status-', status);
+          // console.log('fastGroups -status-', status);
           filteredData.push(group);
         }
       });
-      console.log('filtered data --- ', filteredData);
+      // console.log('filtered data --- ', filteredData);
       setGroupAfterFiltrated(filteredData);
       setGrpSelected(filteredData);
       setGroups(filteredData);
@@ -224,7 +234,7 @@ const HomeScreen = ({navigation}) => {
       //   sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
       // );
     } else if (data === 'availableGroups') {
-      console.log('available group');
+      // console.log('available group');
 
       let filteredData = [];
       groups.forEach(group => {
@@ -234,15 +244,15 @@ const HomeScreen = ({navigation}) => {
           group.state === 1 &&
           num === 1 // 普通团购(未结束)
         ) {
-          console.log('available group -groupId-', group.groupId);
-          console.log('available group -num-', num);
+          // console.log('available group -groupId-', group.groupId);
+          // console.log('available group -num-', num);
           filteredData.push(group);
         }
       });
       setGroups(filteredData);
       setGrpSelected(filteredData);
     } else if (data === 'futureGroups') {
-      console.log('future group');
+      // console.log('future group');
 
       let filteredData = [];
       groups.forEach(group => {
@@ -252,8 +262,8 @@ const HomeScreen = ({navigation}) => {
           group.state === 1 &&
           num === 0 // 普通团购(未开始)
         ) {
-          console.log('available group -groupId-', group.groupId);
-          console.log('available group -num-', num);
+          // console.log('available group -groupId-', group.groupId);
+          // console.log('available group -num-', num);
           filteredData.push(group);
         }
       });
@@ -264,7 +274,7 @@ const HomeScreen = ({navigation}) => {
       //   sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
       // );
     } else if (data === 'endedGroups') {
-      console.log('ended group');
+      // console.log('ended group');
 
       let filteredData = [];
       groups.forEach(group => {
@@ -274,8 +284,8 @@ const HomeScreen = ({navigation}) => {
           group.state === 1 &&
           num === 2 // 普通团购(已结束)
         ) {
-          console.log('available group -groupId-', group.groupId);
-          console.log('available group -num-', num);
+          // console.log('available group -groupId-', group.groupId);
+          // console.log('available group -num-', num);
           filteredData.push(group);
         }
       });
@@ -288,9 +298,8 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-
   if (groups != []) {
-    // console.log('after search array:', groupAfterFiltrated.length);
+    console.log('group in homeScreen :', groups);
     return (
       <>
         <Center>
@@ -390,8 +399,8 @@ const HomeScreen = ({navigation}) => {
                           }}
                           onValueChange={itemValue => {
                             // sortGroup("allGroupsCollected");
-                            console.log('itemvalue1: ', itemValue);
-                            console.log('defvalue: ', defValue);
+                            // console.log('itemvalue1: ', itemValue);
+                            // console.log('defvalue: ', defValue);
                             sortGroup(itemValue);
                             // setTrigerred(1);
                           }}>
@@ -423,11 +432,31 @@ const HomeScreen = ({navigation}) => {
                     </Center>
                   </>
                 }
-                ListFooterComponent={<Box h={0.15 * h} />}
+                ListFooterComponent={
+                  groupAfterFiltrated.length === 0 ? (
+                    <Center>
+                      <Image
+                        source={require('../image/empty.png')}
+                        h={0.21 * h}
+                        w={0.21 * h}
+                      />
+                      <Text color={'gray.500'}>
+                        暂时没有任何收藏团购，
+                      </Text>
+                      <Text color={'gray.500'}>
+                        去“附近拼团”逛逛吧
+                      </Text>
+                    </Center>
+                  ) : (
+                    <Box h={0.15 * h} />
+                  )
+                }
                 // data={groups}
                 data={groupAfterFiltrated}
                 renderItem={({item}) => <HomeCard props={item} userId={Id} />}
                 keyExtractor={item => item.groupId}
+                refreshing={isLoading}
+                onRefresh={loadData}
               />
             ) : (
               <FlatList
@@ -487,12 +516,32 @@ const HomeScreen = ({navigation}) => {
                     </Center>
                   </>
                 }
-                ListFooterComponent={<Box h={0.15 * h} />}
+                ListFooterComponent={
+                  grpSelected.length === 0 && groups.length === 0 ? (
+                    <Center>
+                      <Image
+                        source={require('../image/empty.png')}
+                        h={0.21 * h}
+                        w={0.21 * h}
+                      />
+                      <Text color={'gray.500'}>
+                        暂时没有任何收藏团购，
+                      </Text>
+                      <Text color={'gray.500'}>
+                        去“附近拼团”逛逛吧
+                      </Text>
+                    </Center>
+                  ) : (
+                    <Box h={0.15 * h} />
+                  )
+                }
                 // data={groups}
                 // data={groupAfterFiltrated}
                 data={grpSelected.length === 0 ? groups : grpSelected}
                 renderItem={({item}) => <HomeCard props={item} userId={Id} />}
                 keyExtractor={item => item.groupId}
+                refreshing={isLoading}
+                onRefresh={loadData}
               />
             )}
           </Center>
@@ -500,8 +549,12 @@ const HomeScreen = ({navigation}) => {
       </>
     );
   } else {
-    console.log("groupsssss: ", groups);
-    getColGroups();
+    // console.log("groupsssss: ", groups);
+    return (
+      <Center>
+        <Image source={require('../image/empty.png')} h={0.3 * h} w={0.3 * h} />
+      </Center>
+    );
   }
 };
 

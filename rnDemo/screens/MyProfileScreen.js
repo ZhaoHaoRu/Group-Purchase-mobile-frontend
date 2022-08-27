@@ -46,7 +46,7 @@ const MyProfileScreen = () => {
   const [user, setUser] = useState({});
   const toast = useToast();
   const callback = data => {
-      console.log('user data:', data);
+      // console.log('user data:', data);
     if (data.status === 0) {
       setUser(data.data);
     } else {
@@ -62,7 +62,7 @@ const MyProfileScreen = () => {
   React.useEffect(() => {
     storage.load('userId', data => {
       setId(data);
-      console.log('userId::::', data);
+      // console.log('userId::::', data);
       const request = {userId: parseInt(data)};
       getUserById(request, callback);
     });

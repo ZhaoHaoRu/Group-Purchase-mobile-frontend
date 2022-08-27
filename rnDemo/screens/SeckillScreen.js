@@ -36,7 +36,7 @@ const h = Dimensions.get('window').height;
 
 const SecKillScreen = ({route, navigation}) => {
   const {props} = route.params;
-  console.log('seckill props:', props);
+  // console.log('seckill props:', props);
 
   // let now = new Date().getTime();
   // console.log("now judgeTime:", now);
@@ -50,7 +50,7 @@ const SecKillScreen = ({route, navigation}) => {
   // const {myAddressId} = route.params;
   const tmpName = props.goods[0].goodsName;
   const startTime = timeStamp2String(props.startTime);
-  console.log('seckill startTime: ', startTime);
+  // console.log('seckill startTime: ', startTime);
 
   const [goodName, setGoodName] = React.useState(props.goods[0].goodsName);
   const [picture, setPicture] = React.useState(props.goods[0].picture);
@@ -71,7 +71,7 @@ const SecKillScreen = ({route, navigation}) => {
   let timeId = 0;
 
   const collectCallback = data => {
-    console.log('collectCallback:', data);
+    // console.log('collectCallback:', data);
     if (data.status === 0) {
       if (collected === 0) {
         setColleted(1);
@@ -111,7 +111,7 @@ const SecKillScreen = ({route, navigation}) => {
         placement: 'top',
       });
       setAddressId(parseInt(data.data));
-      console.log('addressID:', addressId);
+      // console.log('addressID:', addressId);
     } else {
       toast.show({
         description: '保存失败，请重试！',
@@ -130,7 +130,7 @@ const SecKillScreen = ({route, navigation}) => {
       location: location,
       phone: phone,
     };
-    console.log('onPressSave data:', data);
+    // console.log('onPressSave data:', data);
     setAddress(data, addressCallback);
   };
 
@@ -226,18 +226,18 @@ const SecKillScreen = ({route, navigation}) => {
   };
 
   const purchaseCallback = data => {
-    console.log('purchaseCallback', data);
+    // console.log('purchaseCallback', data);
     toast.show({
       description: data.data,
       placement: 'top',
     });
     if (data.status === 0) {
       const queryData = {userId: userId, groupId: props.groupId};
-      console.log('click:', click);
+      // console.log('click:', click);
       // 轮询，时间界限设为60s
       timeId = setInterval(() => {
         if (click > 120) {
-          console.log('stop!!!!');
+          // console.log('stop!!!!');
           clearInterval(timeId);
         }
         getSecKillResult(queryData, queryResultCallback);
@@ -260,14 +260,14 @@ const SecKillScreen = ({route, navigation}) => {
       });
       return;
     }
-    console.log('seckill data:', data);
+    // console.log('seckill data:', data);
     secKill(data, purchaseCallback);
   };
 
   React.useEffect(() => {
-    console.log('SecKillScreen addressId:', route.params.addressId);
+    // console.log('SecKillScreen addressId:', route.params.addressId);
     if (route.params.addressId != -1) {
-      console.log(route.params.address);
+      // console.log(route.params.address);
       setReceiver(route.params.address.receiver);
       setPhone(route.params.address.phone);
       setRegion(route.params.address.region);

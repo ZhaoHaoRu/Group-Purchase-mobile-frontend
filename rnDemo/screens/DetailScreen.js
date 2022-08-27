@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Dimensions} from 'react-native';
 import {
   Box,
@@ -19,11 +19,12 @@ const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
 const DetailScreen = ({route, navigation}) => {
-  console.log('detail screen', route.params);
+  // console.log('detail screen', route.params);
   const {props} = route.params;
   const {userId} = route.params;
-  console.log('detail userIddd:', userId);
-  console.log('data:', props);
+  const {groupId} = props.groupId;
+  const [isCollected, setIsCollected] = useState(0);
+
   return (
     <>
       <ScrollView mb={0.1 * h}>
