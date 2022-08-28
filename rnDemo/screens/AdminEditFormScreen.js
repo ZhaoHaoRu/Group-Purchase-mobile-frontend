@@ -47,10 +47,12 @@ const AdminEditFormScreen = ({route, navigation}) => {
       startTime: startTime,
       category: category,
     };
-    // console.log('change has been excute', D);
+    console.log('change has been excute', D);
     changeGroup(D, callback);
   };
-  const callback = data => {};
+  const callback = data => {
+    console.log('after edit data:', data);
+  };
 
   const setGoodsInfo = (Info, Id) => {
     if (Info === '') {

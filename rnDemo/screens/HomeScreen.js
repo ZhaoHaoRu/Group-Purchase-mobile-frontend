@@ -13,6 +13,7 @@ import {
   Icon,
   Text,
   Select,
+  useToast,
   CheckIcon,
   Image,
 } from 'native-base';
@@ -51,6 +52,7 @@ const HomeScreen = ({navigation}) => {
   const [grpId, setGrpId] = useState(0);
   const [status, setStatus] = useState(1);
   const [grpSelected, setGrpSelected] = useState([]);
+  const toast = useToast();
   // const [triggered, setTrigerred] = useState(0);
 
   const [refreshing, setRefreshing] = useState(true);
@@ -89,42 +91,9 @@ const HomeScreen = ({navigation}) => {
     ori.forEach(ori => {});
   };
 
-  const callback2 = data => {
-    const num = judgeTime(data);
-    setStatus(num);
-    // setStatus(judgeTime(data));
-    // console.log('available group -groupId-', data.groupId);
-    // console.log('available group -status-', num);
-    // filteredData.push(data);
-
-    // console.log('callback2 data: ', data.status);
-    // if (data.status === 1) {
-    //   console.log('groupId:', grpId);
-    //   setStatus(judgeTime(data.data));
-    //   console.log('status: ', status);
-    // }
-  };
-
-  const gp = () => {
-    getColGroups();
-    sortGroup(defValue);
-  };
-
   // 获取当前用户
   React.useEffect(() => {
-    // getGroupById(parseInt(grpId), callback2);
-
-    // setTimeout(() => {
-    //   getColGroups();
-    // }, 1000);
-
-    // if (triggered === 1) {
-
     getColGroups();
-    // sortGroup(defValue);
-    // gp();
-    // setTrigerred(0);
-    // }
     // TODO: 不理解这里为啥要删
     storage.load('userId', data => {
       setId(data);
@@ -135,18 +104,7 @@ const HomeScreen = ({navigation}) => {
     // setGroupAfterFiltrated(groupAfterFiltrated);
   }, []);
 
-  // const checkStatus = () => {
-  //   // if (checkState == 1) {
-  //   let filteredData = [];
-  //   groups.forEach(group => {
-  //     if (checkState === 0) {
-  //       // console.log('group.groupTitle:', group.groupTitle);
-  //       return;
-  //     }
-  //     filteredData.push(group);
-  //   });
-  //   setGroupAfterFiltrated(filteredData);
-  // };
+
 
   // 对于团购的内容进行搜索过滤,基于团长或者是团购名称
   const searchItems = searchValue => {
@@ -182,10 +140,7 @@ const HomeScreen = ({navigation}) => {
   const sortGroup = data => {
     // refreshGroups();
     getColGroups();
-    // console.log('get here!');
-    // console.log('data: ', data);
-    // console.log('groups: ', groups);
-    // console.log('ori: ', ori);
+
     setService(data);
 
     if (data === 'timeOrder') {
@@ -215,6 +170,7 @@ const HomeScreen = ({navigation}) => {
         sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
       );
     } else if (data === 'fastGroups') {
+      let hasFast = false;
       let filteredData = [];
       groups.forEach(group => {
         if (
@@ -222,12 +178,19 @@ const HomeScreen = ({navigation}) => {
         ) {
           // console.log('fastGroups -status-', status);
           filteredData.push(group);
+          hasFast = true;
         }
       });
       // console.log('filtered data --- ', filteredData);
       setGroupAfterFiltrated(filteredData);
       setGrpSelected(filteredData);
       setGroups(filteredData);
+      if (hasFast == false) {
+        toast.show({
+          description: '没有秒杀团购，筛选无效！',
+          placement: 'top',
+        });
+      }
 
       // setGroups(sortByKeyReverse(groups, 'groupTitle'));
       // setGroupAfterFiltrated(
@@ -237,6 +200,7 @@ const HomeScreen = ({navigation}) => {
       // console.log('available group');
 
       let filteredData = [];
+      let available = false;
       groups.forEach(group => {
         const num = judgeTime(group);
 
@@ -247,14 +211,22 @@ const HomeScreen = ({navigation}) => {
           // console.log('available group -groupId-', group.groupId);
           // console.log('available group -num-', num);
           filteredData.push(group);
+          available = true;
         }
       });
+      if (available == false) {
+        toast.show({
+          description: '没有有效的普通团购，筛选无效！',
+          placement: 'top',
+        });
+      }
       setGroups(filteredData);
       setGrpSelected(filteredData);
     } else if (data === 'futureGroups') {
       // console.log('future group');
 
       let filteredData = [];
+      let hasFuture = false;
       groups.forEach(group => {
         const num = judgeTime(group);
 
@@ -265,14 +237,18 @@ const HomeScreen = ({navigation}) => {
           // console.log('available group -groupId-', group.groupId);
           // console.log('available group -num-', num);
           filteredData.push(group);
+          hasFuture = true;
         }
       });
+      console.log('未开始的团购！！！！', hasFuture);
+      if (hasFuture == false) {
+        toast.show({
+          description: '没有未开始的团购，筛选无效！',
+          placement: 'top',
+        });
+      }
       setGroups(filteredData);
       setGrpSelected(filteredData);
-      // setGroups(sortByKeyReverse(groups, 'groupTitle'));
-      // setGroupAfterFiltrated(
-      //   sortByKeyReverse(groupAfterFiltrated, 'groupTitle'),
-      // );
     } else if (data === 'endedGroups') {
       // console.log('ended group');
 
@@ -299,7 +275,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   if (groups != []) {
-    console.log('group in homeScreen :', groups);
+    // console.log('group in homeScreen :', groups);
     return (
       <>
         <Center>
@@ -404,22 +380,14 @@ const HomeScreen = ({navigation}) => {
                             sortGroup(itemValue);
                             // setTrigerred(1);
                           }}>
-                          <Select.Item
-                            label="收藏团购"
-                            value="allCollectedGroups"
-                          />
                           <Select.Item label="秒杀团购" value="fastGroups" />
                           <Select.Item
-                            label="有效的团购"
+                            label="普通团购"
                             value="availableGroups"
                           />
                           <Select.Item
                             label="未开始的团购"
                             value="futureGroups"
-                          />
-                          <Select.Item
-                            label="已结束的团购"
-                            value="endedGroups"
                           />
                           <Select.Item label="按时间升序" value="timeOrder" />
                           <Select.Item
@@ -488,22 +456,14 @@ const HomeScreen = ({navigation}) => {
                             // console.log('defvalue:!!!!!!!!!!!!!!!', defValue);
                             sortGroup(itemValue);
                           }}>
-                          <Select.Item
-                            label="收藏团购"
-                            value="allCollectedGroups"
-                          />
                           <Select.Item label="秒杀团购" value="fastGroups" />
                           <Select.Item
-                            label="有效的团购"
+                            label="普通团购"
                             value="availableGroups"
                           />
                           <Select.Item
                             label="未开始的团购"
                             value="futureGroups"
-                          />
-                          <Select.Item
-                            label="已结束的团购"
-                            value="endedGroups"
                           />
                           <Select.Item label="按时间升序" value="timeOrder" />
                           <Select.Item

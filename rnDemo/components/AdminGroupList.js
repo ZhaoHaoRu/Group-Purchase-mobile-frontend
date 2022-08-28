@@ -101,13 +101,13 @@ const AdminGroupList = ({route, navigation}) => {
       deleteGroup(data, callbackAfter);
       // setGroupId(0);
     }
-    {
-      toast.show({
-        description: '出错了，请重试！',
-        variant: 'subtle',
-        placement: 'top',
-      });
-    }
+    // {
+    //   toast.show({
+    //     description: '出错了，请重试！',
+    //     variant: 'subtle',
+    //     placement: 'top',
+    //   });
+    // }
     onClose();
   };
 

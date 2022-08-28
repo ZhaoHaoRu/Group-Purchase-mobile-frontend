@@ -17,22 +17,35 @@ const BrowseCard = ({props, userId}) => {
       <AspectRatio w="100%" ratio={{base: 4 / 3, md: 4 / 3}}>
         <Image
           source={{
-              uri: props.picture,
+            uri: props.picture,
           }}
           alt="image"
           borderRadius="lg"
         />
       </AspectRatio>
-      <Link
-        to={{
-          screen: 'Detail',
-          initial: false,
-          params: {props: props, userId: userId},
-        }}>
-        <Text mt={0.02 * w} color="#71717a" bold size="xl">
-          {title}
-        </Text>
-      </Link>
+      {props.state === 2 ? (
+        <Link
+          to={{
+            screen: 'SecKill',
+            initial: false,
+            params: {props: props, userId: userId, addressId: -1},
+          }}>
+          <Text mt={0.02 * w} color="#71717a" bold size="xl">
+            {title}
+          </Text>
+        </Link>
+      ) : (
+        <Link
+          to={{
+            screen: 'Detail',
+            initial: false,
+            params: {props: props, userId: userId},
+          }}>
+          <Text mt={0.02 * w} color="#71717a" bold size="xl">
+            {title}
+          </Text>
+        </Link>
+      )}
     </Box>
   );
 };

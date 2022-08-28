@@ -46,8 +46,8 @@ class BestSellerCarousel extends React.Component {
       // console.log('recommend data: ', data);
       if (data.status === 0) {
         let tmp = data.data;
-        tmp.map((o,i)=>{
-          tmp[i]['userId'] = this.state.userId;
+        tmp.map((o, i) => {
+          tmp[i].userId = this.state.userId;
         });
         this.setState({entries: tmp});
         // console.log('this.state.entries: ', this.state.entries);
@@ -63,6 +63,14 @@ class BestSellerCarousel extends React.Component {
   }
 
   _renderItem({item, index}, parallaxProps) {
+    // 对于秒杀团购和普通团购有不同的跳转
+    let state = item.state;
+    let screen = '';
+    if (state === 1) {
+      screen = 'Detail';
+    } else {
+      screen = 'SecKill';
+    }
     return (
       <View style={styles.item}>
         <ParallaxImage
@@ -83,6 +91,15 @@ class BestSellerCarousel extends React.Component {
           bottom={'5'}>
           {item.userId === 0 ? (
             <Text style={styles.link}>等待一下</Text>
+          ) : state === 2 ? (
+            <Link
+              to={{
+                screen: 'SecKill',
+                initial: false,
+                params: {props: item, userId: item.userId, addressId: -1},
+              }}>
+              <Text style={styles.link}>进去看看</Text>
+            </Link>
           ) : (
             <Link
               to={{

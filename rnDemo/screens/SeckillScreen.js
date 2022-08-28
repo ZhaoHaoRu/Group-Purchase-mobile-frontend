@@ -36,7 +36,7 @@ const h = Dimensions.get('window').height;
 
 const SecKillScreen = ({route, navigation}) => {
   const {props} = route.params;
-  // console.log('seckill props:', props);
+  console.log('seckill props:', props);
 
   // let now = new Date().getTime();
   // console.log("now judgeTime:", now);

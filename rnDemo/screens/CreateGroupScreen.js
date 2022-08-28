@@ -67,7 +67,17 @@ const CreateGroupScreen = ({navigation}) => {
   // easier to determine group or product's picture
   const [option, setOption] = React.useState('');
   // const [image2, setImage2] = React.useState('http://assets.stickpng.com/thumbs/584abf102912007028bd9332.png')
-  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+  const [date, setDate] = useState(
+    new Date(
+      time.getFullYear(),
+      time.getMonth(),
+      time.getDate(),
+      time.getHours() + 8,
+      time.getMinutes(),
+      time.getSeconds(),
+    ),
+  );
   const [open, setOpen] = useState(false);
   const [showDate, setShowDate] = React.useState('请选择团购开始时间');
   var correctDate;
@@ -174,6 +184,21 @@ const CreateGroupScreen = ({navigation}) => {
     });
   };
 
+  // 修改时区
+  const formatUTC = (dateInt, addOffset = false) => {
+    let date = !dateInt || dateInt.length < 1 ? new Date() : new Date(dateInt);
+    if (typeof dateInt === 'string') {
+      return date;
+    } else {
+      const offset = addOffset
+        ? date.getTimezoneOffset()
+        : -date.getTimezoneOffset();
+      const offsetDate = new Date();
+      offsetDate.setTime(date.getTime() + offset * 60000);
+      return offsetDate;
+    }
+  };
+
   // const [kdate, setKdate] = useState('');
 
   // for (let i = 0; i < 9; i++) {
@@ -203,7 +228,10 @@ const CreateGroupScreen = ({navigation}) => {
     }).then(image => {
       if (option === 'group') {
         // setImage(image.path);
-        setData({...formData, picture: `data:${image.mime};base64,${image.data}`});
+        setData({
+          ...formData,
+          picture: `data:${image.mime};base64,${image.data}`,
+        });
         setImage(`data:${image.mime};base64,${image.data}`);
       } else if (option === 'product') {
         // setPicture(image.path);
@@ -225,7 +253,10 @@ const CreateGroupScreen = ({navigation}) => {
     }).then(image => {
       if (option === 'group') {
         // setImage(image.path);
-        setData({...formData, picture: `data:${image.mime};base64,${image.data}`});
+        setData({
+          ...formData,
+          picture: `data:${image.mime};base64,${image.data}`,
+        });
         setImage(`data:${image.mime};base64,${image.data}`);
       } else if (option === 'product') {
         // setPicture(image.path);
@@ -716,23 +747,32 @@ const CreateGroupScreen = ({navigation}) => {
               <DatePicker
                 modal
                 open={open}
-                date={date}
+                date={time}
                 onConfirm={date => {
                   setOpen(false);
                   setDate(date);
-                  // console.log('date--', date);
-                  setShowDate(JSON.stringify(date));
-                  // console.log('showdate--', showDate);
-                  // console.log("kdate!!!!",getIndexOfJson(date, 0));
-                  var kdate = JSON.stringify(date).substring(1, 11);
-                  // console.log('kdate!!!!', kdate);
-                  var ktime = JSON.stringify(date).substring(12, 20);
-                  // console.log('ktime!!!!', ktime);
+                  console.log('date--', date);
+                  console.log('showdate--', showDate);
+                  let kdate = JSON.stringify(date).substring(1, 11);
+                  console.log('kdate!!!!', kdate);
+                  let ktime = JSON.stringify(date).substring(12, 20);
+                  let hourBefore = JSON.stringify(date).substring(12, 14);
+                  // 对于时区不对的情况进行替换
+                  let hour = (parseInt(hourBefore) + 8) % 24;
+                  if (hour < 10) {
+                    let hourStr = '0' + hour.toString();
+                    ktime = ktime.replace(hourBefore, hourStr);
+                  } else {
+                    ktime = ktime.replace(hourBefore, hour.toString());
+                  }
+                  console.log('hour: ', hour);
+                  console.log('ktime!!!!', ktime);
                   const combined = kdate + ' ' + ktime;
-                  // console.log('combined!!!!', combined);
+                  console.log('combined!!!!', combined);
                   correctDate = combined;
                   // console.log('correctDate!!!!', correctDate);
                   setStartTime(correctDate);
+                  setShowDate(correctDate);
                   // console.log('startTime!!!!', startTime);
                 }}
                 onCancel={() => {
