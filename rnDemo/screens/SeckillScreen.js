@@ -333,7 +333,7 @@ const SecKillScreen = ({route, navigation}) => {
                 paddingY={'5%'}
                 space={4}
                 backgroundColor="gray.50">
-                <CountDown
+                {/* <CountDown
                   size={8}
                   until={k}
                   // digitStyle={{
@@ -343,7 +343,7 @@ const SecKillScreen = ({route, navigation}) => {
                   // }}
                   timeLabels={{d:"天",h:"時",m: "分", s:"秒"}}
                   // timeCont = {{justifyContent: "flex-start"}}
-                />
+                /> */}
 
                 <HStack
                   space={2}

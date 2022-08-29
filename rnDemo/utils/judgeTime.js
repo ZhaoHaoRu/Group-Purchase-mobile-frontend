@@ -56,3 +56,37 @@ export const calCountdownTime = data => {
     return time;
   }
 };
+
+export const calCountdownStartTime = data => {
+  console.log("calCountdownTime's data: ", data);
+
+  console.log('!!!!!!!!!!!!!!!!!!!!!!')
+  console.log(data.state)
+  let now = new Date().getTime();
+  // console.log('now coutdowntime:', now);
+  // console.log('starttime coutdowntime:', data.startTime);
+  const startTime = new Date();
+  startTime.setTime(data.startTime);
+  // let startTime = data.startTime ;
+  // console.log('endTime coutdowntime:', endTime);
+  console.log('------- startTime: ', startTime.getTime())
+  console.log('------- now Time: ', new Date().getTime())
+
+  // on going, get time left
+  if (
+    new Date().getTime() < startTime.getTime()
+    //  && (data.state === 3)
+  ) {
+    // console.log(
+    //   'get time left 1 : ',
+    //   (endTime - new Date().getTime()),
+    // );
+    let time = timeStamp4Countdown(startTime.getTime() - new Date().getTime());
+    // let time2 = (startTime.getTime() - new Date().getTime());
+    console.log(
+      '----------- get time left : ',
+      timeStamp4Countdown(startTime.getTime() - new Date().getTime()),
+    );
+    return time;
+  }
+};
