@@ -116,7 +116,7 @@ const CreateGroupScreen = ({navigation}) => {
     });
   };
   const callback = data => {
-    // console.log('create group callback:', data);
+    console.log('create group callback:', data);
     setData(data.data);
     const props = data;
     navigation.replace('QrCode', {
@@ -179,7 +179,7 @@ const CreateGroupScreen = ({navigation}) => {
         state: stat,
         category: grpType,
       };
-      // console.log('create Group data:', D); // data可以直接发送给后端*/
+      console.log('create Group data:', D); // data可以直接发送给后端*/
       createGroup(D, callback);
     });
   };

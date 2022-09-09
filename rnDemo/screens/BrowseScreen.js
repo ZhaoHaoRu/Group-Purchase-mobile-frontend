@@ -49,12 +49,19 @@ const RenderScreen = props => {
   // TODO 本功能不需要登录，因此后续还需要有所修改
   React.useEffect(() => {
     try {
-      storage.load('userId', data => {
-        setId(data);
-      });
+      storage
+        .load('userId', data => {
+          setId(data);
+        })
+        .catch(err => {
+          // 如果取不到数据，说明是游客
+          setId(0);
+          console.log('lost id: ', Id);
+        });
     } catch (e) {
       // 0 代表着当前用户为游客
       setId(0);
+      // console.log('lost id: ', id);
     }
     if (props.props == 1) {
       const data = {};

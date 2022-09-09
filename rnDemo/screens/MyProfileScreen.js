@@ -1,32 +1,6 @@
-// import {View, Text} from 'react-native';
-// import React from 'react';
-// import {Box, VStack} from 'native-base';
-// import ProfilePic from '../components/ProfilePic';
-// import ProfileFuncRow1 from '../components/ProfileFuncRow1';
-// import ProfileFuncRow2 from '../components/ProfileFuncRow2';
-// import ProfileFuncList from '../components/ProfileFuncList';
-//
-// const MyProfileScreen = () => {
-//   return (
-//     <View>
-//       <ProfilePic />
-//       <VStack marginTop={180}>
-//         <ProfileFuncRow1 />
-//         <ProfileFuncRow2 />
-//         {/* //trick */}
-//         <Box height={1000} bg="#fff">
-//           <ProfileFuncList />
-//         </Box>
-//       </VStack>
-//     </View>
-//   );
-// };
-//
-// export default MyProfileScreen;
-
-import {View, Text} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import React, {useState} from 'react';
-import {Box, useToast, VStack} from 'native-base';
+import {Box, Divider, Heading, HStack, Image, Spacer, useToast, VStack} from 'native-base';
 import ProfilePic from '../components/ProfilePic';
 import ProfileFuncRow1 from '../components/ProfileFuncRow1';
 import ProfileFuncRow2 from '../components/ProfileFuncRow2';
@@ -40,13 +14,21 @@ import EditGroupDetails from '../components/EditGroupDetails';
 import {storage} from '../utils/storage';
 import {getCollectedGroups} from '../service/groupService';
 import {getUserById} from '../service/userService';
+import {StackActions} from "@react-navigation/native";
 
-const MyProfileScreen = () => {
+const w = Dimensions.get('window').width;
+const h = Dimensions.get('window').height;
+
+const MyProfileScreen = ({navigation}) => {
   const [Id, setId] = useState(0);
   const [user, setUser] = useState({});
   const toast = useToast();
+    const onPressLogout = () => {
+        storage.remove('userId');
+        navigation.dispatch(StackActions.popToTop());
+    };
   const callback = data => {
-      // console.log('user data:', data);
+    // console.log('user data:', data);
     if (data.status === 0) {
       setUser(data.data);
     } else {
@@ -73,10 +55,67 @@ const MyProfileScreen = () => {
       <ProfilePic user={user} />
       <VStack marginTop={180}>
         <ProfileFuncRow1 userId={Id} />
-        <ProfileFuncRow2 userId={Id} />
+        <ProfileFuncRow2 userId={Id} navigation={navigation} />
         {/* //trick */}
         <Box height={1000} bg="#fff">
-          <ProfileFuncList />
+            <View bg={'#fff'}>
+                <VStack>
+                    <Box bg={'#fff'}>
+                        <HStack mt={1} mb={1}>
+                            <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
+                                我的收藏
+                            </Heading>
+                            <Spacer />
+                            <Image
+                                // mt="15%"
+                                mr="4"
+                                mt="4"
+                                opacity={0.3}
+                                source={require('../image/arrowR.png')}
+                                size="18px"
+                                alt="arrowR"
+                            />
+                        </HStack>
+                        <Divider
+                            bg="darkText"
+                            thickness="1.5"
+                            alignSelf={'center'}
+                            mt="3"
+                            mb="0"
+                            width={0.9 * w}
+                            opacity={0.1}
+                            orientation="horizontal"
+                        />
+                    </Box>
+                    <Box bg={'#fff'}>
+                        <HStack mt={1} mb={1}>
+                            <Heading fontSize="14" ml="4" mt="4" opacity={0.6}>
+                                退出登录
+                            </Heading>
+                            <Spacer />
+                            <Image
+                                // mt="15%"
+                                mr="4"
+                                mt="4"
+                                opacity={0.3}
+                                source={require('../image/arrowR.png')}
+                                size="18px"
+                                alt="arrowR"
+                            />
+                        </HStack>
+                        <Divider
+                            bg="darkText"
+                            thickness="1.5"
+                            alignSelf={'center'}
+                            mt="3"
+                            mb="0"
+                            width={0.9 * w}
+                            opacity={0.1}
+                            orientation="horizontal"
+                        />
+                    </Box>
+                </VStack>
+            </View>
         </Box>
       </VStack>
     </View>
@@ -85,7 +124,6 @@ const MyProfileScreen = () => {
 
 const StackNav = createNativeStackNavigator();
 const MyProfileWrapper = createNativeStackNavigator();
-
 
 export function MyProfileScreenRoute() {
   let navigationContainer = (

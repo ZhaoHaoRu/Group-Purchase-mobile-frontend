@@ -153,6 +153,7 @@ export default function App() {
           screenOptions={{headerShown: false}}>
           <Route.Screen name="Welcome" component={WelcomeScreen} />
           <Route.Screen name="Login" component={LoginForm} />
+          <Route.Screen name="Visitor" component={BrowseScreen} />
           <Route.Screen name="Register" component={RegisterForm} />
           <Route.Screen name="Detail" component={DetailScreen} />
           <Route.Screen name="Cart" component={CartScreen} />

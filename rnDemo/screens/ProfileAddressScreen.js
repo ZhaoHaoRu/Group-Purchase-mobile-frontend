@@ -11,7 +11,8 @@ import {
 } from 'native-base';
 import React, {Component, useState} from 'react';
 import {TextInput, View, StyleSheet, Pressable, Dimensions} from 'react-native';
-import {getAddress} from '../service/userService';
+import {getAddress, recommend} from '../service/userService';
+import {storage} from "../utils/storage";
 
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
@@ -21,7 +22,7 @@ export default function ProfileAddressScreen({route, navigation}) {
   const {userId} = route.params;
   const [addresses, setAddresses] = useState([]);
   const addressCallback = data => {
-    // console.log('addressCallback:', data);
+    console.log('addressCallback:', data);
     if (data.status === 0) {
       setAddresses(data.data);
     } else {
@@ -33,12 +34,19 @@ export default function ProfileAddressScreen({route, navigation}) {
     }
   };
   const onGetAddress = () => {
+    // TODO: 这里userId有的时候会undined
+    console.log("onGetAddress userId: ", userId);
     const data = {userId: parseInt(userId)};
     getAddress(data, addressCallback);
   };
 
   React.useEffect(() => {
-    onGetAddress();
+    storage.load('userId', data => {
+      console.log('userId getAddress: ', data);
+      const request = {userId: parseInt(data)};
+      getAddress(request, addressCallback);
+    });
+    // onGetAddress();
   }, []);
   // console.log('delivery props:', addresses);
   return (

@@ -28,7 +28,7 @@ const LoginForm = ({navigation}) => {
   const toast = useToast();
 
   const callback = data => {
-    // console.log('callback get:', data);
+    console.log('callback get:', data);
     if (data.status === 1) {
       // TODO storage的用法
       storage.save('userId', data.data.userId);
@@ -58,7 +58,7 @@ const LoginForm = ({navigation}) => {
     console.log('name:', name);
     console.log('password:', password);
     console.log('login success!');
-    const data = {userName: name, password: password};
+    const data = {userName: name, password: password, token: "2113"};
     console.log('data:', data); // data可以直接发送给后端
     login(data, callback);
   };

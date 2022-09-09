@@ -23,7 +23,7 @@ const BrowseCard = ({props, userId}) => {
           borderRadius="lg"
         />
       </AspectRatio>
-      {props.state === 2 ? (
+      {props.state === 2 && userId != 0 ? (
         <Link
           to={{
             screen: 'SecKill',

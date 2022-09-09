@@ -1,4 +1,4 @@
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions,  BackHandler } from 'react-native';
 import React, {useState} from 'react';
 import {
   Box,
@@ -13,6 +13,8 @@ import {
   Spacer,
 } from 'native-base';
 import {Link} from '@react-navigation/native';
+import {storage} from '../utils/storage';
+import {StackActions} from '@react-navigation/native';
 import {useEffect} from 'react';
 
 const w = Dimensions.get('window').width;
@@ -59,24 +61,24 @@ const AdminOptions = ({userId}) => {
         </Link>
       </Pressable>
 
-        {/*董云鹏*/}
-        <Pressable
-            py="3"
-            flex={1}
-            alignItems="center"
-            /*onPress={() => navigation.replace('QrCodeScanner')}*/
-        >
-            <Image
-                mb="5%"
-                opacity={0.5}
-                source={require('../image/script.png')}
-                size="30px"
-                alt="refresh"
-            />
-            <Link to={{screen: 'OrderView', initial: false}}>
-                <Text fontSize="xs">订单统计</Text>
-            </Link>
-        </Pressable>
+      {/*董云鹏*/}
+      <Pressable
+        py="3"
+        flex={1}
+        alignItems="center"
+        /*onPress={() => navigation.replace('QrCodeScanner')}*/
+      >
+        <Image
+          mb="5%"
+          opacity={0.5}
+          source={require('../image/script.png')}
+          size="30px"
+          alt="refresh"
+        />
+        <Link to={{screen: 'OrderView', initial: false}}>
+          <Text fontSize="xs">订单统计</Text>
+        </Link>
+      </Pressable>
 
       {/*<Pressable py="3" flex={1} alignItems="center">*/}
       {/*  /!*<Image*!/*/}
@@ -108,7 +110,12 @@ const AdminOptions = ({userId}) => {
 };
 
 // 团员功能
-const UserOptions = ({userId}) => {
+const UserOptions = ({navigation, userId}) => {
+  const onPressLogout = () => {
+    storage.remove('userId');
+    // navigation.dispatch(StackActions.popToTop());
+      BackHandler.exitApp();
+  };
   return (
     <>
       <Pressable py="3" flex={1} alignItems="center">
@@ -147,17 +154,17 @@ const UserOptions = ({userId}) => {
         </Link>
       </Pressable>
 
-      <Pressable py="3" flex={1} alignItems="center">
-        {/* <Image
+      <Pressable py="3" flex={1} alignItems="center" onPress={onPressLogout}>
+        <Image
           mb="5%"
           opacity={0.5}
-          source={require('../image/inbox.png')}
+          source={require('../image/people.png')}
           size="30px"
           alt="feedback"
         />
-        <Link to={{screen: 'AdminOrderList', initial: false}}>
-          <Text fontSize="xs">订单管理</Text>
-        </Link> */}
+        {/*<Link to={{screen: '', initial: false}}>*/}
+          <Text fontSize="xs">退出登录</Text>
+        {/*</Link>*/}
       </Pressable>
 
       <Pressable py="3" flex={1} alignItems="center">
@@ -176,7 +183,7 @@ const UserOptions = ({userId}) => {
   );
 };
 
-const ProfileFuncRow2 = ({userId}) => {
+const ProfileFuncRow2 = ({navigation, userId}) => {
   const [option, setOption] = useState(1);
   const [hint, setHint] = useState('切换团长功能');
   const [title, setTitle] = useState('团员功能');
@@ -191,7 +198,7 @@ const ProfileFuncRow2 = ({userId}) => {
     // console.log("here0")
     if (option === 1) {
       // console.log('here1');
-      return <UserOptions userId={userId} />;
+      return <UserOptions navigation={navigation} nuserId={userId} />;
     } else if (option === -1) {
       return <AdminOptions userId={userId} />;
     }

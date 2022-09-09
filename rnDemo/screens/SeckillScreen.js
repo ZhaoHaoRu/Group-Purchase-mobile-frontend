@@ -31,6 +31,7 @@ import {GoodsCard, styles} from '../components/DetailCard';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {calCountdownTime, judgeTime} from '../utils/judgeTime';
 import CountDown from 'react-native-countdown-component';
+import {calCountdownStartTime} from '../utils/judgeTime';
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
@@ -42,7 +43,7 @@ const SecKillScreen = ({route, navigation}) => {
   // console.log("now judgeTime:", now);
   const [timeleft, setTimeLeft] = React.useState(0);
 
-  let k = calCountdownTime(props);
+  let k = calCountdownStartTime(props);
   // setTimeLeft(k);
   // setTimeLeft (calCountdownTime(props));
 
@@ -226,7 +227,7 @@ const SecKillScreen = ({route, navigation}) => {
   };
 
   const purchaseCallback = data => {
-    // console.log('purchaseCallback', data);
+    console.log('purchaseCallback', data);
     toast.show({
       description: data.data,
       placement: 'top',
@@ -333,17 +334,17 @@ const SecKillScreen = ({route, navigation}) => {
                 paddingY={'5%'}
                 space={4}
                 backgroundColor="gray.50">
-                <CountDown
-                  size={8}
-                  until={k}
-                  // digitStyle={{
-                  //   backgroundColor: '#fff',
-                  //   borderColor: '#f43f5e',
-                  //   borderWidth: 2,
-                  // }}
-                  timeLabels={{d:"天",h:"時",m: "分", s:"秒"}}
-                  // timeCont = {{justifyContent: "flex-start"}}
-                />
+                {/*<CountDown*/}
+                {/*  size={8}*/}
+                {/*  until={k}*/}
+                {/*  // digitStyle={{*/}
+                {/*  //   backgroundColor: '#fff',*/}
+                {/*  //   borderColor: '#f43f5e',*/}
+                {/*  //   borderWidth: 2,*/}
+                {/*  // }}*/}
+                {/*  timeLabels={{d:"天",h:"時",m: "分", s:"秒"}}*/}
+                {/*  // timeCont = {{justifyContent: "flex-start"}}*/}
+                {/*/>*/}
 
                 <HStack
                   space={2}
@@ -710,13 +711,39 @@ const SecKillScreen = ({route, navigation}) => {
                 一键开团
               </Button>
             ) : (
-              <Button
-                size="sm"
-                ml={0.5 * w}
-                colorScheme="danger"
-                opacity={'0.5'}>
-                {status === 2 ? '团购已结束' : '团购未开始'}
-              </Button>
+              // <Button
+              //   size="sm"
+              //   ml={0.5 * w}
+              //   colorScheme="danger"
+              //   opacity={'0.5'}>
+              //   {status === 2 ? '团购已结束' : '团购未开始'}
+              // </Button>
+              <>
+                {status === 2 ? (
+                  <Button
+                    size="sm"
+                    ml={0.5 * w}
+                    colorScheme="danger"
+                    opacity={'0.5'}
+                    // ml={0.1 * w}
+                    // mt={0.005 * h}
+                    // color="danger.800"
+                  >
+                    '团购已结束'
+                  </Button>
+                ) : (
+                  <Box ml="190">
+                    <Text fontSize="2xs" ml="1">
+                      距离团购开始还有
+                    </Text>
+                    <CountDown
+                      size={8}
+                      until={k}
+                      timeLabels={{d: '天', h: '时', m: '分', s: '秒'}}
+                    />
+                  </Box>
+                )}
+              </>
             )}
           </Center>
         </HStack>

@@ -14,7 +14,8 @@ export const getCart = (data, callback) => {
 };
 
 export const addOrder = (data, callback) => {
-  const url = `${config.backendUrl}/order/addOrder?userId=${data.userId}&groupId=${data.groupId}&addressId=${data.addressId}&time=${data.time}`;
+  // const url = `${config.backendUrl}/order/addOrder?userId=${data.userId}&groupId=${data.groupId}&addressId=${data.addressId}&time=${data.time}`;
+  const url = `${config.backendUrl}/order/addOrder?userId=${data.userId}&groupId=${data.groupId}&addressId=${data.addressId}&time=${data.time}&token=${data.token}`;
   console.log('addOrder data:', data);
   getRequest(url, data, callback);
 };

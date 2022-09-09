@@ -7,13 +7,24 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {Button, Box, Text, HStack, VStack, Center} from 'native-base';
+import {Button, Box, Text, HStack, VStack, Center, useToast} from 'native-base';
 // import AwesomeButton from 'react-native-really-awesome-button';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 const WelcomeScreen = ({navigation}) => {
+  const toast = useToast();
+
+  const onPressVisit = () => {
+    toast.show({
+      description: '不登录状态仅能浏览哦，查看团购详情请先登录!',
+      variant: 'subtle',
+      duration: 2000,
+      placement: 'top',
+    });
+    navigation.navigate('Visitor');
+  };
   console.log('get home screen!');
   return (
     <ImageBackground
@@ -33,7 +44,7 @@ const WelcomeScreen = ({navigation}) => {
             </Text>
           </Center>
           <Center w={width} h="15%" />
-          <Center w={width} h="15%">
+          <Center w={width} h="10%">
             <Button
               variant="subtle"
               colorScheme="danger"
@@ -44,7 +55,7 @@ const WelcomeScreen = ({navigation}) => {
               创建账户
             </Button>
           </Center>
-          <Center w={width} h="15%" rounded="md">
+          <Center w={width} h="10%" rounded="md">
             <Button
               variant="Outline"
               colorScheme="danger"
@@ -55,6 +66,19 @@ const WelcomeScreen = ({navigation}) => {
               borderRadius="full"
               onPress={() => navigation.replace('Login')}>
               登录
+            </Button>
+          </Center>
+          <Center w={width} h="10%" rounded="md">
+            <Button
+                variant="link"
+                colorScheme="danger"
+                width="80%"
+                size="lg"
+                // borderColor="danger.400"
+                // borderWidth="3px"
+                // borderRadius="full"
+                onPress={onPressVisit}>
+              随便看看
             </Button>
           </Center>
         </VStack>

@@ -2,7 +2,9 @@ import config from '../utils/config';
 import {postRequest, getRequest} from '../utils/ajax';
 
 export const login = (data, callback) => {
-  const url = `${config.backendUrl}/user/userAuth?userName=${data.userName}&password=${data.password}`;
+  // const url = `${config.backendUrl}/user/userAuth?userName=${data.userName}&password=${data.password}`;
+  // TODO: 使用token
+  const url = `${config.backendUrl}/user/userAuth?userName=${data.userName}&password=${data.password}&token=${data.token}`;
   // console.log('url: ', url);
   // console.log('the data:', data);
   // postRequest(url, data, callback);
@@ -16,6 +18,7 @@ export const register = (data, callback) => {
 
 export const getAddress = (data, callback) => {
   const url = `${config.backendUrl}/user/getUserAddress?id=${data.userId}`;
+  console.log('address url: ', url);
   getRequest(url, data, callback);
 };
 

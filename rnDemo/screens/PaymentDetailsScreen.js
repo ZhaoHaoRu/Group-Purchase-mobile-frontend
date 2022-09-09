@@ -73,6 +73,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
   };
 
   const buyCallback = data => {
+    console.log('buycallback:', data);
     if (data.status === 1) {
       toast.show({
         description: data.data,
@@ -109,11 +110,13 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     if (address.addressId != 0) {
       setAddressId(address.addressId);
     }
+    // TODO: 对于服务器版本需要手动添加token
     let data = {
       userId: parseInt(userId),
       groupId: parseInt(groupId),
       addressId: addressId,
       time: time,
+      token:"6328",
     };
     if (address.addressId != 0) {
       data.addressId = address.addressId;
