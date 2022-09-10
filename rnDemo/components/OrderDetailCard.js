@@ -117,7 +117,7 @@ const OrderDetailCard = data => {
                     }}
                     alt={'image'}
                   />
-                  <VStack >
+                  <VStack>
                     <Text
                       ml={0.02 * width}
                       bord
@@ -141,9 +141,7 @@ const OrderDetailCard = data => {
                       共{item.number}件
                     </Text>
                   </VStack>
-                  <Text
-                      ml={0.05 * width}
-                  >
+                  <Text ml={0.05 * width}>
                     ￥{parseFloat(item.price * item.number).toFixed(2)}
                   </Text>
                 </HStack>
@@ -154,7 +152,9 @@ const OrderDetailCard = data => {
             <Box width={0.5 * width}>
               <Text ml={0.02 * width}>商品总金额:</Text>
             </Box>
-            <Text ml={0.25 * width}>￥{parseFloat(dataSource.orderPrice).toFixed(2)}</Text>
+            <Text ml={0.25 * width}>
+              ￥{parseFloat(dataSource.orderPrice).toFixed(2)}
+            </Text>
           </HStack>
         </Box>
         <Box
@@ -166,11 +166,11 @@ const OrderDetailCard = data => {
           pl="4"
           pr="3"
           py="2">
-          <HStack justifyContent={"space-between"}>
+          <HStack justifyContent={'space-between'}>
             <Box width={0.5 * width}>
-            <Text ml={0.02 * width} fontSize="sm" mt="1">
-              实际支付：
-            </Text>
+              <Text ml={0.02 * width} fontSize="sm" mt="1">
+                实际支付：
+              </Text>
             </Box>
             <Text
               fontSize="lg"
