@@ -23,6 +23,10 @@ const OrderDetailCard = data => {
     var m = date.getMinutes() + ':';
     var s = date.getSeconds();
     return Y + M + D + h + m + s;
+    /**
+     * 改为本地时间
+     */
+    // return date.toLocaleString();
   };
 
   return (

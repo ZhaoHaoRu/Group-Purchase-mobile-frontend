@@ -46,6 +46,7 @@ const OrderDetailScreen = props => {
               size={0.1 * width}
               ml={0.5 * width}
               mt={0.06 * height}
+              alt={'wallet'}
             />
           </HStack>
         </Box>

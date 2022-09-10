@@ -10,6 +10,7 @@ let postRequest = (url, json, callback) => {
 
   fetch(url, opts)
     .then(response => {
+      // console.log('reponse: ', response.json());
       return response.json();
     })
     .then(data => {

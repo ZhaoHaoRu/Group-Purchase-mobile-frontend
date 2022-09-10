@@ -24,13 +24,14 @@ export default function DeliveryInfoScreen({route, navigation}) {
   const {flag} = route.params;
   const [addresses, setAddresses] = useState([]);
   const addressCallback = data => {
-    // console.log('addressCallback:', data);
+    console.log('addressCallback:', data);
     if (data.status === 0) {
       setAddresses(data.data);
     } else {
       toast.show({
         description: '出错了，请重试！',
         variant: 'subtle',
+        duration: 500,
         placement: 'top',
       });
     }
@@ -43,6 +44,7 @@ export default function DeliveryInfoScreen({route, navigation}) {
   const onPressUse = () => {
     toast.show({
       description: '应用成功！',
+      duration: 500,
       placement: 'top',
     });
   };

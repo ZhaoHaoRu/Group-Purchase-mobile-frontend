@@ -38,6 +38,7 @@ const AdminOrderList = ({route, navigation}) => {
     } else {
       toast.show({
         description: '出错了，请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -83,12 +84,14 @@ const AdminOrderList = ({route, navigation}) => {
       setChangedOrders(tmpOrders);
       toast.show({
         description: '删除成功！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
     } else {
       toast.show({
         description: '出错了，请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });

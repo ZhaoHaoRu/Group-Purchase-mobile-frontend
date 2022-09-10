@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, View} from 'react-native';
+import {ActivityIndicator, Button, View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import BrowseCard from '../components/BrowseCard';
@@ -22,16 +22,37 @@ import BestSellerCarousel from '../components/BestSellerCarousel';
 import HomeCard from '../components/HomeCard';
 // import {useState} from '@types/react';
 import {storage} from '../utils/storage';
-import {getGroupByTag, getAllGroup} from '../service/groupService';
+import {
+  getGroupByTag,
+  getAllGroup,
+  getCollectedGroups,
+} from '../service/groupService';
 
 // 获得屏幕的宽度和高度，便于确定元素的大小，适配不同大小的屏幕
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 const RenderScreen = props => {
   const [groups, setGroups] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
   const [Id, setId] = useState(0);
   console.log('RenderScreen props:', props);
   const toast = useToast();
+
+  /**
+   * 重新加载数据，刷新页面
+   */
+  const loadData = () => {
+    setIsLoading(true);
+    console.log('refresh:', isLoading);
+    if (props.props == 1) {
+      const data = {};
+      getAllGroup(data, groupCallback);
+    } else {
+      const data = {tag: props.props};
+      getGroupByTag(data, groupCallback);
+    }
+  };
 
   const groupCallback = data => {
     if (data.status === 0) {
@@ -73,32 +94,35 @@ const RenderScreen = props => {
   }, []);
   if (groups != []) {
     return (
-      <ScrollView>
-        <View>
-          <Flex
-            direction="row"
-            margin="1%"
-            flexWrap="wrap"
-            justifyContent="center">
-            <FlatList
-              data={groups}
-              numColumns={2}
-              renderItem={({item}) => <BrowseCard props={item} userId={Id} />}
-              keyExtractor={item => item.groupId}
-              ListFooterComponent={
-                <>
-                  <Divider marginTop={0.01 * h} />
-                  <Box textAlign="center" height={0.1 * h}>
-                    <Text color="gray.300" size="xl" ml="30%">
-                      没有更多啦！w(ﾟДﾟ)w
-                    </Text>
-                  </Box>
-                </>
-              }
-            />
-          </Flex>
-        </View>
-      </ScrollView>
+      // <ScrollView>
+      <View>
+        <Flex
+          direction="row"
+          margin="1%"
+          flexWrap="wrap"
+          justifyContent="center">
+          <FlatList
+            data={groups}
+            numColumns={2}
+            renderItem={({item}) => <BrowseCard props={item} userId={Id} />}
+            keyExtractor={item => item.groupId}
+            h={0.9 * h}
+            refreshing={isLoading}
+            onRefresh={loadData}
+            ListFooterComponent={
+              <>
+                <Divider marginTop={0.01 * h} />
+                <Box textAlign="center" height={0.1 * h}>
+                  <Text color="gray.300" size="xl" ml="30%">
+                    没有更多啦！w(ﾟДﾟ)w
+                  </Text>
+                </Box>
+              </>
+            }
+          />
+        </Flex>
+      </View>
+      // </ScrollView>
     );
   } else {
     return (

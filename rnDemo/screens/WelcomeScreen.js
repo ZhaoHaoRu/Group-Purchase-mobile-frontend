@@ -29,6 +29,7 @@ const WelcomeScreen = ({navigation}) => {
   return (
     <ImageBackground
       style={styles.container}
+      alt={'background'}
       source={require('../image/background.png')}>
       <View>
         <VStack space={4} alignItems="center" w="100%">

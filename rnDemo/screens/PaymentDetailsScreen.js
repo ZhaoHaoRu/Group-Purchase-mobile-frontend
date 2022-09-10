@@ -58,6 +58,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     if (data.status === 0) {
       toast.show({
         description: data.message,
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -66,6 +67,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     } else {
       toast.show({
         description: '保存失败，请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -125,6 +127,7 @@ const PaymentDetailsScreen = ({route, navigation}) => {
     if (address.addressId === 0 && addressId === 0) {
       toast.show({
         description: '新地址还没有保存编辑，保存后重试！',
+        duration: 1000,
         variant: 'subtle',
         placement: 'top',
       });

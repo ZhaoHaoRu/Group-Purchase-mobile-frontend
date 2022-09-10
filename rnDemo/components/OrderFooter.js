@@ -8,7 +8,7 @@ import {
   Image,
   Center,
   Pressable,
-  Modal,
+  Modal, useToast,
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
@@ -20,6 +20,7 @@ const h = Dimensions.get('window').height;
 
 export default function OrderFooter(data) {
   const [modalVisible, setModalVisible] = React.useState(false);
+  const toast = useToast();
   console.log(modalVisible);
   console.log('order footer -data-:', data.groupId);
   const handleClick = () => {
@@ -29,7 +30,12 @@ export default function OrderFooter(data) {
   const callback = data => {
     setModalVisible(!modalVisible);
     console.log(data);
-    alert(data.data);
+    // alert(data.data);
+    toast.show({
+      description: data.data,
+      variant: 'subtle',
+      placement: 'top',
+    });
   };
 
   const cancelOrder = () => {

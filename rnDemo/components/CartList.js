@@ -82,7 +82,7 @@ export default function CartList({props}) {
             </Box>
           </Box>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.goodsId}
       />
     </Box>
     // </Center>

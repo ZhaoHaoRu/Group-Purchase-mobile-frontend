@@ -180,6 +180,12 @@ const CreateGroupScreen = ({navigation}) => {
         category: grpType,
       };
       console.log('create Group data:', D); // data可以直接发送给后端*/
+      toast.show({
+        description: '正在创建团购！',
+        variant: 'subtle',
+        duration: 2000,
+        placement: 'top',
+      });
       createGroup(D, callback);
     });
   };

@@ -28,7 +28,7 @@ const LoginForm = ({navigation}) => {
   const toast = useToast();
 
   const callback = data => {
-    console.log('callback get:', data);
+    console.log('callback get login:', data);
     if (data.status === 1) {
       // TODO storage的用法
       storage.save('userId', data.data.userId);

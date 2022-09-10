@@ -75,6 +75,7 @@ class BestSellerCarousel extends React.Component {
       <View style={styles.item}>
         <ParallaxImage
           source={{uri: item.picture}}
+          alt={'image'}
           containerStyle={styles.imageContainer}
           style={styles.image}
           parallaxFactor={0.4}

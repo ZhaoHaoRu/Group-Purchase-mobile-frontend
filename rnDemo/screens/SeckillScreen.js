@@ -78,6 +78,7 @@ const SecKillScreen = ({route, navigation}) => {
         setColleted(1);
         toast.show({
           description: '收藏成功！',
+          duration: 500,
           variant: 'subtle',
           placement: 'top',
         });
@@ -85,6 +86,7 @@ const SecKillScreen = ({route, navigation}) => {
         setColleted(0);
         toast.show({
           description: '取消收藏成功！',
+          duration: 500,
           variant: 'subtle',
           placement: 'top',
         });
@@ -92,6 +94,7 @@ const SecKillScreen = ({route, navigation}) => {
     } else {
       toast.show({
         description: '请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -108,6 +111,7 @@ const SecKillScreen = ({route, navigation}) => {
     if (data.status === 0) {
       toast.show({
         description: data.message,
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -116,6 +120,7 @@ const SecKillScreen = ({route, navigation}) => {
     } else {
       toast.show({
         description: '保存失败，请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -165,12 +170,14 @@ const SecKillScreen = ({route, navigation}) => {
       toast.show({
         description: '成功加入购物车',
         variant: 'subtle',
+        duration: 500,
         placement: 'top',
       });
     } else {
       toast.show({
         description: '请重试！',
         variant: 'subtle',
+        duration: 500,
         placement: 'top',
       });
     }
@@ -279,12 +286,12 @@ const SecKillScreen = ({route, navigation}) => {
     const data = {groupId: props.groupId, userId: userId};
     getCart(data, cartCallback);
     setStatus(judgeTime(props));
+    console.log('seckill status: ', judgeTime(props));
     // updateAddressColumns();
 
     // setTimeLeft (calCountdownTime(props));
   }, []);
 
-  // console.log('seckill status: ', status);
   return (
     <>
       <ScrollView mb={0.1 * h}>

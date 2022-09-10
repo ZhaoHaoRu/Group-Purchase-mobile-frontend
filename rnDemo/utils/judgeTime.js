@@ -1,7 +1,7 @@
 // 判断团购是否已经结束
 // 参数：团购
 
-import { timeStamp2String, timeStamp4Countdown } from "./parseTime";
+import {timeStamp2String, timeStamp4Countdown} from './parseTime';
 
 // 返回结果 ：0:未开始 1：未结束 2:已结束 3:未开始，秒杀团购
 export const judgeTime = data => {
@@ -15,15 +15,15 @@ export const judgeTime = data => {
   if (new Date().getTime() < data.startTime && data.state === 1) {
     // console.log('return 0');
     return 0;
+  } else if (new Date().getTime() < data.startTime && data.state === 2) {
+    // console.log('return 3');
+    return 3;
   } else if (
     new Date().getTime() < endTime &&
     (data.state === 1 || data.state === 2)
   ) {
     // console.log('return 1');
     return 1;
-  } else if (new Date().getTime() < data.startTime && data.state === 2) {
-    // console.log('return 3');
-    return 3;
   } else {
     // console.log('return 2');
     return 2;
@@ -60,8 +60,8 @@ export const calCountdownTime = data => {
 export const calCountdownStartTime = data => {
   console.log("calCountdownTime's data: ", data);
 
-  console.log('!!!!!!!!!!!!!!!!!!!!!!')
-  console.log(data.state)
+  console.log('!!!!!!!!!!!!!!!!!!!!!!');
+  console.log(data.state);
   let now = new Date().getTime();
   // console.log('now coutdowntime:', now);
   // console.log('starttime coutdowntime:', data.startTime);
@@ -69,13 +69,13 @@ export const calCountdownStartTime = data => {
   startTime.setTime(data.startTime);
   // let startTime = data.startTime ;
   // console.log('endTime coutdowntime:', endTime);
-  console.log('------- startTime: ', startTime.getTime())
-  console.log('------- now Time: ', new Date().getTime())
+  console.log('------- startTime: ', parseInt(startTime.getTime()));
+  console.log('------- now Time: ', parseInt(new Date().getTime()));
 
   // on going, get time left
   if (
-      new Date().getTime() < startTime.getTime()
-      //  && (data.state === 3)
+    new Date().getTime() < startTime.getTime()
+    //  && (data.state === 3)
   ) {
     // console.log(
     //   'get time left 1 : ',
@@ -83,9 +83,12 @@ export const calCountdownStartTime = data => {
     // );
     let time = timeStamp4Countdown(startTime.getTime() - new Date().getTime());
     // let time2 = (startTime.getTime() - new Date().getTime());
+    console.log('----------- get time:', time);
     console.log(
-        '----------- get time left : ',
-        timeStamp4Countdown(startTime.getTime() - new Date().getTime()),
+      '----------- get time left : ',
+      timeStamp4Countdown(
+        parseInt(startTime.getTime()) - parseInt(new Date().getTime()),
+      ),
     );
     return time;
   }

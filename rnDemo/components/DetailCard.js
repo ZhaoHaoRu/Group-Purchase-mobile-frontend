@@ -46,10 +46,11 @@ const CommentCard = () => {
     <Box pl="4" pr="5" py="2">
       <HStack alignItems="center" space={3}>
         <Image
-          size={0.3 * w}
+          size={0.3 * w}F
           source={{
             uri: item.avatarUrl,
           }}
+          alt={'image'}
         />
         <VStack>
           <Text
@@ -93,11 +94,13 @@ export const GoodsCard = ({item, userId, groupId}) => {
       toast.show({
         description: '成功加入购物车',
         variant: 'subtle',
+        duration: 500,
         placement: 'top',
       });
     } else {
       toast.show({
         description: '请重试！',
+        duration: 500,
         variant: 'subtle',
         placement: 'top',
       });
@@ -201,12 +204,14 @@ const DetailCard = ({props, userId, myAddressId}) => {
         toast.show({
           description: '收藏成功！',
           variant: 'subtle',
+          duration: 500,
           placement: 'top',
         });
       } else {
         setCollected(0);
         toast.show({
           description: '取消收藏成功！',
+          duration: 500,
           variant: 'subtle',
           placement: 'top',
         });

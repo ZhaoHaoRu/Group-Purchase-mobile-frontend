@@ -104,8 +104,6 @@ const HomeScreen = ({navigation}) => {
     // setGroupAfterFiltrated(groupAfterFiltrated);
   }, []);
 
-
-
   // 对于团购的内容进行搜索过滤,基于团长或者是团购名称
   const searchItems = searchValue => {
     // console.log('searchValue:', searchValue);
@@ -407,13 +405,10 @@ const HomeScreen = ({navigation}) => {
                         source={require('../image/empty.png')}
                         h={0.21 * h}
                         w={0.21 * h}
+                        alt={'image'}
                       />
-                      <Text color={'gray.500'}>
-                        暂时没有任何收藏团购，
-                      </Text>
-                      <Text color={'gray.500'}>
-                        去“附近拼团”逛逛吧
-                      </Text>
+                      <Text color={'gray.500'}>暂时没有任何收藏团购，</Text>
+                      <Text color={'gray.500'}>去“附近拼团”逛逛吧</Text>
                     </Center>
                   ) : (
                     <Box h={0.15 * h} />
@@ -483,13 +478,10 @@ const HomeScreen = ({navigation}) => {
                         source={require('../image/empty.png')}
                         h={0.21 * h}
                         w={0.21 * h}
+                        alt={'image'}
                       />
-                      <Text color={'gray.500'}>
-                        暂时没有任何收藏团购，
-                      </Text>
-                      <Text color={'gray.500'}>
-                        去“附近拼团”逛逛吧
-                      </Text>
+                      <Text color={'gray.500'}>暂时没有任何收藏团购，</Text>
+                      <Text color={'gray.500'}>去“附近拼团”逛逛吧</Text>
                     </Center>
                   ) : (
                     <Box h={0.15 * h} />
