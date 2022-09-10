@@ -8,19 +8,21 @@ import {
   Image,
   Center,
   Pressable,
+  Stack,
 } from 'native-base';
 import {StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dimensions} from 'react-native';
 import {Link} from '@react-navigation/native';
-import {judgeTime} from '../utils/judgeTime';
+import {calCountdownStartTime, calCountdownTime, judgeTime} from '../utils/judgeTime';
 import {getGroupById} from '../service/groupService';
+import CountDown from 'react-native-countdown-component';
 
 // 获得屏幕的宽度和高度，便于确定元素的大小，适配不同大小的屏幕
 const w = Dimensions.get('window').width;
 const h = Dimensions.get('window').height;
 
-export default function PurchaseFooter({groupId, userId}) {
+export default function PurchaseFooter({groupId, userId, props}) {
   const [status, setStatus] = useState(1);
   const defaultAddress = {
     addressId: 0,
@@ -30,7 +32,7 @@ export default function PurchaseFooter({groupId, userId}) {
     region: '',
   };
   const callback = data => {
-    console.log("callback data: ", data);
+    console.log('callback data: ', data);
     if (data.status === 1) {
       setStatus(judgeTime(data.data));
       console.log('status: ', status);
@@ -40,6 +42,10 @@ export default function PurchaseFooter({groupId, userId}) {
     const data = parseInt(groupId);
     getGroupById(parseInt(groupId), callback);
   }, []);
+
+  let k = calCountdownStartTime(props);
+  console.log('-------------props: ', props)
+
   // console.log('PurchaseFooter:', groupId, userId);
   return (
     <Box
@@ -104,17 +110,45 @@ export default function PurchaseFooter({groupId, userId}) {
               </Link>
             </Button>
           ) : (
-            <Button
-              size="sm"
-              ml={0.5 * w}
-              colorScheme="danger"
-              opacity={'0.5'}
-              // ml={0.1 * w}
-              // mt={0.005 * h}
-              // color="danger.800"
-            >
-              {status === 2 ? '团购已结束' : '团购未开始'}
-            </Button>
+<>
+              {status === 2 ? (
+                <Button
+                size="sm"
+                ml={0.5 * w}
+                colorScheme="danger"
+                opacity={'0.5'}
+                // ml={0.1 * w}
+                // mt={0.005 * h}
+                // color="danger.800"
+              >
+                '团购已结束'
+                </Button>
+
+              ) : (
+                <Box ml='190'>
+                <Text fontSize="2xs" ml='1'>
+                距离团购开始还有
+                </Text>
+                <CountDown
+                  size={8}
+                  until={k}
+                  timeLabels={{d: '天', h: '時', m: '分', s: '秒'}}
+                  // timeCont = {{justifyContent: "flex-start"}}
+                />
+                                {/* <Button
+                size="sm"
+                ml={0.5 * w}
+                colorScheme="danger"
+                opacity={'0.5'}
+                // ml={0.1 * w}
+                // mt={0.005 * h}
+                // color="danger.800"
+              >
+                '团购未开始'
+                </Button> */}
+                </Box>
+              )}
+            </>
           )}
         </Center>
       </HStack>

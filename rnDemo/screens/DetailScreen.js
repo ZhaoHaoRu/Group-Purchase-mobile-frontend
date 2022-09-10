@@ -31,7 +31,7 @@ const DetailScreen = ({route, navigation}) => {
         <Header />
         <DetailCard props={props} userId={userId} myAddressId={-1} />
       </ScrollView>
-      <PurchaseFooter groupId={props.groupId} userId={userId} />
+      <PurchaseFooter groupId={props.groupId} userId={userId} props={props}  />
     </>
   );
 };
