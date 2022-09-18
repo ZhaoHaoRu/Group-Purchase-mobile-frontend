@@ -84,7 +84,6 @@ export function TabWrapper() {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
-        // title: '交我团',
         headerStyle: {
           backgroundColor: '#fda4af',
         },
